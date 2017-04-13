@@ -1,6 +1,7 @@
 ﻿using LIBS.device_driver;
 using LIBS.service_fun;
 using LIBS.storage;
+using LIBS.ui_control;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -280,6 +281,64 @@ namespace LIBS
             //计算需要减去本底
             double average = calculate_integration_average.get_integration_average(wave_all, spec_all, env_all, interval_start_wave, interval_end_wave);
             MessageBox.Show(average.ToString());
+        }
+
+        //void test(ref double[] xx)
+        //{
+        //    double[] aa = new double[2];
+        //    aa[0] = 0.1;
+        //    aa[1] = 0.2;
+
+        //    xx = aa;
+        //}
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //double[] xx = new double[2];
+            //xx[0] = 9.9; xx[1] = 8.8;
+            //test(ref xx);
+            //MessageBox.Show(xx[0].ToString() + " " + xx[1].ToString());
+
+            select_element []se = new select_element[2];
+            sample []sp = new sample[2];
+            standard []sd = new standard[2];
+            double[,] sv = new double[2,2];
+            double[,] sdv = new double[2,2];
+
+            se[0].element = "Hg";
+            se[0].label = "Hg";
+            se[0].seek_peak_range = 0.25;
+            se[0].select_wave = 253.65;
+            se[0].sequece_index = 0;
+            se[0].element = "Al";
+            se[0].label = "Al";
+            se[0].seek_peak_range = 0.25;
+            se[0].select_wave = 396.152;
+            se[0].sequece_index = 1;
+
+            sd[0].average_times = 1;
+            sd[0].is_readed = true;
+            sd[0].standard_index = 0;
+            sd[0].standard_label = "空白";
+            sd[0].standard_ppm = new double[2];
+            sd[1].average_times = 1;
+            sd[1].is_readed = true;
+            sd[1].standard_index = 1;
+            sd[1].standard_label = "标样1";
+            sd[1].standard_ppm = new double[2];
+
+            sp[0].sample_index = 0;
+            sp[0].sample_label = "样本1";
+            sp[0].is_read = true;
+            sp[1].sample_index = 1;
+            sp[1].sample_label = "样本2";
+            sp[1].is_read = false;
+
+            sdv[0, 0] = 0; sdv[0, 1] = 0;
+            sdv[1, 0] = 10; sdv[1, 1] = 100;
+            sv[0, 0] = 0.5; sv[0, 1] = 0.5;
+            sv[1, 0] = 0.6; sv[1, 1] = 0.7;
+
+            datagrid_control.draw_datagrid_analysis(dataGridView1, se, sd, sp, sdv, sv);
         }
     }
 }

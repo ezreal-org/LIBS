@@ -87,6 +87,36 @@ namespace LIBS.device_driver
             return wrapper.getSpectrum(device_index);
         }
 
+        //一次获取所有通道波长
+        public double[] get_wave_all()
+        {
+            double[] wave_all = new double[10418];
+            int wave_index = 0;
+            for(int i = 0; i < cnt_of_devices; i++)
+            {
+                double []wave_temp = wrapper.getWavelengths(i);
+                for(int j = 0; j < wave_temp.Length; j++) //以后这里会根据响应的强度对重叠区域进行取舍
+                {
+                    wave_all[wave_index++] = wave_temp[j];
+                }
+            }
+            return wave_all;
+        }
+        //一次获取所有通道数据
+        public double[] get_spec_all()
+        {
+            double []spec_all = new double[10418];
+            int spec_index = 0;
+            for(int i = 0; i < cnt_of_devices; i++)
+            {
+                double[] spec_temp = wrapper.getWavelengths(i);
+                for (int j = 0; j < spec_temp.Length; j++) //以后这里会根据响应的强度对重叠区域进行取舍
+                {
+                    spec_all[spec_index++] = spec_temp[j];
+                }
+            }
+            return spec_all;
+        }
         //高性能读取
 
         //多线程并发读在设备这一层控制？

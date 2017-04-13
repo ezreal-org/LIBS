@@ -39,8 +39,11 @@
             this.缩小ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // chart1
@@ -84,40 +87,40 @@
             this.放大ToolStripMenuItem,
             this.缩小ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(186, 194);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(161, 184);
             // 
             // left_offset
             // 
             this.left_offset.Name = "left_offset";
-            this.left_offset.Size = new System.Drawing.Size(185, 38);
+            this.left_offset.Size = new System.Drawing.Size(160, 36);
             this.left_offset.Text = "左偏移";
             this.left_offset.Click += new System.EventHandler(this.left_offset_Click);
             // 
             // right_offset
             // 
             this.right_offset.Name = "right_offset";
-            this.right_offset.Size = new System.Drawing.Size(185, 38);
+            this.right_offset.Size = new System.Drawing.Size(160, 36);
             this.right_offset.Text = "右偏移";
             this.right_offset.Click += new System.EventHandler(this.right_offset_Click);
             // 
             // 绘图ToolStripMenuItem
             // 
             this.绘图ToolStripMenuItem.Name = "绘图ToolStripMenuItem";
-            this.绘图ToolStripMenuItem.Size = new System.Drawing.Size(185, 38);
+            this.绘图ToolStripMenuItem.Size = new System.Drawing.Size(160, 36);
             this.绘图ToolStripMenuItem.Text = "绘图";
             this.绘图ToolStripMenuItem.Click += new System.EventHandler(this.绘图ToolStripMenuItem_Click);
             // 
             // 放大ToolStripMenuItem
             // 
             this.放大ToolStripMenuItem.Name = "放大ToolStripMenuItem";
-            this.放大ToolStripMenuItem.Size = new System.Drawing.Size(185, 38);
+            this.放大ToolStripMenuItem.Size = new System.Drawing.Size(160, 36);
             this.放大ToolStripMenuItem.Text = "放大";
             this.放大ToolStripMenuItem.Click += new System.EventHandler(this.放大ToolStripMenuItem_Click);
             // 
             // 缩小ToolStripMenuItem
             // 
             this.缩小ToolStripMenuItem.Name = "缩小ToolStripMenuItem";
-            this.缩小ToolStripMenuItem.Size = new System.Drawing.Size(185, 38);
+            this.缩小ToolStripMenuItem.Size = new System.Drawing.Size(160, 36);
             this.缩小ToolStripMenuItem.Text = "缩小";
             this.缩小ToolStripMenuItem.Click += new System.EventHandler(this.缩小ToolStripMenuItem_Click);
             // 
@@ -133,7 +136,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(555, 704);
+            this.button1.Location = new System.Drawing.Point(415, 718);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(178, 35);
             this.button1.TabIndex = 2;
@@ -141,11 +144,32 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(43, 777);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 37;
+            this.dataGridView1.Size = new System.Drawing.Size(1104, 340);
+            this.dataGridView1.TabIndex = 3;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(619, 718);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(178, 35);
+            this.button2.TabIndex = 2;
+            this.button2.Text = "datagridview";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1218, 751);
+            this.ClientSize = new System.Drawing.Size(1226, 1227);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.chart1);
@@ -154,6 +178,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -170,6 +195,8 @@
         private System.Windows.Forms.ToolStripMenuItem 缩小ToolStripMenuItem;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button button2;
     }
 }
 

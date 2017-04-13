@@ -95,5 +95,38 @@ namespace LIBS
 
             return y_show_unit;
         }
+
+        //根据选择的积分区间，计算积分均值
+        public static double get_integration_average(double[] wave_all, double[] spec_all, double[] env_all, double select_integration_start, double select_integration_end)
+        {
+            double ret_average = 0;
+
+            int start_index = 0, end_index = 0;
+            start_index = data_util.get_index_by_wave(wave_all, select_integration_start);
+            end_index = data_util.get_index_by_wave(wave_all, select_integration_end) - 1;
+            for (int i = start_index; i <= end_index; i++)
+            {
+                ret_average += (spec_all[i] - env_all[i]);
+            }
+            ret_average /= (end_index - start_index + 1);
+            return ret_average;
+        }
+
+        public static int find_peak(double[] spec, int start_index, int end_index)
+        {
+            int peak_index = 0;
+            double maximal_val = -1;
+            for(int i=start_index; i<= end_index; i++)
+            {
+                if (spec[i] > maximal_val)
+                {
+                    maximal_val = spec[i];
+                    peak_index = i;
+                }
+            }
+            return peak_index;
+        }
+
+
     }
 }
