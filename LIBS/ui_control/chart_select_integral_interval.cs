@@ -13,7 +13,8 @@ namespace LIBS
         //用于平滑显示的曲线x,y ;插值后的(x,y)用户通过x快速找到插值曲线的y
         public static point[] spline_point;
         //根据最小坐标、最大坐标、封波长、默认积分区间开始、积分区间结束绘图
-        public static void draw_chart(Chart chart1,double x_show_unit, double y_show_unit, double x_minimal, double x_maximal, double y_minimal, double y_maximal, double peak_wave, double interval_start, double interval_end, double []wave_all, double []spec_all, double[] env_all)
+        //标样才会显示积分区间调整线
+        public static void draw_chart(Chart chart1, double x_show_unit, double y_show_unit, double x_minimal, double x_maximal, double y_minimal, double y_maximal, double peak_wave, double interval_start, double interval_end, double[] wave_all, double[] spec_all, double[] env_all, bool is_standard = true)
         {
             while (chart1.Series.Count > 0)
             {
@@ -100,6 +101,8 @@ namespace LIBS
             ser_interval_left.Color = Color.DeepSkyBlue;
             ser_interval_left.BorderWidth = 1;
             chart1.Series.Add(ser_interval_left);
+            if (is_standard) ser_interval_left.Enabled = true;
+            else ser_interval_left.Enabled = false;
 
             //interval_mid--serie3
             Series ser_interval_mid = new Series("interval_mid");
@@ -122,6 +125,8 @@ namespace LIBS
             ser_interval_mid.Color = Color.DeepSkyBlue;
             ser_interval_mid.BorderWidth = 1;
             chart1.Series.Add(ser_interval_mid);
+            if (is_standard) ser_interval_left.Enabled = true;
+            else ser_interval_left.Enabled = false;
 
             //interval_right--serie4
             Series ser_interval_right = new Series("interval_right");
@@ -144,6 +149,8 @@ namespace LIBS
             ser_interval_right.Color = Color.DeepSkyBlue;
             ser_interval_right.BorderWidth = 1;
             chart1.Series.Add(ser_interval_right);
+            if (is_standard) ser_interval_left.Enabled = true;
+            else ser_interval_left.Enabled = false;
 
             //interval_circle--serie5
             Series ser_interval_circle = new Series("interval_circle");

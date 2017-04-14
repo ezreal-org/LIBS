@@ -26,10 +26,20 @@ namespace LIBS
         double interval_end_wave;
         double peak_wave;
         int interval_change_status; // 0-没有改变, 1-改变左区间, 2-改变右区间
+        spec_metadata spec_data; //程序内流动改对象
 
         public Form1()
         {
             InitializeComponent();
+            //chush
+            spec_data = new spec_metadata();
+            spec_data.read_wave_all = new double[10418];  //波长
+            spec_data.read_spec_all_now = new double[10418];
+            spec_data.read_standard_spec = new double[20, 5, 10148]; //最多支持20个标样，5次平均；实际存储是以实际数目为准
+            spec_data.read_sample_spec = new double[20, 5, 10418]; //20个样本的5次平均
+            spec_data.samples = new sample[20];
+            spec_data.standards = new standard[20];
+            spec_data.elements = new select_element[20];
         }
         private void read_testdata()
         {
@@ -234,7 +244,7 @@ namespace LIBS
             }
             strenth = Math.Round(strenth, 3);
             label1.Text = wave + ", " + strenth;
-            Point p_lable = new Point(e.X + 20, e.Y);
+            Point p_lable = new Point(e.X + 20 + chart1.Location.X, e.Y);
             label1.Location = p_lable;
 
         }
@@ -242,14 +252,14 @@ namespace LIBS
         private void chart1_MouseDown(object sender, MouseEventArgs e)
         {
             double pixel_x = chart1.ChartAreas[0].AxisX.ValueToPixelPosition(chart1.Series[(int)e_series.INTERVAL_LEFT].Points[0].XValue);
-            if (e.X - pixel_x < 5 && e.X - pixel_x > -5) //调整左边积分区间
+            if (e.X - pixel_x < 5 && e.X - pixel_x > -5 && chart1.Series[(int)e_series.INTERVAL_LEFT].Enabled) //调整左边积分区间
             {
                 //MessageBox.Show("");
                 interval_change_status = 1;
                 return;
             }
             pixel_x = chart1.ChartAreas[0].AxisX.ValueToPixelPosition(chart1.Series[(int)e_series.INTERVAL_RIGHT].Points[0].XValue);
-            if (e.X - pixel_x < 5 && e.X - pixel_x > -5)
+            if (e.X - pixel_x < 5 && e.X - pixel_x > -5 && chart1.Series[(int)e_series.INTERVAL_RIGHT].Enabled)
             {
                 //MessageBox.Show("");
                 interval_change_status = 2;
@@ -269,7 +279,7 @@ namespace LIBS
                 chart1.Series[(int)e_series.INTERVAL_CIRCLE].Enabled = false;
 
                 //重新根据积分区间计算
-
+                //只负责更新积分区间，调用datagrid_control重新fill表格数据
                     // 计算该点的(wave,积分平均强度)
                     // 重新计算方程 更新视图
                     // 重新绘制方程图
@@ -283,19 +293,18 @@ namespace LIBS
             MessageBox.Show(average.ToString());
         }
 
-        //void test(ref double[] xx)
+        //void test(double[] xx)
         //{
-        //    double[] aa = new double[2];
-        //    aa[0] = 0.1;
-        //    aa[1] = 0.2;
+        //    xx[0] = 0.1;
+        //    xx[1] = 0.2;
 
-        //    xx = aa;
+           
         //}
         private void button2_Click(object sender, EventArgs e)
         {
             //double[] xx = new double[2];
             //xx[0] = 9.9; xx[1] = 8.8;
-            //test(ref xx);
+            //test(xx);
             //MessageBox.Show(xx[0].ToString() + " " + xx[1].ToString());
 
             select_element []se = new select_element[2];

@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.left_offset = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,9 +42,11 @@
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button2 = new System.Windows.Forms.Button();
+            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             this.SuspendLayout();
             // 
             // chart1
@@ -68,9 +71,9 @@
             chartArea1.Position.Y = 3F;
             this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.ContextMenuStrip = this.contextMenuStrip1;
-            this.chart1.Location = new System.Drawing.Point(12, 12);
+            this.chart1.Location = new System.Drawing.Point(894, 12);
             this.chart1.Name = "chart1";
-            this.chart1.Size = new System.Drawing.Size(1200, 700);
+            this.chart1.Size = new System.Drawing.Size(832, 492);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             this.chart1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.chart1_MouseDown);
@@ -87,40 +90,40 @@
             this.放大ToolStripMenuItem,
             this.缩小ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(161, 184);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(186, 194);
             // 
             // left_offset
             // 
             this.left_offset.Name = "left_offset";
-            this.left_offset.Size = new System.Drawing.Size(160, 36);
+            this.left_offset.Size = new System.Drawing.Size(185, 38);
             this.left_offset.Text = "左偏移";
             this.left_offset.Click += new System.EventHandler(this.left_offset_Click);
             // 
             // right_offset
             // 
             this.right_offset.Name = "right_offset";
-            this.right_offset.Size = new System.Drawing.Size(160, 36);
+            this.right_offset.Size = new System.Drawing.Size(185, 38);
             this.right_offset.Text = "右偏移";
             this.right_offset.Click += new System.EventHandler(this.right_offset_Click);
             // 
             // 绘图ToolStripMenuItem
             // 
             this.绘图ToolStripMenuItem.Name = "绘图ToolStripMenuItem";
-            this.绘图ToolStripMenuItem.Size = new System.Drawing.Size(160, 36);
+            this.绘图ToolStripMenuItem.Size = new System.Drawing.Size(185, 38);
             this.绘图ToolStripMenuItem.Text = "绘图";
             this.绘图ToolStripMenuItem.Click += new System.EventHandler(this.绘图ToolStripMenuItem_Click);
             // 
             // 放大ToolStripMenuItem
             // 
             this.放大ToolStripMenuItem.Name = "放大ToolStripMenuItem";
-            this.放大ToolStripMenuItem.Size = new System.Drawing.Size(160, 36);
+            this.放大ToolStripMenuItem.Size = new System.Drawing.Size(185, 38);
             this.放大ToolStripMenuItem.Text = "放大";
             this.放大ToolStripMenuItem.Click += new System.EventHandler(this.放大ToolStripMenuItem_Click);
             // 
             // 缩小ToolStripMenuItem
             // 
             this.缩小ToolStripMenuItem.Name = "缩小ToolStripMenuItem";
-            this.缩小ToolStripMenuItem.Size = new System.Drawing.Size(160, 36);
+            this.缩小ToolStripMenuItem.Size = new System.Drawing.Size(185, 38);
             this.缩小ToolStripMenuItem.Text = "缩小";
             this.缩小ToolStripMenuItem.Click += new System.EventHandler(this.缩小ToolStripMenuItem_Click);
             // 
@@ -128,7 +131,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label1.Location = new System.Drawing.Point(1065, 670);
+            this.label1.Location = new System.Drawing.Point(407, 686);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(82, 24);
             this.label1.TabIndex = 1;
@@ -136,7 +139,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(415, 718);
+            this.button1.Location = new System.Drawing.Point(133, 884);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(178, 35);
             this.button1.TabIndex = 2;
@@ -147,15 +150,15 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(43, 777);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 12);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 37;
-            this.dataGridView1.Size = new System.Drawing.Size(1104, 340);
+            this.dataGridView1.Size = new System.Drawing.Size(833, 492);
             this.dataGridView1.TabIndex = 3;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(619, 718);
+            this.button2.Location = new System.Drawing.Point(381, 884);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(178, 35);
             this.button2.TabIndex = 2;
@@ -163,11 +166,40 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // chart2
+            // 
+            chartArea2.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea2.AxisX.MinorTickMark.Enabled = true;
+            chartArea2.AxisX.MinorTickMark.LineColor = System.Drawing.Color.Gray;
+            chartArea2.AxisX.MinorTickMark.Size = 0.5F;
+            chartArea2.AxisX2.MajorGrid.Enabled = false;
+            chartArea2.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea2.AxisY.MinorTickMark.Enabled = true;
+            chartArea2.AxisY.MinorTickMark.LineColor = System.Drawing.Color.Gray;
+            chartArea2.AxisY.MinorTickMark.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea2.AxisY.MinorTickMark.Size = 0.5F;
+            chartArea2.AxisY.MinorTickMark.TickMarkStyle = System.Windows.Forms.DataVisualization.Charting.TickMarkStyle.AcrossAxis;
+            chartArea2.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+            chartArea2.Name = "ChartArea1";
+            chartArea2.Position.Auto = false;
+            chartArea2.Position.Height = 94F;
+            chartArea2.Position.Width = 94F;
+            chartArea2.Position.X = 3F;
+            chartArea2.Position.Y = 3F;
+            this.chart2.ChartAreas.Add(chartArea2);
+            this.chart2.ContextMenuStrip = this.contextMenuStrip1;
+            this.chart2.Location = new System.Drawing.Point(894, 510);
+            this.chart2.Name = "chart2";
+            this.chart2.Size = new System.Drawing.Size(832, 492);
+            this.chart2.TabIndex = 4;
+            this.chart2.Text = "chart2";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1226, 1227);
+            this.ClientSize = new System.Drawing.Size(1738, 1227);
+            this.Controls.Add(this.chart2);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -179,6 +211,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -197,6 +230,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
     }
 }
 

@@ -52,7 +52,6 @@ namespace LIBS
         public static LfReValue linearFitFunc(double[] a, double[] b, int n)
         {
             LfReValue temp = new LfReValue();
-
             double a_sum = 0, b_sum = 0;
             double a_avg, b_avg;
             double p1 = 0, p2 = 0, p3 = 0, p4 = 0;
