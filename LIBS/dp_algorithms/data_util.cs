@@ -118,7 +118,7 @@ namespace LIBS
             double maximal_val = -1;
             for(int i=start_index; i<= end_index; i++)
             {
-                if (spec[i] > maximal_val)
+                if (spec[i] >= maximal_val)
                 {
                     maximal_val = spec[i];
                     peak_index = i;
