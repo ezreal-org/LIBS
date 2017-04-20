@@ -129,6 +129,7 @@ namespace LIBS.ui_control
             //标样平均的积分平均强度
             for (int i = 0; i < standard_cnt; i++) //每个标样
             {
+                if (!standards[i].is_readed) continue;
                 for (int t = 0; t < standards[i].average_times; t++)
                 {
                     double[] spec_temp_all = new double[pixel_cnt];
@@ -149,6 +150,7 @@ namespace LIBS.ui_control
             //样本的平均积分平均强度
             for (int i = 0; i < sample_cnt; i++) //每个标样
             {
+                if (!samples[i].is_read) continue;
                 for (int t = 0; t < samples[i].average_times; t++)
                 {
                     double[] spec_temp_all = new double[pixel_cnt];
@@ -217,6 +219,24 @@ namespace LIBS.ui_control
                     }
                 }
             }
+        }
+
+        public static void draw_datagrid_snapshot(DataGridView dgv, double []concentration, double[] strenth)
+        {
+            DataTable dt9 = new DataTable();
+            dt9.Columns.Add("重复项", typeof(string));
+            dt9.Columns.Add("浓度", typeof(string));
+            dt9.Columns.Add("强度", typeof(string));
+            int this_average_times = concentration.Length;
+            for (int i=0; i< this_average_times; i++)
+            {
+                DataRow dr9 = dt9.NewRow();
+                dr9[0] = (i + 1).ToString();
+                dr9[1] = Math.Round(concentration[i], 3);
+                dr9[2] = Math.Round(strenth[i], 3);
+                dt9.Rows.Add(dr9);
+            }
+            dgv.DataSource = dt9;
         }
     }
 }

@@ -286,11 +286,40 @@ namespace LIBS
                 datagrid_control.draw_datagrid_analysis(dataGridView1, spec_data);
                 dataGridView1.ClearSelection();
                 dataGridView1.Rows[origin_select_row].Cells[origin_select_column].Selected = true;
+
                 //重新根据积分区间计算
                 //只负责更新积分区间，调用datagrid_control重新fill表格数据
                 // 计算该点的(wave,积分平均强度)
                 // 重新计算方程 更新视图
                 // 重新绘制方程图
+                double[] element_concentrations = null;
+                double[] element_average_strenths = null;
+                int click_column = dataGridView1.SelectedCells[0].ColumnIndex;
+                int click_row = dataGridView1.SelectedCells[0].RowIndex;
+                LinearFit.LfReValue equation = analysis_proc.get_equation(spec_data, click_column - 3, ref element_concentrations, ref element_average_strenths);
+
+                double []this_read_integration_strenths = analysis_proc.get_oneshot_all_strength(spec_data, click_row, click_column - 3);
+                int this_read_average_times = this_read_integration_strenths.Length;
+                double[] this_read_integration_concentrations = new double[this_read_average_times];
+                double this_read_strenth_average = 0, this_read_concentration_average = 0;
+                for (int i = 0; i < this_read_average_times; i++)
+                {
+                    this_read_integration_concentrations[i] = (this_read_integration_strenths[i] - equation.getA()) / equation.getB();
+                }
+                for (int i = 0; i < this_read_average_times; i++)
+                {
+                    this_read_strenth_average += this_read_integration_strenths[i];
+                }
+                this_read_strenth_average /= this_read_average_times;
+                this_read_concentration_average = (this_read_strenth_average - equation.getA()) / equation.getB();
+
+                equation_chart.draw_equation(chart2, label2, element_concentrations, element_average_strenths, equation.getA(), equation.getB(), equation.getR());
+                if (click_row < spec_data.standard_cnt)
+                    equation_chart.add_point_now(chart2, element_concentrations[click_row], element_average_strenths[click_row], Color.Red, MarkerStyle.Circle);
+                else
+                    equation_chart.add_point_now(chart2, this_read_concentration_average, this_read_strenth_average, Color.Green, MarkerStyle.Triangle);
+                datagrid_control.draw_datagrid_snapshot(dataGridView9, this_read_integration_concentrations, this_read_integration_strenths);
+                summary_info.draw_summary_info(label_info, this_read_concentration_average, this_read_strenth_average);
             }
         }
 
@@ -327,7 +356,7 @@ namespace LIBS
             se[1].element = "Al";
             se[1].label = "Al";
             se[1].seek_peak_range = 0.25;
-            se[1].select_wave = 396.152;
+            se[1].select_wave = 396.16;
             se[1].sequece_index = 1;
             spec_data.elements[0] = se[0];
             spec_data.elements[1] = se[1];
@@ -338,7 +367,7 @@ namespace LIBS
             sd[0].standard_index = 0;
             sd[0].standard_label = "空白";
             sd[0].standard_ppm = new double[2];
-            sd[1].average_times = 1;
+            sd[1].average_times = 2;
             sd[1].is_readed = true;
             sd[1].standard_index = 1;
             sd[1].standard_label = "标样1";
@@ -362,9 +391,11 @@ namespace LIBS
             spec_data.sample_cnt = 2;
 
             //初始标样1
+            Random rr = new Random();
             for (int i = 0; i < 10418; i++)
             {
                 spec_data.read_standard_spec[1, 0, i] = spec_data.read_spec_all_now[i];
+                spec_data.read_standard_spec[1, 1, i] = spec_data.read_spec_all_now[i] + 500*rr.NextDouble();
             }
             //设置已经读取，设置标样对象;通过标样确定样本读取峰，初始积分区间
             for (int j = 0; j < spec_data.element_cnt; j++)
@@ -384,12 +415,12 @@ namespace LIBS
             }
 
             datagrid_control.draw_datagrid_analysis(dataGridView1, spec_data);
+
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            MessageBox.Show(e.RowIndex + " " + e.ColumnIndex);
-            analysis_cell_click.process_cell_click(chart1, dataGridView1, e.RowIndex, e.ColumnIndex, spec_data);
+            analysis_proc.process_cell_click(chart1,chart2, label2,label_info, dataGridView1, dataGridView9, e.RowIndex, e.ColumnIndex, spec_data);
         }
     }
 }

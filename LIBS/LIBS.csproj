@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="device_driver\spec_wrapper.cs" />
-    <Compile Include="service_fun\analysis_cell_click.cs" />
+    <Compile Include="service_fun\analysis_proc.cs" />
     <Compile Include="service_fun\calculate_integration_average.cs" />
     <Compile Include="storage\file_reader.cs" />
     <Compile Include="storage\spec_data.cs" />
@@ -69,6 +69,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="dp_algorithms\spline.cs" />
     <Compile Include="ui_control\datagrid_control.cs" />
+    <Compile Include="ui_control\equation_chart.cs" />
+    <Compile Include="ui_control\summary_info.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

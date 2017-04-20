@@ -3,6 +3,7 @@ using LIBS.storage;
 using LIBS.ui_control;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -10,9 +11,9 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace LIBS.service_fun
 {
-    class analysis_cell_click
+    class analysis_proc
     {
-        public static void process_cell_click(Chart chart1, DataGridView dgv, int click_row, int click_column, spec_metadata spec_obj)
+        public static void process_cell_click(Chart chart1,Chart chart2,Label label2,Label label_info, DataGridView dgv, DataGridView dataGridView9, int click_row, int click_column, spec_metadata spec_obj)
         {
             select_element[] elements = spec_obj.elements;
             standard[] standards = spec_obj.standards;
@@ -62,17 +63,35 @@ namespace LIBS.service_fun
             }
 
             //记录样本的多次读取数据
-            double[] this_read_integration_average_strenth =null;
-            double[] this_read_integration_average_concentration = null;
+            double[] this_read_integration_strenths = null;
             int this_read_average_times = 0;
+            //用于计算方程的浓度和强度
+            double []element_concentrations = null;
+            double []element_average_strenths = null;
+            LinearFit.LfReValue equation = get_equation(spec_obj, click_column-3, ref element_concentrations, ref element_average_strenths);
 
-            LinearFit.LfReValue equation = get_equation(spec_obj, click_column-3);
-
-            this_read_integration_average_strenth = get_oneshot_all_strength(spec_obj, click_row, click_column - 3);
+            this_read_integration_strenths = get_oneshot_all_strength(spec_obj, click_row, click_column - 3);
+            this_read_average_times = this_read_integration_strenths.Length;
+            double[] this_read_integration_concentrations = new double[this_read_average_times];
+            double this_read_strenth_average=0, this_read_concentration_average = 0;
             for (int i = 0; i < this_read_average_times; i++)
             {
-                this_read_integration_average_concentration[i] = (this_read_integration_average_strenth[i] - equation.getA()) / equation.getB();
+                this_read_integration_concentrations[i] = (this_read_integration_strenths[i] - equation.getA()) / equation.getB();
             }
+            for(int i = 0; i < this_read_average_times; i++)
+            {
+                this_read_strenth_average += this_read_integration_strenths[i];
+            }
+            this_read_strenth_average /= this_read_average_times;
+            this_read_concentration_average = (this_read_strenth_average - equation.getA()) / equation.getB();
+
+            equation_chart.draw_equation(chart2 ,label2, element_concentrations, element_average_strenths, equation.getA(), equation.getB(), equation.getR());
+            if (click_row < standard_cnt)
+                equation_chart.add_point_now(chart2, element_concentrations[click_row], element_average_strenths[click_row], Color.Red, MarkerStyle.Circle);
+            else
+                equation_chart.add_point_now(chart2, this_read_concentration_average, this_read_strenth_average, Color.Green, MarkerStyle.Triangle);
+            datagrid_control.draw_datagrid_snapshot(dataGridView9, this_read_integration_concentrations, this_read_integration_strenths);
+            summary_info.draw_summary_info(label_info, this_read_concentration_average, this_read_strenth_average);
         }
 
         public static void read_spec_click(spec_wrapper wrapper, DataGridView dgv, int row_index, spec_metadata spec_obj)
@@ -143,7 +162,8 @@ namespace LIBS.service_fun
         }
 
         //获取某元素波长的方程，前置约束为调用者已经完成所有所有标样的读取
-        private static LinearFit.LfReValue get_equation(spec_metadata spec_obj, int element_index)
+        //函数返回方程的同时，将返回方程进行计算时用到的标样点
+        public static LinearFit.LfReValue get_equation(spec_metadata spec_obj, int element_index, ref double[] concentration, ref double[] standards_integration_average_strenth)
         {
             double[] wave_all = spec_obj.read_wave_all;
             double[] env = spec_obj.env_spec;
@@ -153,7 +173,7 @@ namespace LIBS.service_fun
             double[,,] spec_standard = spec_obj.read_standard_spec;
 
             //提取该元素列标样数据，得到方程
-            double[] standards_integration_average_strenth = new double[standard_cnt];
+            standards_integration_average_strenth = new double[standard_cnt];
             //标样平均的积分平均强度
             for (int i = 0; i < standard_cnt; i++) //每个标样
             {
@@ -166,7 +186,7 @@ namespace LIBS.service_fun
                 }
                 standards_integration_average_strenth[i] = standard_element_interval_average / standards[i].average_times;
             }
-            double[] concentration = new double[standard_cnt]; //浓度
+            concentration = new double[standard_cnt]; //浓度
             for (int j = 0; j < standard_cnt; j++)
             {
                 concentration[j] = standards[j].standard_ppm[element.sequece_index];
@@ -177,7 +197,7 @@ namespace LIBS.service_fun
         }
 
         //获取该cell对应的多次平均强度，index为标样或样本序号
-        private static double[] get_oneshot_all_strength(spec_metadata spec_obj, int rowindex, int element_index)
+        public static double[] get_oneshot_all_strength(spec_metadata spec_obj, int rowindex, int element_index)
         {
             int this_read_average_times = 1;
             int standard_cnt = spec_obj.standard_cnt;
@@ -195,11 +215,13 @@ namespace LIBS.service_fun
             {
                 this_read_average_times = standards[rowindex].average_times;
                 src_spec = spec_obj.read_standard_spec;
+                index = rowindex;
             }
             else
             {
                 this_read_average_times = samples[rowindex - standard_cnt].average_times;
                 src_spec = spec_obj.read_sample_spec;
+                index = rowindex - standard_cnt;
              }
             double[] strenght_oneshot = new double[this_read_average_times];
             double[] spec_temp_all = new double[pixel_cnt]; 

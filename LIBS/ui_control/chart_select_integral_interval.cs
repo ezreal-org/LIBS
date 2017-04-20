@@ -125,8 +125,8 @@ namespace LIBS
             ser_interval_mid.Color = Color.DeepSkyBlue;
             ser_interval_mid.BorderWidth = 1;
             chart1.Series.Add(ser_interval_mid);
-            if (is_standard) ser_interval_left.Enabled = true;
-            else ser_interval_left.Enabled = false;
+            if (is_standard) ser_interval_mid.Enabled = true;
+            else ser_interval_mid.Enabled = false;
 
             //interval_right--serie4
             Series ser_interval_right = new Series("interval_right");
@@ -149,8 +149,8 @@ namespace LIBS
             ser_interval_right.Color = Color.DeepSkyBlue;
             ser_interval_right.BorderWidth = 1;
             chart1.Series.Add(ser_interval_right);
-            if (is_standard) ser_interval_left.Enabled = true;
-            else ser_interval_left.Enabled = false;
+            if (is_standard) ser_interval_right.Enabled = true;
+            else ser_interval_right.Enabled = false;
 
             //interval_circle--serie5
             Series ser_interval_circle = new Series("interval_circle");
