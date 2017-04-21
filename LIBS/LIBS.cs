@@ -424,5 +424,11 @@ namespace LIBS
             //}
             //draw_DisturbdataGridView3(d);
         }
+
+        private void toolStripButton6_Click(object sender, EventArgs e)
+        {
+            //file_operator.save_spec_metadat(@"h:\specdate.dat",spec_data);
+        }
+
     }
 }

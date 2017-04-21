@@ -77,9 +77,10 @@
             chartArea1.Position.Y = 3F;
             this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.ContextMenuStrip = this.contextMenuStrip1;
-            this.chart1.Location = new System.Drawing.Point(1148, 12);
+            this.chart1.Location = new System.Drawing.Point(765, 8);
+            this.chart1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chart1.Name = "chart1";
-            this.chart1.Size = new System.Drawing.Size(856, 594);
+            this.chart1.Size = new System.Drawing.Size(571, 371);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             this.chart1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.chart1_MouseDown);
@@ -96,40 +97,40 @@
             this.放大ToolStripMenuItem,
             this.缩小ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(186, 194);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(124, 124);
             // 
             // left_offset
             // 
             this.left_offset.Name = "left_offset";
-            this.left_offset.Size = new System.Drawing.Size(185, 38);
+            this.left_offset.Size = new System.Drawing.Size(123, 24);
             this.left_offset.Text = "左偏移";
             this.left_offset.Click += new System.EventHandler(this.left_offset_Click);
             // 
             // right_offset
             // 
             this.right_offset.Name = "right_offset";
-            this.right_offset.Size = new System.Drawing.Size(185, 38);
+            this.right_offset.Size = new System.Drawing.Size(123, 24);
             this.right_offset.Text = "右偏移";
             this.right_offset.Click += new System.EventHandler(this.right_offset_Click);
             // 
             // 绘图ToolStripMenuItem
             // 
             this.绘图ToolStripMenuItem.Name = "绘图ToolStripMenuItem";
-            this.绘图ToolStripMenuItem.Size = new System.Drawing.Size(185, 38);
+            this.绘图ToolStripMenuItem.Size = new System.Drawing.Size(123, 24);
             this.绘图ToolStripMenuItem.Text = "绘图";
             this.绘图ToolStripMenuItem.Click += new System.EventHandler(this.绘图ToolStripMenuItem_Click);
             // 
             // 放大ToolStripMenuItem
             // 
             this.放大ToolStripMenuItem.Name = "放大ToolStripMenuItem";
-            this.放大ToolStripMenuItem.Size = new System.Drawing.Size(185, 38);
+            this.放大ToolStripMenuItem.Size = new System.Drawing.Size(123, 24);
             this.放大ToolStripMenuItem.Text = "放大";
             this.放大ToolStripMenuItem.Click += new System.EventHandler(this.放大ToolStripMenuItem_Click);
             // 
             // 缩小ToolStripMenuItem
             // 
             this.缩小ToolStripMenuItem.Name = "缩小ToolStripMenuItem";
-            this.缩小ToolStripMenuItem.Size = new System.Drawing.Size(185, 38);
+            this.缩小ToolStripMenuItem.Size = new System.Drawing.Size(123, 24);
             this.缩小ToolStripMenuItem.Text = "缩小";
             this.缩小ToolStripMenuItem.Click += new System.EventHandler(this.缩小ToolStripMenuItem_Click);
             // 
@@ -137,17 +138,19 @@
             // 
             this.label1.AutoSize = true;
             this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label1.Location = new System.Drawing.Point(449, 1179);
+            this.label1.Location = new System.Drawing.Point(299, 737);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 24);
+            this.label1.Size = new System.Drawing.Size(55, 15);
             this.label1.TabIndex = 1;
             this.label1.Text = "label1";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(235, 1168);
+            this.button1.Location = new System.Drawing.Point(157, 730);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(178, 35);
+            this.button1.Size = new System.Drawing.Size(119, 22);
             this.button1.TabIndex = 2;
             this.button1.Text = "计算积分平均";
             this.button1.UseVisualStyleBackColor = true;
@@ -155,9 +158,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(33, 1168);
+            this.button2.Location = new System.Drawing.Point(22, 730);
+            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(178, 35);
+            this.button2.Size = new System.Drawing.Size(119, 22);
             this.button2.TabIndex = 2;
             this.button2.Text = "datagridview";
             this.button2.UseVisualStyleBackColor = true;
@@ -166,10 +170,11 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 12);
+            this.dataGridView1.Location = new System.Drawing.Point(8, 8);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 37;
-            this.dataGridView1.Size = new System.Drawing.Size(1109, 594);
+            this.dataGridView1.Size = new System.Drawing.Size(739, 371);
             this.dataGridView1.TabIndex = 3;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
@@ -178,11 +183,11 @@
             this.dataGridView9.AllowUserToAddRows = false;
             this.dataGridView9.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.dataGridView9.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView9.Location = new System.Drawing.Point(453, 640);
-            this.dataGridView9.Margin = new System.Windows.Forms.Padding(6);
+            this.dataGridView9.Location = new System.Drawing.Point(302, 400);
+            this.dataGridView9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridView9.Name = "dataGridView9";
             this.dataGridView9.RowTemplate.Height = 23;
-            this.dataGridView9.Size = new System.Drawing.Size(668, 476);
+            this.dataGridView9.Size = new System.Drawing.Size(445, 298);
             this.dataGridView9.TabIndex = 11;
             // 
             // chart2
@@ -207,9 +212,10 @@
             chartArea2.Position.Y = 3F;
             this.chart2.ChartAreas.Add(chartArea2);
             this.chart2.ContextMenuStrip = this.contextMenuStrip1;
-            this.chart2.Location = new System.Drawing.Point(1170, 648);
+            this.chart2.Location = new System.Drawing.Point(780, 405);
+            this.chart2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chart2.Name = "chart2";
-            this.chart2.Size = new System.Drawing.Size(834, 468);
+            this.chart2.Size = new System.Drawing.Size(556, 292);
             this.chart2.TabIndex = 13;
             this.chart2.Text = "chart2";
             // 
@@ -217,17 +223,20 @@
             // 
             this.label2.AutoSize = true;
             this.label2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label2.Location = new System.Drawing.Point(1166, 1151);
+            this.label2.Location = new System.Drawing.Point(777, 719);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(0, 24);
+            this.label2.Size = new System.Drawing.Size(0, 15);
             this.label2.TabIndex = 1;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label_info);
-            this.groupBox1.Location = new System.Drawing.Point(33, 663);
+            this.groupBox1.Location = new System.Drawing.Point(22, 414);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(410, 420);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Size = new System.Drawing.Size(273, 262);
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "详细信息";
@@ -235,16 +244,17 @@
             // label_info
             // 
             this.label_info.AutoSize = true;
-            this.label_info.Location = new System.Drawing.Point(6, 49);
+            this.label_info.Location = new System.Drawing.Point(4, 31);
+            this.label_info.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label_info.Name = "label_info";
-            this.label_info.Size = new System.Drawing.Size(0, 24);
+            this.label_info.Size = new System.Drawing.Size(0, 15);
             this.label_info.TabIndex = 0;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2028, 1227);
+            this.ClientSize = new System.Drawing.Size(1276, 654);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.chart2);
             this.Controls.Add(this.dataGridView9);
@@ -254,6 +264,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.chart1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
