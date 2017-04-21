@@ -239,6 +239,79 @@ namespace LIBS.ui_control
             dgv.DataSource = dt9;
         }
 
+        public static void draw_disturb_wave(DataGridView dgv, NIST nist, double str)
+        {
+            int l = 0;
+            int k = 0;
+            string[] nameNIST2 = new string[20];      //把保存干扰元素名字
+            double[] waveNIST2 = new double[20];     //保存干扰元素的波长
+            int[] typeNIST2 = new int[20];             //保存干扰光谱的类型
+            int[] countNIST2 = new int[20];          //保存干扰的强度计数
+
+            for (k = 0; k < 2359; k++)
+            {
+                if (nist.waveNIST[k] > (str - 1) && nist.waveNIST[k] < (str + 1))
+                {
+                    nameNIST2[l] = nist.nameNIST[k];
+                    waveNIST2[l] = nist.waveNIST[k];
+                    typeNIST2[l] = nist.typeNIST[k];
+                    countNIST2[l] = nist.countNIST[k];
+                    l++;
+                }
+            }
+            string nam = "..";
+            double wav = 0;
+            int typ = 0;
+            int coun = 0;
+            for (int m = 0; m < waveNIST2.Length - 1; m++)
+            {
+                for (int n = 0; n < waveNIST2.Length - 1 - m; n++)
+                {
+                    if (waveNIST2[n] < waveNIST2[n + 1])
+                    {
+                        wav = waveNIST2[n];
+                        waveNIST2[n] = waveNIST2[n + 1];
+                        waveNIST2[n + 1] = wav;
+
+                        nam = nameNIST2[n];
+                        nameNIST2[n] = nameNIST2[n + 1];
+                        nameNIST2[n + 1] = nam;
+
+                        typ = typeNIST2[n];
+                        typeNIST2[n] = typeNIST2[n + 1];
+                        typeNIST2[n + 1] = typ;
+
+                        coun = countNIST2[n];
+                        countNIST2[n] = countNIST2[n + 1];
+                        countNIST2[n + 1] = coun;
+
+                    }
+
+                }
+            }
+
+            DataTable dt3 = new DataTable();
+            dt3.Columns.Add("序号", typeof(string));
+            dt3.Columns.Add("符号", typeof(string));
+            dt3.Columns.Add("波长", typeof(string));
+            dt3.Columns.Add("光谱类型", typeof(string));
+            dt3.Columns.Add("强度", typeof(string));
+
+            for (l = 0; l < waveNIST2.Length; l++)
+            {
+                if (nameNIST2[l] != null)
+                {
+                    DataRow dr = dt3.NewRow();
+                    dr[0] = l + 1;
+                    dr[1] = nameNIST2[l];
+                    dr[2] = waveNIST2[l];
+                    dr[3] = typeNIST2[l];
+                    dr[4] = countNIST2[l];
+                    dt3.Rows.Add(dr);
+                }
+            }
+            dgv.DataSource = dt3;
+        }
         public static void draw_datagrid_element_nist(DataGridView dgv, NIST nist, string element)
         {
             DataTable dt = new DataTable();
