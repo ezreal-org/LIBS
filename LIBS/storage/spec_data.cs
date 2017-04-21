@@ -10,6 +10,7 @@ namespace LIBS.storage
     //   积分时间、平均次数、平滑宽度、暗电流矫正
     /*****************************/
     //选择元素序列(选择顺序)
+    [Serializable]
     public class select_element
     {
         public int sequece_index;
@@ -22,6 +23,7 @@ namespace LIBS.storage
         public double interval_end;   
     }
     //标样序列
+    [Serializable]
     public class standard
     {
         public int standard_index; // 0号位置留给空白标样
@@ -31,6 +33,7 @@ namespace LIBS.storage
         public bool is_readed;
     }
     //样本序列
+    [Serializable]
     public class sample
     {
         public int sample_index;
@@ -50,7 +53,8 @@ namespace LIBS.storage
     //read_standard_spec[x][ave_times][10418] => average_standard_spec
     //read_sample_spec[x][ave_times[10418] => average_sample_spec
 
-        //程序中流动的数据对象，
+    //程序中流动的数据对象，
+    [Serializable]
     public class spec_metadata
     {
         public select_element[] elements; //简单的预定义大小以分配空间

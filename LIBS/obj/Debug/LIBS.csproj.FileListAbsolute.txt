@@ -1,0 +1,10 @@
+H:\workspace\git\LIBS\LIBS\bin\Debug\LIBS.exe.config
+H:\workspace\git\LIBS\LIBS\bin\Debug\LIBS.exe
+H:\workspace\git\LIBS\LIBS\bin\Debug\LIBS.pdb
+H:\workspace\git\LIBS\LIBS\obj\Debug\LIBS.csprojResolveAssemblyReference.cache
+H:\workspace\git\LIBS\LIBS\obj\Debug\LIBS.Form1.resources
+H:\workspace\git\LIBS\LIBS\obj\Debug\LIBS.LIBS.resources
+H:\workspace\git\LIBS\LIBS\obj\Debug\LIBS.Properties.Resources.resources
+H:\workspace\git\LIBS\LIBS\obj\Debug\LIBS.csproj.GenerateResource.Cache
+H:\workspace\git\LIBS\LIBS\obj\Debug\LIBS.exe
+H:\workspace\git\LIBS\LIBS\obj\Debug\LIBS.pdb
