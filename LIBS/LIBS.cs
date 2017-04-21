@@ -431,6 +431,7 @@ namespace LIBS
             datagrid_control.draw_disturb_wave(dataGridView3, nist, select_wave);
         }
 
+<<<<<<< HEAD
         private void label4_Click(object sender, EventArgs e)
         {
             //用了布局，不好直接添加button
@@ -446,5 +447,12 @@ namespace LIBS
             //重绘已选元素表
             datagrid_control.draw_datagrid_select_element(dataGridView1, spec_data.elements, spec_data.element_cnt);
         }
+=======
+        private void toolStripButton6_Click(object sender, EventArgs e)
+        {
+            //file_operator.save_spec_metadat(@"h:\specdate.dat",spec_data);
+        }
+
+>>>>>>> a81bf62cac3502d08b2a8dfd83fa16f2256757c5
     }
 }
