@@ -11,7 +11,7 @@ namespace LIBS.ui_control
 {
     class datagrid_control
     {
-        public static bool show_strenth = true; //默认显示浓度
+        public static bool show_strenth = false; //默认显示浓度
         public static bool is_datagrid_analysis_exist = false; //根据这个标识判断是否需要new新表格还是重用旧表格
 
         //这部分只负责根据数据绘图,standard_val/sample_val为强度或者浓度

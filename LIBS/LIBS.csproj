@@ -52,6 +52,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="device_driver\spec_wrapper.cs" />
+    <Compile Include="LIBS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LIBS.Designer.cs">
+      <DependentUpon>LIBS.cs</DependentUpon>
+    </Compile>
     <Compile Include="service_fun\analysis_proc.cs" />
     <Compile Include="service_fun\calculate_integration_average.cs" />
     <Compile Include="storage\file_reader.cs" />
@@ -73,6 +79,9 @@
     <Compile Include="ui_control\summary_info.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LIBS.resx">
+      <DependentUpon>LIBS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

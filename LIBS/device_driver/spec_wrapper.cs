@@ -11,7 +11,7 @@ namespace LIBS.device_driver
         private static OmniDriver.CCoWrapper wrapper;
         public int cnt_of_devices;
         
-        spec_wrapper()
+        public spec_wrapper()
         {
             cnt_of_devices = 0;
             wrapper = new OmniDriver.CCoWrapper();

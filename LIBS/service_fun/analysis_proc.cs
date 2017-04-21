@@ -13,7 +13,7 @@ namespace LIBS.service_fun
 {
     class analysis_proc
     {
-        public static void process_cell_click(Chart chart1,Chart chart2,Label label2,Label label_info, DataGridView dgv, DataGridView dataGridView9, int click_row, int click_column, spec_metadata spec_obj)
+        public static void process_cell_click(Chart chart1,Chart chart2,Label label2,Label label_info, DataGridView dataGridView9, int click_row, int click_column, spec_metadata spec_obj)
         {
             select_element[] elements = spec_obj.elements;
             standard[] standards = spec_obj.standards;

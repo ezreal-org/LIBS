@@ -96,40 +96,40 @@
             this.放大ToolStripMenuItem,
             this.缩小ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(161, 184);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(186, 194);
             // 
             // left_offset
             // 
             this.left_offset.Name = "left_offset";
-            this.left_offset.Size = new System.Drawing.Size(160, 36);
+            this.left_offset.Size = new System.Drawing.Size(185, 38);
             this.left_offset.Text = "左偏移";
             this.left_offset.Click += new System.EventHandler(this.left_offset_Click);
             // 
             // right_offset
             // 
             this.right_offset.Name = "right_offset";
-            this.right_offset.Size = new System.Drawing.Size(160, 36);
+            this.right_offset.Size = new System.Drawing.Size(185, 38);
             this.right_offset.Text = "右偏移";
             this.right_offset.Click += new System.EventHandler(this.right_offset_Click);
             // 
             // 绘图ToolStripMenuItem
             // 
             this.绘图ToolStripMenuItem.Name = "绘图ToolStripMenuItem";
-            this.绘图ToolStripMenuItem.Size = new System.Drawing.Size(160, 36);
+            this.绘图ToolStripMenuItem.Size = new System.Drawing.Size(185, 38);
             this.绘图ToolStripMenuItem.Text = "绘图";
             this.绘图ToolStripMenuItem.Click += new System.EventHandler(this.绘图ToolStripMenuItem_Click);
             // 
             // 放大ToolStripMenuItem
             // 
             this.放大ToolStripMenuItem.Name = "放大ToolStripMenuItem";
-            this.放大ToolStripMenuItem.Size = new System.Drawing.Size(160, 36);
+            this.放大ToolStripMenuItem.Size = new System.Drawing.Size(185, 38);
             this.放大ToolStripMenuItem.Text = "放大";
             this.放大ToolStripMenuItem.Click += new System.EventHandler(this.放大ToolStripMenuItem_Click);
             // 
             // 缩小ToolStripMenuItem
             // 
             this.缩小ToolStripMenuItem.Name = "缩小ToolStripMenuItem";
-            this.缩小ToolStripMenuItem.Size = new System.Drawing.Size(160, 36);
+            this.缩小ToolStripMenuItem.Size = new System.Drawing.Size(185, 38);
             this.缩小ToolStripMenuItem.Text = "缩小";
             this.缩小ToolStripMenuItem.Click += new System.EventHandler(this.缩小ToolStripMenuItem_Click);
             // 
@@ -225,7 +225,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label_info);
-            this.groupBox1.Location = new System.Drawing.Point(12, 648);
+            this.groupBox1.Location = new System.Drawing.Point(33, 663);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(410, 420);
             this.groupBox1.TabIndex = 14;
