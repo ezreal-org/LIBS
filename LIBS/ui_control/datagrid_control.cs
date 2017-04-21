@@ -336,5 +336,24 @@ namespace LIBS.ui_control
             }
             dgv.DataSource = dt;
         }
+
+        public static void draw_datagrid_select_element(DataGridView dgv, select_element[] elements, int element_length)
+        {
+            DataTable dt1 = new DataTable();
+            dt1.Columns.Add("序号", typeof(string));
+            dt1.Columns.Add("元素", typeof(string));
+            dt1.Columns.Add("标签", typeof(string));
+            dt1.Columns.Add("波长", typeof(string));
+            for (int i=0 ; i < element_length; i++)
+            {
+                DataRow dr1 = dt1.NewRow();
+                dr1[0] = elements[i].sequece_index;
+                dr1[1] = elements[i].element;
+                dr1[2] = elements[i].label;
+                dr1[3] = elements[i].select_wave;
+                dt1.Rows.Add(dr1);
+            }
+            dgv.DataSource = dt1;
+        }
     }
 }

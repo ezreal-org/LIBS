@@ -36,6 +36,13 @@ namespace LIBS
             spec_data.samples = new sample[20];
             spec_data.standards = new standard[20];
             spec_data.elements = new select_element[20];
+            for (int i = 0; i < 20; i++)
+            {
+                spec_data.samples[i] = new sample();
+                spec_data.standards[i] = new standard();
+                spec_data.standards[i].standard_ppm = new double[20];
+                spec_data.elements[i] = new select_element();
+            }
             //初始化nist对象
             nist = new NIST();
             nist.read_NIST();
@@ -84,12 +91,12 @@ namespace LIBS
             sd[0].is_readed = true;
             sd[0].standard_index = 0;
             sd[0].standard_label = "空白";
-            sd[0].standard_ppm = new double[2];
+            sd[0].standard_ppm = new double[20];
             sd[1].average_times = 2;
             sd[1].is_readed = true;
             sd[1].standard_index = 1;
             sd[1].standard_label = "标样1";
-            sd[1].standard_ppm = new double[2];
+            sd[1].standard_ppm = new double[20];
             sd[1].standard_ppm[0] = 0.5;
             sd[1].standard_ppm[1] = 8;
             spec_data.standards[0] = sd[0];
@@ -373,6 +380,11 @@ namespace LIBS
 
         private void tabControl1_Selected(object sender, TabControlEventArgs e)
         {
+            if (e.TabPageIndex == 1)
+            {
+                //绘制已选元素表格   
+                datagrid_control.draw_datagrid_select_element(dataGridView1, spec_data.elements, spec_data.element_cnt);
+            }
             if (e.TabPageIndex == 5)
             {
                 datagrid_control.draw_datagrid_analysis(dgv_analysis, spec_data);
@@ -405,10 +417,11 @@ namespace LIBS
 
         //统一的元素选择
         private void checkBox_CheckedChanged(object sender, EventArgs e)
-        {
+        { 
             //MessageBox.Show("Clicked--" + ((CheckBox)sender).Text);
             select_element_now = ((CheckBox)sender).Text;
             datagrid_control.draw_datagrid_element_nist(dataGridView2, nist, select_element_now);
+            label4.Text = "元素信息("+ select_element_now + ")                                     添加";
         }
 
         private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -416,6 +429,22 @@ namespace LIBS
             double select_wave = (double)dataGridView2.Rows[e.RowIndex].Cells[1].Value;//记录下所选择的波长
             label5.Text = "在" + select_element_now + "(" + select_wave.ToString() + ")处可能的干扰";
             datagrid_control.draw_disturb_wave(dataGridView3, nist, select_wave);
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+            //用了布局，不好直接添加button
+            double select_wave = (double)dataGridView2.Rows[dataGridView2.SelectedCells[0].RowIndex].Cells[1].Value;//记录下所选择的波长
+                                                                                                                    //添加元素
+            spec_data.elements[spec_data.element_cnt].sequece_index = spec_data.element_cnt;
+            spec_data.elements[spec_data.element_cnt].element = select_element_now;
+            spec_data.elements[spec_data.element_cnt].label = select_element_now;
+            spec_data.elements[spec_data.element_cnt].select_wave = select_wave;
+            spec_data.elements[spec_data.element_cnt].seek_peak_range = 0.5; //设置默认寻峰范围
+            spec_data.element_cnt++;
+
+            //重绘已选元素表
+            datagrid_control.draw_datagrid_select_element(dataGridView1, spec_data.elements, spec_data.element_cnt);
         }
     }
 }
