@@ -24,7 +24,7 @@ namespace LIBS.ui_control
             int sample_cnt = spec_obj.sample_cnt;
             int element_cnt = spec_obj.element_cnt;
             double[,] standard_val = new double[standard_cnt, element_cnt];
-            double[,] sample_val = new double[standard_cnt, element_cnt];
+            double[,] sample_val = new double[sample_cnt, element_cnt];
             fill_datagrid_data(spec_obj, ref standard_val, ref sample_val);
 
             //列
@@ -202,7 +202,7 @@ namespace LIBS.ui_control
                         }
                         LinearFit.LfReValue equation = LinearFit.linearFitFunc(concentration, strenth, standard_cnt);
                         //根据方程进行样本浓度推算
-                        for (int j = 0; j < standard_cnt; j++)
+                        for (int j = 0; j < sample_cnt; j++)
                         {
                             sample_val[j, i] = (samples_integration_average_strenth[j, i] - equation.getA()) / equation.getB();
                         }
@@ -354,6 +354,65 @@ namespace LIBS.ui_control
                 dt1.Rows.Add(dr1);
             }
             dgv.DataSource = dt1;
+        }
+
+        public static void draw_datagrid_standard_setting(DataGridView dgv, select_element[] elements,standard[] standards, int element_cnt, int standard_cnt)
+        {
+            //设置列
+            DataTable dtData = new DataTable();
+            dtData.Columns.Add("序号");
+            //dtData.Columns.Add("标签");
+            dtData.Columns.Add("标签");
+            for(int i = 0; i < element_cnt; i++)
+            {
+                dtData.Columns.Add(elements[i].element + "(" + elements[i].select_wave.ToString() + ")");
+            }
+            //设置行
+            int t = 0;
+            DataRow drData;
+            string concentration_unit = "ppm"; //这个可以放在标样对不同元素的浓度单位中
+            drData = dtData.NewRow();
+            drData[0] = "";
+            drData[1] = "";
+            for (int i = 0; i < element_cnt; i++)
+            {
+                drData[2 + i] = concentration_unit;
+            }
+            dtData.Rows.Add(drData);
+            for (int l = 0; l < standard_cnt; l++)
+            {
+                drData = dtData.NewRow();
+                drData[0] = standards[l].standard_index+1;      //序号
+                drData[1] = standards[l].standard_label;
+                for (int i = 0; i < element_cnt; i++)
+                {
+                        drData[2 + i] = standards[l].standard_ppm[i];
+                }
+                dtData.Rows.Add(drData);
+            }
+            dgv.DataSource = dtData;
+        }
+
+        public static void draw_datagrid_sample_setting(DataGridView dgv, sample[] samples, int sample_cnt)
+        {
+            DataTable dt7 = new DataTable();
+            dt7.Columns.Add("序号", typeof(string));
+            dt7.Columns.Add("溶液标签", typeof(string));
+            //dt7.Columns.Add("状态", typeof(string));
+            dt7.Columns.Add("重量(g)", typeof(string));
+            dt7.Columns.Add("体积(mL)", typeof(string));
+            dt7.Columns.Add("稀释系数", typeof(string));
+            for (int k = 0 ; k < sample_cnt; k++)
+            {
+                DataRow dr7 = dt7.NewRow();
+                dr7[0] = samples[k].sample_index+1;
+                dr7[1] = samples[k].sample_label;
+                dr7[2] = samples[k].weight;
+                dr7[3] = samples[k].volume;
+                dr7[4] = samples[k].coefficient;
+                dt7.Rows.Add(dr7);
+            }
+            dgv.DataSource = dt7;
         }
     }
 }

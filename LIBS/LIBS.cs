@@ -21,12 +21,14 @@ namespace LIBS
         spec_wrapper wrapper;
         NIST nist;
         string select_element_now; //当前正在选择的元素
+        string select_element_control_name; //记录上一个选择的元素的控件name
 
         public LIBS()
         {
             InitializeComponent();
 
             //初始化
+            select_element_control_name = null;
             wrapper = new spec_wrapper();
             spec_data = new spec_metadata();
             spec_data.read_wave_all = new double[10418];  //波长
@@ -385,10 +387,22 @@ namespace LIBS
                 //绘制已选元素表格   
                 datagrid_control.draw_datagrid_select_element(dataGridView1, spec_data.elements, spec_data.element_cnt);
             }
+            if (e.TabPageIndex == 3)
+            {
+                textBox15.Text = spec_data.standard_cnt.ToString();
+                datagrid_control.draw_datagrid_standard_setting(dataGridView5, spec_data.elements, spec_data.standards, spec_data.element_cnt, spec_data.standard_cnt);
+            }
+            if (e.TabPageIndex == 4)
+            {
+                textBox16.Text = spec_data.sample_cnt.ToString();
+                datagrid_control.draw_datagrid_sample_setting(dataGridView7, spec_data.samples, spec_data.sample_cnt);
+
+            }
             if (e.TabPageIndex == 5)
             {
                 datagrid_control.draw_datagrid_analysis(dgv_analysis, spec_data);
             }
+            
         }
 
         private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -417,7 +431,7 @@ namespace LIBS
 
         //统一的元素选择
         private void checkBox_CheckedChanged(object sender, EventArgs e)
-        { 
+        {
             //MessageBox.Show("Clicked--" + ((CheckBox)sender).Text);
             select_element_now = ((CheckBox)sender).Text;
             datagrid_control.draw_datagrid_element_nist(dataGridView2, nist, select_element_now);
@@ -431,7 +445,6 @@ namespace LIBS
             datagrid_control.draw_disturb_wave(dataGridView3, nist, select_wave);
         }
 
-<<<<<<< HEAD
         private void label4_Click(object sender, EventArgs e)
         {
             //用了布局，不好直接添加button
@@ -447,12 +460,94 @@ namespace LIBS
             //重绘已选元素表
             datagrid_control.draw_datagrid_select_element(dataGridView1, spec_data.elements, spec_data.element_cnt);
         }
-=======
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
-            //file_operator.save_spec_metadat(@"h:\specdate.dat",spec_data);
+            file_operator.save_spec_metadat(@"h:\specdate.dat",spec_data);
         }
 
->>>>>>> a81bf62cac3502d08b2a8dfd83fa16f2256757c5
+        //保存不同标样的浓度数据
+        private void button6_Click(object sender, EventArgs e)
+        {
+            for(int i = 0; i < spec_data.standard_cnt; i++)
+            {
+                for(int j = 0; j < spec_data.element_cnt; j++)
+                {
+                    spec_data.standards[i].standard_ppm[j] = Double.Parse(dataGridView5.Rows[i+1].Cells[j+2].Value.ToString());
+                }
+            }
+        }
+
+        private void textBox15_Click(object sender, EventArgs e)
+        {
+            if (textBox15.Text != null && textBox15.Text != "")
+            {
+                int sc = int.Parse(textBox15.Text);
+                if (sc >= 2 && sc <= 20)
+                {
+                    if (sc > spec_data.standard_cnt)
+                    {
+                        for (int k = spec_data.standard_cnt; k < sc; k++)
+                        {
+                            spec_data.standards[k].standard_index = k;
+                            spec_data.standards[k].standard_label = "标样" + k;
+                            spec_data.standards[k].average_times = 1;
+                            spec_data.standards[k].is_readed = false;
+                        }
+
+                    }
+                    spec_data.standard_cnt = sc;
+
+                }
+                else if (sc < 2)
+                {
+                    textBox15.Text = (sc + 1).ToString(); MessageBox.Show("标样数目异常");
+                }
+                else
+                {
+                    textBox15.Text = (sc - 1).ToString(); MessageBox.Show("标样数目异常");
+                }
+            }
+            datagrid_control.draw_datagrid_standard_setting(dataGridView5, spec_data.elements, spec_data.standards, spec_data.element_cnt, spec_data.standard_cnt);
+        }
+
+        private void textBox16_Click(object sender, EventArgs e)
+        {
+            if (textBox16.Text != null && textBox16.Text != "")
+            {
+                int sc = int.Parse(textBox16.Text);
+                if (sc >= 1 && sc <= 20)
+                {
+                    if (sc > spec_data.sample_cnt)
+                    {
+                        for (int k = spec_data.sample_cnt; k < sc; k++)
+                        {
+                            spec_data.samples[k].sample_index = k;
+                            spec_data.samples[k].sample_label = "样本" + (k+1).ToString();
+                            spec_data.samples[k].average_times = 1;
+                            spec_data.samples[k].is_read = false;
+                        }
+
+                    }
+                    spec_data.sample_cnt = sc;
+
+                }
+                else if (sc < 1)
+                {
+                    textBox16.Text = (sc + 1).ToString(); MessageBox.Show("样本数目异常");
+                }
+                else
+                {
+                    textBox16.Text = (sc - 1).ToString(); MessageBox.Show("样本数目异常");
+                }
+                datagrid_control.draw_datagrid_sample_setting(dataGridView7, spec_data.samples, spec_data.sample_cnt);
+
+            }
+        }
+
+        //添加样本
+        private void button7_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
