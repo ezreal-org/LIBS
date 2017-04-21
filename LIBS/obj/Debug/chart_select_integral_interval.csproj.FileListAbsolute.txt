@@ -1,0 +1,9 @@
+C:\Users\jayce\Documents\Visual Studio 2015\Projects\chart_select_integral_interval\chart_select_integral_interval\obj\Debug\chart_select_integral_interval.csprojResolveAssemblyReference.cache
+C:\Users\jayce\Documents\Visual Studio 2015\Projects\chart_select_integral_interval\chart_select_integral_interval\obj\Debug\chart_select_integral_interval.csproj.GenerateResource.Cache
+C:\Users\jayce\Documents\Visual Studio 2015\Projects\chart_select_integral_interval\chart_select_integral_interval\bin\Debug\LIBS.exe.config
+C:\Users\jayce\Documents\Visual Studio 2015\Projects\chart_select_integral_interval\chart_select_integral_interval\bin\Debug\LIBS.exe
+C:\Users\jayce\Documents\Visual Studio 2015\Projects\chart_select_integral_interval\chart_select_integral_interval\bin\Debug\LIBS.pdb
+C:\Users\jayce\Documents\Visual Studio 2015\Projects\chart_select_integral_interval\chart_select_integral_interval\obj\Debug\LIBS.Form1.resources
+C:\Users\jayce\Documents\Visual Studio 2015\Projects\chart_select_integral_interval\chart_select_integral_interval\obj\Debug\LIBS.exe
+C:\Users\jayce\Documents\Visual Studio 2015\Projects\chart_select_integral_interval\chart_select_integral_interval\obj\Debug\LIBS.pdb
+C:\Users\jayce\Documents\Visual Studio 2015\Projects\chart_select_integral_interval\chart_select_integral_interval\obj\Debug\LIBS.Properties.Resources.resources
