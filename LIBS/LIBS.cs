@@ -20,6 +20,7 @@ namespace LIBS
         int interval_change_status; // 0-没有改变, 1-改变左区间, 2-改变右区间
         spec_wrapper wrapper;
         NIST nist;
+        string select_element_now; //当前正在选择的元素
 
         public LIBS()
         {
@@ -406,23 +407,15 @@ namespace LIBS
         private void checkBox_CheckedChanged(object sender, EventArgs e)
         {
             //MessageBox.Show("Clicked--" + ((CheckBox)sender).Text);
-            datagrid_control.draw_datagrid_element_nist(dataGridView2, nist, ((CheckBox)sender).Text);
+            select_element_now = ((CheckBox)sender).Text;
+            datagrid_control.draw_datagrid_element_nist(dataGridView2, nist, select_element_now);
         }
 
         private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            double d = (double)dataGridView2.Rows[e.RowIndex].Cells[1].Value;//记录下所选择的波长
-            //MessageBox.Show(d.ToString());
-           // label5.Text = "在" + selectElement + "(" + d.ToString() + ")处可能的干扰";
-
-            //if (true)//selectIfwave == true)
-            //{
-            //    selectwaveArray[selectNo[selectNow]] = d;
-            //    selectcountArray[selectNo[selectNow]] = int.Parse(dataGridView2.Rows[e.RowIndex].Cells[3].Value.ToString());
-            //    draw_selectdataGridView1();
-            //    selectIfwave = false;
-            //}
-            //draw_DisturbdataGridView3(d);
+            double select_wave = (double)dataGridView2.Rows[e.RowIndex].Cells[1].Value;//记录下所选择的波长
+            label5.Text = "在" + select_element_now + "(" + select_wave.ToString() + ")处可能的干扰";
+            datagrid_control.draw_disturb_wave(dataGridView3, nist, select_wave);
         }
 
         private void toolStripButton6_Click(object sender, EventArgs e)
