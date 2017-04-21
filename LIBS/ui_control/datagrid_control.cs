@@ -238,5 +238,30 @@ namespace LIBS.ui_control
             }
             dgv.DataSource = dt9;
         }
+
+        public static void draw_datagrid_element_nist(DataGridView dgv, NIST nist, string element)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("序号", typeof(double));
+            dt.Columns.Add("波长", typeof(double));
+            dt.Columns.Add("光谱类型", typeof(double));
+            dt.Columns.Add("强度", typeof(double));
+            int l = 0;
+            int k = 0;
+            for (; k < 2359; k++)
+            {
+                if (nist.nameNIST[k] == element)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr[0] = l + 1;
+                    dr[1] = nist.waveNIST[k];//波长
+                    dr[2] = nist.typeNIST[k];//类型
+                    dr[3] = nist.countNIST[k];//强度
+                    dt.Rows.Add(dr);
+                    l++;
+                }
+            }
+            dgv.DataSource = dt;
+        }
     }
 }

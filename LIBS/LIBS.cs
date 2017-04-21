@@ -19,6 +19,7 @@ namespace LIBS
         spec_metadata spec_data; //程序内流动改对象
         int interval_change_status; // 0-没有改变, 1-改变左区间, 2-改变右区间
         spec_wrapper wrapper;
+        NIST nist;
 
         public LIBS()
         {
@@ -34,6 +35,9 @@ namespace LIBS
             spec_data.samples = new sample[20];
             spec_data.standards = new standard[20];
             spec_data.elements = new select_element[20];
+            //初始化nist对象
+            nist = new NIST();
+            nist.read_NIST();
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
@@ -52,8 +56,14 @@ namespace LIBS
         private void test_case_setting()
         {
             select_element[] se = new select_element[2];
+            se[0] = new select_element();
+            se[1] = new select_element();
             sample[] sp = new sample[2];
+            sp[0] = new sample();
+            sp[1] = new sample();
             standard[] sd = new standard[2];
+            sd[0] = new standard();
+            sd[1] = new standard();
 
             se[0].element = "Hg";
             se[0].label = "Hg";
@@ -395,7 +405,24 @@ namespace LIBS
         //统一的元素选择
         private void checkBox_CheckedChanged(object sender, EventArgs e)
         {
-            MessageBox.Show("Clicked--" + ((CheckBox)sender).Text);
+            //MessageBox.Show("Clicked--" + ((CheckBox)sender).Text);
+            datagrid_control.draw_datagrid_element_nist(dataGridView2, nist, ((CheckBox)sender).Text);
+        }
+
+        private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            double d = (double)dataGridView2.Rows[e.RowIndex].Cells[1].Value;//记录下所选择的波长
+            //MessageBox.Show(d.ToString());
+           // label5.Text = "在" + selectElement + "(" + d.ToString() + ")处可能的干扰";
+
+            //if (true)//selectIfwave == true)
+            //{
+            //    selectwaveArray[selectNo[selectNow]] = d;
+            //    selectcountArray[selectNo[selectNow]] = int.Parse(dataGridView2.Rows[e.RowIndex].Cells[3].Value.ToString());
+            //    draw_selectdataGridView1();
+            //    selectIfwave = false;
+            //}
+            //draw_DisturbdataGridView3(d);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace LIBS.storage
     //   积分时间、平均次数、平滑宽度、暗电流矫正
     /*****************************/
     //选择元素序列(选择顺序)
-    public struct select_element
+    public class select_element
     {
         public int sequece_index;
         public string element;
@@ -22,7 +22,7 @@ namespace LIBS.storage
         public double interval_end;   
     }
     //标样序列
-    public struct standard
+    public class standard
     {
         public int standard_index; // 0号位置留给空白标样
         public string standard_label;
@@ -31,7 +31,7 @@ namespace LIBS.storage
         public bool is_readed;
     }
     //样本序列
-    public struct sample
+    public class sample
     {
         public int sample_index;
         public string sample_label;

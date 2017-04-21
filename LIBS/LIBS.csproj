@@ -61,6 +61,7 @@
     <Compile Include="service_fun\analysis_proc.cs" />
     <Compile Include="service_fun\calculate_integration_average.cs" />
     <Compile Include="storage\file_reader.cs" />
+    <Compile Include="storage\NIST.cs" />
     <Compile Include="storage\spec_data.cs" />
     <Compile Include="ui_control\chart_select_integral_interval.cs" />
     <Compile Include="dp_algorithms\data_util.cs" />
