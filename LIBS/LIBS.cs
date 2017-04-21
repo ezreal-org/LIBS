@@ -433,9 +433,13 @@ namespace LIBS
         private void checkBox_CheckedChanged(object sender, EventArgs e)
         {
             //MessageBox.Show("Clicked--" + ((CheckBox)sender).Text);
+            //去掉以前的选择
+            if(select_element_control_name!=null)
+                ((CheckBox)(Controls.Find(select_element_control_name, true)[0])).Checked = false;
             select_element_now = ((CheckBox)sender).Text;
             datagrid_control.draw_datagrid_element_nist(dataGridView2, nist, select_element_now);
             label4.Text = "元素信息("+ select_element_now + ")                                     添加";
+            select_element_control_name = ((CheckBox)sender).Name;
         }
 
         private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
