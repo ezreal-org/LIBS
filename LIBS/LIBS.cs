@@ -38,6 +38,8 @@ namespace LIBS
             spec_data.samples = new sample[20];
             spec_data.standards = new standard[20];
             spec_data.elements = new select_element[20];
+            spec_data.env_spec = new double[10418];
+
             for (int i = 0; i < 20; i++)
             {
                 spec_data.samples[i] = new sample();
@@ -145,9 +147,19 @@ namespace LIBS
 
         private void LIBS_Load(object sender, EventArgs e)
         {
-            read_testdata();
-            test_case_setting();
-
+            //read_testdata();
+            // test_case_setting();
+            wrapper.connect();
+            spec_data.read_wave_all = wrapper.get_wave_all();
+            spec_data.standard_cnt = 2;
+            spec_data.standards[0].standard_index = 0;
+            spec_data.standards[0].standard_label = "空白";
+            spec_data.standards[0].average_times = 1;
+            spec_data.standards[0].is_readed = false;
+            spec_data.standards[1].standard_index = 1;
+            spec_data.standards[1].standard_label = "标样1";
+            spec_data.standards[1].average_times = 1;
+            spec_data.standards[1].is_readed = false;
         }
 
         private void dgv_analysis_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -459,6 +471,9 @@ namespace LIBS
             spec_data.elements[spec_data.element_cnt].label = select_element_now;
             spec_data.elements[spec_data.element_cnt].select_wave = select_wave;
             spec_data.elements[spec_data.element_cnt].seek_peak_range = 0.5; //设置默认寻峰范围
+            spec_data.elements[spec_data.element_cnt].interval_start = select_wave-0.05; //设置默认积分区间，程序中在分析窗体点读取，将根据实际峰,寻峰范围重新设置
+            spec_data.elements[spec_data.element_cnt].interval_end = select_wave + 0.05;
+            spec_data.elements[spec_data.element_cnt].peak_wave = select_wave;
             spec_data.element_cnt++;
 
             //重绘已选元素表

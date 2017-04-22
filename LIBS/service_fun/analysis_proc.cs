@@ -128,8 +128,8 @@ namespace LIBS.service_fun
                     int seek_end_index = data_util.get_index_by_wave(wave_all, elements[j].select_wave + elements[j].seek_peak_range / 2);
                     int peak_index = data_util.find_peak(spec_now, seek_start_index, seek_end_index);
                     elements[j].peak_wave = wave_all[peak_index];
-                    elements[j].interval_start = elements[j].peak_wave - 0.25; //设置默认积分范围为峰左右0.25nm
-                    elements[j].interval_end = elements[j].peak_wave + 0.25;
+                    elements[j].interval_start = elements[j].peak_wave - 0.05; //设置默认积分范围为峰左右0.25nm
+                    elements[j].interval_end = elements[j].peak_wave + 0.05;
                 }
                 standards[row_index].is_readed = true;
             }

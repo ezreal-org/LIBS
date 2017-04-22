@@ -197,7 +197,7 @@ namespace LIBS
             }
             //均匀插值1000个点
             spline_point = spline.splineInsertPoint(spline_src_point, wave_draw_start_x, wave__draw_end_x, 1000);
-
+            
             for (int i = 0; i < 1000; i++)
             {
                 dr = dt3.NewRow();
