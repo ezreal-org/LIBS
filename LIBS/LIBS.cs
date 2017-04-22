@@ -26,7 +26,11 @@ namespace LIBS
         public LIBS()
         {
             InitializeComponent();
+            init_application();
+        }
 
+        private void init_application()
+        {
             //初始化
             select_element_control_name = null;
             wrapper = new spec_wrapper();
@@ -47,110 +51,9 @@ namespace LIBS
                 spec_data.standards[i].standard_ppm = new double[20];
                 spec_data.elements[i] = new select_element();
             }
-            //初始化nist对象
-            nist = new NIST();
-            nist.read_NIST();
-        }
-
-        private void toolStripButton2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void read_testdata()
-        {
-            spec_data.read_spec_all_now = file_reader.read_testdata("TestData\\Al50.txt");
-            spec_data.env_spec = file_reader.read_testdata("TestData\\空白.txt");
-            spec_data.read_wave_all = file_reader.read_testdata("TestData\\readAllWave.txt");
-
-        }
-
-        private void test_case_setting()
-        {
-            select_element[] se = new select_element[2];
-            se[0] = new select_element();
-            se[1] = new select_element();
-            sample[] sp = new sample[2];
-            sp[0] = new sample();
-            sp[1] = new sample();
-            standard[] sd = new standard[2];
-            sd[0] = new standard();
-            sd[1] = new standard();
-
-            se[0].element = "Hg";
-            se[0].label = "Hg";
-            se[0].seek_peak_range = 0.25;
-            se[0].select_wave = 253.65;
-            se[0].sequece_index = 0;
-            se[1].element = "Al";
-            se[1].label = "Al";
-            se[1].seek_peak_range = 0.25;
-            se[1].select_wave = 396.16;
-            se[1].sequece_index = 1;
-            spec_data.elements[0] = se[0];
-            spec_data.elements[1] = se[1];
-            spec_data.element_cnt = 2;
-
-            sd[0].average_times = 1;
-            sd[0].is_readed = true;
-            sd[0].standard_index = 0;
-            sd[0].standard_label = "空白";
-            sd[0].standard_ppm = new double[20];
-            sd[1].average_times = 2;
-            sd[1].is_readed = true;
-            sd[1].standard_index = 1;
-            sd[1].standard_label = "标样1";
-            sd[1].standard_ppm = new double[20];
-            sd[1].standard_ppm[0] = 0.5;
-            sd[1].standard_ppm[1] = 8;
-            spec_data.standards[0] = sd[0];
-            spec_data.standards[1] = sd[1];
-            spec_data.standard_cnt = 2;
-
-            sp[0].sample_index = 0;
-            sp[0].sample_label = "样本1";
-            sp[0].average_times = 1;
-            sp[0].is_read = true;
-            sp[1].sample_index = 1;
-            sp[1].sample_label = "样本2";
-            sp[1].average_times = 1;
-            sp[1].is_read = false;
-            spec_data.samples[0] = sp[0];
-            spec_data.samples[1] = sp[1];
-            spec_data.sample_cnt = 2;
-
-            //初始标样1
-            Random rr = new Random();
-            for (int i = 0; i < 10418; i++)
-            {
-                spec_data.read_standard_spec[1, 0, i] = spec_data.read_spec_all_now[i];
-                spec_data.read_standard_spec[1, 1, i] = spec_data.read_spec_all_now[i] + 500 * rr.NextDouble();
-            }
-            //设置已经读取，设置标样对象;通过标样确定样本读取峰，初始积分区间
-            for (int j = 0; j < spec_data.element_cnt; j++)
-            {
-                //寻峰，确定实际读取波长，默认积分区间
-                int seek_start_index = data_util.get_index_by_wave(spec_data.read_wave_all, spec_data.elements[j].select_wave - spec_data.elements[j].seek_peak_range / 2);
-                int seek_end_index = data_util.get_index_by_wave(spec_data.read_wave_all, spec_data.elements[j].select_wave + spec_data.elements[j].seek_peak_range / 2);
-                int peak_index = data_util.find_peak(spec_data.read_spec_all_now, seek_start_index, seek_end_index);
-                spec_data.elements[j].peak_wave = spec_data.read_wave_all[peak_index];
-                spec_data.elements[j].interval_start = spec_data.elements[j].peak_wave - 0.05; //设置默认积分范围为峰左右0.25nm
-                spec_data.elements[j].interval_end = spec_data.elements[j].peak_wave + 0.05;
-            }
-            //初始样本1
-            for (int i = 0; i < 10418; i++)
-            {
-                spec_data.read_sample_spec[0, 0, i] = spec_data.read_spec_all_now[i] * 0.5;
-            }
-        }
-
-
-        private void LIBS_Load(object sender, EventArgs e)
-        {
             //read_testdata();
             // test_case_setting();
-            wrapper.connect();
-            spec_data.read_wave_all = wrapper.get_wave_all();
+            //初始至少两个标样
             spec_data.standard_cnt = 2;
             spec_data.standards[0].standard_index = 0;
             spec_data.standards[0].standard_label = "空白";
@@ -160,6 +63,109 @@ namespace LIBS
             spec_data.standards[1].standard_label = "标样1";
             spec_data.standards[1].average_times = 1;
             spec_data.standards[1].is_readed = false;
+            //初始化nist对象
+            nist = new NIST();
+            nist.read_NIST();
+            //测试
+            wrapper.connect();
+            spec_data.read_wave_all = wrapper.get_wave_all();
+        }
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //private void read_testdata()
+        //{
+        //    spec_data.read_spec_all_now = file_reader.read_testdata("TestData\\Al50.txt");
+        //    spec_data.env_spec = file_reader.read_testdata("TestData\\空白.txt");
+        //    spec_data.read_wave_all = file_reader.read_testdata("TestData\\readAllWave.txt");
+
+        //}
+
+        //private void test_case_setting()
+        //{
+        //    select_element[] se = new select_element[2];
+        //    se[0] = new select_element();
+        //    se[1] = new select_element();
+        //    sample[] sp = new sample[2];
+        //    sp[0] = new sample();
+        //    sp[1] = new sample();
+        //    standard[] sd = new standard[2];
+        //    sd[0] = new standard();
+        //    sd[1] = new standard();
+
+        //    se[0].element = "Hg";
+        //    se[0].label = "Hg";
+        //    se[0].seek_peak_range = 0.25;
+        //    se[0].select_wave = 253.65;
+        //    se[0].sequece_index = 0;
+        //    se[1].element = "Al";
+        //    se[1].label = "Al";
+        //    se[1].seek_peak_range = 0.25;
+        //    se[1].select_wave = 396.16;
+        //    se[1].sequece_index = 1;
+        //    spec_data.elements[0] = se[0];
+        //    spec_data.elements[1] = se[1];
+        //    spec_data.element_cnt = 2;
+
+        //    sd[0].average_times = 1;
+        //    sd[0].is_readed = true;
+        //    sd[0].standard_index = 0;
+        //    sd[0].standard_label = "空白";
+        //    sd[0].standard_ppm = new double[20];
+        //    sd[1].average_times = 2;
+        //    sd[1].is_readed = true;
+        //    sd[1].standard_index = 1;
+        //    sd[1].standard_label = "标样1";
+        //    sd[1].standard_ppm = new double[20];
+        //    sd[1].standard_ppm[0] = 0.5;
+        //    sd[1].standard_ppm[1] = 8;
+        //    spec_data.standards[0] = sd[0];
+        //    spec_data.standards[1] = sd[1];
+        //    spec_data.standard_cnt = 2;
+
+        //    sp[0].sample_index = 0;
+        //    sp[0].sample_label = "样本1";
+        //    sp[0].average_times = 1;
+        //    sp[0].is_read = true;
+        //    sp[1].sample_index = 1;
+        //    sp[1].sample_label = "样本2";
+        //    sp[1].average_times = 1;
+        //    sp[1].is_read = false;
+        //    spec_data.samples[0] = sp[0];
+        //    spec_data.samples[1] = sp[1];
+        //    spec_data.sample_cnt = 2;
+
+        //    //初始标样1
+        //    Random rr = new Random();
+        //    for (int i = 0; i < 10418; i++)
+        //    {
+        //        spec_data.read_standard_spec[1, 0, i] = spec_data.read_spec_all_now[i];
+        //        spec_data.read_standard_spec[1, 1, i] = spec_data.read_spec_all_now[i] + 500 * rr.NextDouble();
+        //    }
+        //    //设置已经读取，设置标样对象;通过标样确定样本读取峰，初始积分区间
+        //    for (int j = 0; j < spec_data.element_cnt; j++)
+        //    {
+        //        //寻峰，确定实际读取波长，默认积分区间
+        //        int seek_start_index = data_util.get_index_by_wave(spec_data.read_wave_all, spec_data.elements[j].select_wave - spec_data.elements[j].seek_peak_range / 2);
+        //        int seek_end_index = data_util.get_index_by_wave(spec_data.read_wave_all, spec_data.elements[j].select_wave + spec_data.elements[j].seek_peak_range / 2);
+        //        int peak_index = data_util.find_peak(spec_data.read_spec_all_now, seek_start_index, seek_end_index);
+        //        spec_data.elements[j].peak_wave = spec_data.read_wave_all[peak_index];
+        //        spec_data.elements[j].interval_start = spec_data.elements[j].peak_wave - 0.05; //设置默认积分范围为峰左右0.25nm
+        //        spec_data.elements[j].interval_end = spec_data.elements[j].peak_wave + 0.05;
+        //    }
+        //    //初始样本1
+        //    for (int i = 0; i < 10418; i++)
+        //    {
+        //        spec_data.read_sample_spec[0, 0, i] = spec_data.read_spec_all_now[i] * 0.5;
+        //    }
+        //}
+
+
+        private void LIBS_Load(object sender, EventArgs e)
+        {
+            
         }
 
         private void dgv_analysis_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -168,7 +174,8 @@ namespace LIBS
             //读取数据
             if (e.ColumnIndex == 2 && e.RowIndex >= 0)
             {
-                analysis_proc.read_spec_click(wrapper, dgv_analysis, e.RowIndex, spec_data);
+                //获取平均次数用于下一次读取
+                analysis_proc.read_spec_click(textBox17, wrapper, dgv_analysis, e.RowIndex, spec_data);
             }
             else if (e.ColumnIndex > 2 && e.RowIndex >= 0)
             {
@@ -517,14 +524,6 @@ namespace LIBS
                     spec_data.standard_cnt = sc;
 
                 }
-                else if (sc < 2)
-                {
-                    textBox15.Text = (sc + 1).ToString(); MessageBox.Show("标样数目异常");
-                }
-                else
-                {
-                    textBox15.Text = (sc - 1).ToString(); MessageBox.Show("标样数目异常");
-                }
             }
             datagrid_control.draw_datagrid_standard_setting(dataGridView5, spec_data.elements, spec_data.standards, spec_data.element_cnt, spec_data.standard_cnt);
         }
@@ -534,7 +533,7 @@ namespace LIBS
             if (textBox16.Text != null && textBox16.Text != "")
             {
                 int sc = int.Parse(textBox16.Text);
-                if (sc >= 1 && sc <= 20)
+                if (sc >= 0 && sc <= 20)
                 {
                     if (sc > spec_data.sample_cnt)
                     {
@@ -549,14 +548,6 @@ namespace LIBS
                     }
                     spec_data.sample_cnt = sc;
 
-                }
-                else if (sc < 1)
-                {
-                    textBox16.Text = (sc + 1).ToString(); MessageBox.Show("样本数目异常");
-                }
-                else
-                {
-                    textBox16.Text = (sc - 1).ToString(); MessageBox.Show("样本数目异常");
                 }
                 datagrid_control.draw_datagrid_sample_setting(dataGridView7, spec_data.samples, spec_data.sample_cnt);
 

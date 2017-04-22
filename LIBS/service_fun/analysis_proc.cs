@@ -94,7 +94,7 @@ namespace LIBS.service_fun
             summary_info.draw_summary_info(label_info, this_read_concentration_average, this_read_strenth_average);
         }
 
-        public static void read_spec_click(spec_wrapper wrapper, DataGridView dgv, int row_index, spec_metadata spec_obj)
+        public static void read_spec_click(NumericUpDown textbox_average_times, spec_wrapper wrapper, DataGridView dgv, int row_index, spec_metadata spec_obj)
         {
             select_element[] elements = spec_obj.elements;
             standard[] standards = spec_obj.standards;
@@ -108,9 +108,12 @@ namespace LIBS.service_fun
             int element_cnt = spec_obj.element_cnt;
 
             double[] spec_now = null;
+            int this_read_average_times = int.Parse(textbox_average_times.Text);
+            if (this_read_average_times < 1 || this_read_average_times > 5) this_read_average_times = 1;
             //读标样
             if (row_index < standard_cnt)
             {
+                standards[row_index].average_times = this_read_average_times;
                 for (int i = 0; i < standards[row_index].average_times; i++)
                 {
                     //从设备获取数据
@@ -138,6 +141,7 @@ namespace LIBS.service_fun
             if (row_index >= standard_cnt)
             {
                 int sample_index = row_index - standard_cnt;
+                samples[sample_index].average_times = this_read_average_times;
                 for (int i = 0; i < samples[sample_index].average_times; i++)
                 {
                     //从设备获取数据

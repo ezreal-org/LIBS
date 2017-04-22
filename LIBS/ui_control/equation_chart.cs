@@ -36,22 +36,36 @@ namespace LIBS.ui_control
             dt2.Columns.Add("y", typeof(double));
 
             DataRow dr2;
-            for(int i = 0; i < concention.Length; i++)
-            {
-                dr2 = dt2.NewRow();
-                dr2[0] = Math.Round(concention[i], 2);
-                dr2[1] = Math.Round(strenth[i],2);
-                dt2.Rows.Add(dr2);
-            }
+            dr2 = dt2.NewRow();
+            dr2[0] = minx;
+            dr2[1] = b * minx + a;
+            dt2.Rows.Add(dr2);
+            dr2 = dt2.NewRow();
+            dr2[0] = maxx;
+            dr2[1] = b * maxx + a;
+            dt2.Rows.Add(dr2);
+
             Series ser2 = new Series("dt");
             ser2.Points.DataBind(dt2.AsEnumerable(), "x", "y", "");
             ser2.XValueType = ChartValueType.Auto;
             ser2.YValueType = ChartValueType.Double;
-            ser2.ChartType = SeriesChartType.Spline;
+            ser2.ChartType = SeriesChartType.Line;
             ser2.IsVisibleInLegend = false;
-           
+
+            DataTable dt3 = new DataTable();
+            dt3.Columns.Add("x", typeof(double));
+            dt3.Columns.Add("y", typeof(double));
+            DataRow dr3;
+            for (int i = 0; i < concention.Length; i++)
+            {
+                dr3 = dt3.NewRow();
+                dr3[0] = Math.Round(concention[i], 2);
+                dr3[1] = Math.Round(strenth[i], 2);
+                dt3.Rows.Add(dr3);
+            }
+
             Series ser = new Series("src_point");
-            ser.Points.DataBind(dt2.AsEnumerable(), "x", "y", "");
+            ser.Points.DataBind(dt3.AsEnumerable(), "x", "y", "");
             ser.XValueType = ChartValueType.Auto;
             ser.YValueType = ChartValueType.Double;
             ser.ChartType = SeriesChartType.Point;

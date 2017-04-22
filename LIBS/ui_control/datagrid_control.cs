@@ -193,6 +193,7 @@ namespace LIBS.ui_control
                     // 根据标样浓度和对应强度计算
                     for (int i = 0; i < element_cnt; i++)
                     {
+                      
                         double[] concentration = new double[standard_cnt]; //浓度
                         double[] strenth = new double[standard_cnt];
                         for (int j = 0; j < standard_cnt; j++)
@@ -204,6 +205,7 @@ namespace LIBS.ui_control
                         //根据方程进行样本浓度推算
                         for (int j = 0; j < sample_cnt; j++)
                         {
+                            if (!samples[j].is_read) continue;
                             sample_val[j, i] = (samples_integration_average_strenth[j, i] - equation.getA()) / equation.getB();
                         }
                     }
