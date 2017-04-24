@@ -67,6 +67,7 @@
     <Compile Include="storage\file_reader.cs" />
     <Compile Include="storage\NIST.cs" />
     <Compile Include="storage\spec_data.cs" />
+    <Compile Include="ui_control\calc_spec_wave.cs" />
     <Compile Include="ui_control\chart_select_integral_interval.cs" />
     <Compile Include="dp_algorithms\data_util.cs" />
     <Compile Include="Form1.cs">

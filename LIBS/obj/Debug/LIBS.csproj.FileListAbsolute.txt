@@ -1,36 +1,10 @@
-<<<<<<< HEAD
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\chart_select_integral_interval\chart_select_integral_interval\bin\Debug\LIBS.exe.config
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\chart_select_integral_interval\chart_select_integral_interval\obj\Debug\LIBS.exe
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\chart_select_integral_interval\chart_select_integral_interval\obj\Debug\LIBS.pdb
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\chart_select_integral_interval\chart_select_integral_interval\bin\Debug\LIBS.exe
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\chart_select_integral_interval\chart_select_integral_interval\bin\Debug\LIBS.pdb
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\chart_select_integral_interval\chart_select_integral_interval\obj\Debug\LIBS.csprojResolveAssemblyReference.cache
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\chart_select_integral_interval\chart_select_integral_interval\obj\Debug\LIBS.Form1.resources
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\chart_select_integral_interval\chart_select_integral_interval\obj\Debug\LIBS.Properties.Resources.resources
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\chart_select_integral_interval\chart_select_integral_interval\obj\Debug\LIBS.csproj.GenerateResource.Cache
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\LIBS\LIBS\bin\Debug\LIBS.exe.config
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\LIBS\LIBS\obj\Debug\LIBS.exe
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\LIBS\LIBS\obj\Debug\LIBS.pdb
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\LIBS\LIBS\bin\Debug\LIBS.exe
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\LIBS\LIBS\bin\Debug\LIBS.pdb
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\LIBS\LIBS\obj\Debug\LIBS.csprojResolveAssemblyReference.cache
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\LIBS\LIBS\obj\Debug\LIBS.Form1.resources
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\LIBS\LIBS\obj\Debug\LIBS.Properties.Resources.resources
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\LIBS\LIBS\obj\Debug\LIBS.csproj.GenerateResource.Cache
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\LIBS\LIBS\bin\Debug\NETOmniDriver-NET40.dll
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\huawei_console\LIBS\LIBS\bin\Debug\LIBS.exe.config
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\huawei_console\LIBS\LIBS\obj\Debug\LIBS.exe
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\huawei_console\LIBS\LIBS\obj\Debug\LIBS.pdb
-C:\Users\jayce\Documents\Visual Studio 2015\Projects\LIBS\LIBS\obj\Debug\LIBS.LIBS.resources
-=======
-H:\workspace\git\LIBS\LIBS\bin\Debug\LIBS.exe.config
-H:\workspace\git\LIBS\LIBS\bin\Debug\LIBS.exe
-H:\workspace\git\LIBS\LIBS\bin\Debug\LIBS.pdb
-H:\workspace\git\LIBS\LIBS\obj\Debug\LIBS.csprojResolveAssemblyReference.cache
-H:\workspace\git\LIBS\LIBS\obj\Debug\LIBS.Form1.resources
-H:\workspace\git\LIBS\LIBS\obj\Debug\LIBS.LIBS.resources
-H:\workspace\git\LIBS\LIBS\obj\Debug\LIBS.Properties.Resources.resources
-H:\workspace\git\LIBS\LIBS\obj\Debug\LIBS.csproj.GenerateResource.Cache
-H:\workspace\git\LIBS\LIBS\obj\Debug\LIBS.exe
-H:\workspace\git\LIBS\LIBS\obj\Debug\LIBS.pdb
->>>>>>> a81bf62cac3502d08b2a8dfd83fa16f2256757c5
+H:\0.数据整合\主项目\LIBS\LIBS\bin\Debug\LIBS.exe.config
+H:\0.数据整合\主项目\LIBS\LIBS\bin\Debug\LIBS.exe
+H:\0.数据整合\主项目\LIBS\LIBS\bin\Debug\LIBS.pdb
+H:\0.数据整合\主项目\LIBS\LIBS\obj\Debug\LIBS.csprojResolveAssemblyReference.cache
+H:\0.数据整合\主项目\LIBS\LIBS\obj\Debug\LIBS.Form1.resources
+H:\0.数据整合\主项目\LIBS\LIBS\obj\Debug\LIBS.LIBS.resources
+H:\0.数据整合\主项目\LIBS\LIBS\obj\Debug\LIBS.Properties.Resources.resources
+H:\0.数据整合\主项目\LIBS\LIBS\obj\Debug\LIBS.csproj.GenerateResource.Cache
+H:\0.数据整合\主项目\LIBS\LIBS\obj\Debug\LIBS.exe
+H:\0.数据整合\主项目\LIBS\LIBS\obj\Debug\LIBS.pdb
