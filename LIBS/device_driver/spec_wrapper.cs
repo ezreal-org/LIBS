@@ -12,11 +12,13 @@ namespace LIBS.device_driver
     {
         private static OmniDriver.CCoWrapper wrapper;
         public int cnt_of_devices;
+        public int []map_index_waverange2device; //逻辑设备索引到实际设备索引的映射
         public int build_num; //记录第几次读取
         public bool is_test_model; //是否是测试模式
         private double[] wave_all;
         private double[,] wave_array;
         private int[] channel_pixels;
+        
         
         public spec_wrapper()
         {
@@ -32,7 +34,7 @@ namespace LIBS.device_driver
             if (is_test_model)
             {
                 cnt_of_devices = 6;
-                init_wave_all(); //连接时初始化波长
+                init_wave_all(); //连接时初始化波长，并初始化索引映射的map
                 return true;
             }
             cnt_of_devices = wrapper.openAllSpectrometers();
@@ -53,10 +55,14 @@ namespace LIBS.device_driver
         //设置/获取积分时间,微秒为单位
         public void set_intergration_time(int device_index, int value) //micro s
         {
+            // @jayce 设备驱动层做用户看到的index到设备实际通道index的映射
+            device_index = map_index_waverange2device[device_index];
             wrapper.setIntegrationTime(device_index, value);
         }
         public int get_intergration_time(int device_index)
         {
+            // @jayce 设备驱动层做用户看到的index到设备实际通道index的映射
+            device_index = map_index_waverange2device[device_index];
             return wrapper.getIntegrationTime(device_index);
         }
 
@@ -135,6 +141,7 @@ namespace LIBS.device_driver
             }
             //实模式
             wave_array = new double[cnt_of_devices, 2068];
+            map_index_waverange2device = new int[cnt_of_devices];
             channel_pixels = new int[cnt_of_devices]; //记录每个通道的像素
             for (int i = 0; i < cnt_of_devices; i++)
             {
@@ -152,6 +159,7 @@ namespace LIBS.device_driver
                 if (wave_array[i, 0] > 185 && wave_array[i, 0] < 186)
                 {
                     //System.Console.WriteLine("找到第一通道：i={0}", i.ToString());
+                    map_index_waverange2device[0] = i; // @jayce i号硬件设备索引，对应逻辑用户看到的0号索引
                     for (int j = 0; j < (channel_pixels[i] - 122); j++)
                     {
                         wave_all[j] = wave_array[i, (121 + j)];
@@ -159,6 +167,7 @@ namespace LIBS.device_driver
                 }               
                 else if (wave_array[i, 0] > 228 && wave_array[i, 0] < 238)
                 {
+                    map_index_waverange2device[1] = i;
                     for (int j = 0; j < (channel_pixels[i] - 168); j++)
                     {
                         wave_all[1533+j] = wave_array[i, (167 + j)];
@@ -166,6 +175,7 @@ namespace LIBS.device_driver
                 }
                 else if (wave_array[i, 0] > 320 && wave_array[i, 0] < 321)
                 {
+                    map_index_waverange2device[2] = i;
                     for (int j = 0; j < (channel_pixels[i] - 87); j++)
                     {
                         wave_all[3253+j] = wave_array[i, (86 + j)];
@@ -173,6 +183,7 @@ namespace LIBS.device_driver
                 }
                 else if (wave_array[i, 0] > 398 && wave_array[i, 0] < 399)
                 {
+                    map_index_waverange2device[3] = i;
                     try
                     {
                         for (int j = 0; j < (channel_pixels[i] - 100); j++)
@@ -184,6 +195,7 @@ namespace LIBS.device_driver
                 }
                 else if (wave_array[i, 0] > 508 && wave_array[i, 0] < 509)
                 {
+                    map_index_waverange2device[4] = i;
                     for (int j = 0; j < (channel_pixels[i] - 181); j++)
                     {
                         wave_all[6814+j] = wave_array[i, (180 + j)];
@@ -191,6 +203,7 @@ namespace LIBS.device_driver
                 }
                 else if (wave_array[i, 0] > 607 && wave_array[i, 0] < 608)
                 {
+                    map_index_waverange2device[5] = i;
                     for (int j = 0; j < 1918; j++)
                     {
                         wave_all[8500+j] = wave_array[i, (72 + j)];
