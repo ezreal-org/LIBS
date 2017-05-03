@@ -822,6 +822,36 @@ namespace LIBS
                 float x_real = -1, y_real = -1;//当前鼠标的实验数据
                 x_real = pixToData_1(x_pix, y_pix).X;
                 y_real = pixToData_1(x_pix, y_pix).Y;
+                float x_real_show = x_real;
+                float y_real_show = y_real;
+
+                for (int i=0;i<x.Length-2;i++)
+                {
+                    if (x_real<x[i])
+                    {
+                        x_real_show = (float)x_init[i];
+                        y_real_show = (float)y_init[i];
+                        break;
+                    }
+                    else if (x_real>x[x.Length-1])
+                    {
+                        x_real_show = (float)x[x.Length - 1];
+                        y_real_show = (float)y[x.Length - 1];
+                        break;
+                    }
+                    else
+                    {
+                        if ((x_real>=x[i])&&(x_real<=x[i+1]))
+                        {
+                            x_real_show =(float) x[i];
+                            y_real_show =(float) y[i];
+                            break;
+                        }
+                    }
+                }
+
+                
+
 
                 if ((x_real < x_min_1) || (x_real > x_max_1) || (y_real < y_min_1) || (y_real > y_max_1))
                 {
@@ -832,7 +862,9 @@ namespace LIBS
                 {
                     if ((e.X != locX) || (e.Y != LocY))//防止显示闪烁
                     {
-                        toolTip_1.Show(x_real + " , " + y_real + "", this.panel_XY, new Point(e.X + 5, e.Y - 28));
+                        toolTip_1.Show(x_real_show + " , " + y_real_show + "", this.panel_XY, new Point(e.X + 5, e.Y - 28));
+                        drawDot_1(convert_1(x_real_show, y_real_show));
+
                         locX = e.X;
                         LocY = e.Y;
                     }
@@ -857,6 +889,8 @@ namespace LIBS
                     locNowP1_1 = p1;
                     locNowP2_1 = p2;
                     locNowBoolean_1 = true;
+
+                    
 
                 }
 
@@ -1266,6 +1300,11 @@ namespace LIBS
             toolTip_3.Hide(this.panel3_XY);
         }
 
+        private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
         private float locX_3 = 0, LocY_3 = 0;//消除tooltip闪烁问题，如果鼠标位置与当前locX，LocY位置相同则不刷新
         private void panel3_XY_MouseMove(object sender, MouseEventArgs e)
         {
@@ -1275,6 +1314,33 @@ namespace LIBS
                 float x_real_3 = -1, y_real_3 = -1;//当前鼠标的实验数据
                 x_real_3 = pixToData_3(x_pix_3, y_pix_3).X;
                 y_real_3 = pixToData_3(x_pix_3, y_pix_3).Y;
+                float x_real_3_show = x_real_3;
+                float y_real_3_show = y_real_3;
+
+                for (int i = 0; i < x_tabpage3_array.Length - 2; i++)
+                {
+                    if (x_real_3 < x_tabpage3_array[i])
+                    {
+                        x_real_3_show = (float)x_tabpage3_array[i];
+                        y_real_3_show = (float)y_tabpage3_array[i];
+                        break;
+                    }
+                    else if (x_real_3 > x_tabpage3_array[x_tabpage3_array.Length - 1])
+                    {
+                        x_real_3_show = (float)x_tabpage3_array[x_tabpage3_array.Length - 1];
+                        y_real_3_show = (float)y_tabpage3_array[x_tabpage3_array.Length - 1];
+                        break;
+                    }
+                    else
+                    {
+                        if ((x_real_3 >= x_tabpage3_array[i]) && (x_real_3 <= x_tabpage3_array[i + 1]))
+                        {
+                            x_real_3_show = (float)x_tabpage3_array[i];
+                            y_real_3_show = (float)y_tabpage3_array[i];
+                            break;
+                        }
+                    }
+                }
 
                 if ((x_real_3 < x_min_3) || (x_real_3 > x_max_3) || (y_real_3 < y_min_3) || (y_real_3 > y_max_3))
                 {
@@ -1285,7 +1351,7 @@ namespace LIBS
                 {
                     if ((e.X != locX_3) || (e.Y != LocY_3))//防止显示闪烁
                     {
-                        toolTip_3.Show(x_real_3 + " , " + y_real_3 + "", this.panel3_XY, new Point(e.X + 5, e.Y - 28));
+                        toolTip_3.Show(x_real_3_show + " , " + y_real_3_show + "", this.panel3_XY, new Point(e.X + 5, e.Y - 28));
                         locX_3 = e.X;
                         LocY_3 = e.Y;
                     }
@@ -1377,7 +1443,7 @@ namespace LIBS
         //画tabpage1上的坐标点
         void drawDot_1(PointF p)
         {
-            g_bitmap_1.FillEllipse(Brushes.Red, p.X, p.Y, 2f, 2f);
+            g_bitmap_1.FillEllipse(Brushes.Red, p.X, p.Y, 2.5f, 2.5f);
             gg_1.DrawImage(myBitmap_1, 0, 0);
         }
 
