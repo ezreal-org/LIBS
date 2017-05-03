@@ -161,6 +161,9 @@ namespace LIBS
                     spec_data = vv_spec_metadata;
                     x_init = spec_data.read_wave_all;
                     y_init = spec_data.read_spec_all_now;
+
+
+                    //MessageBox.Show(spec_data.element_cnt+"");
                 }
                 catch (Exception ex)
                 {
@@ -600,21 +603,43 @@ namespace LIBS
 
         private void label4_Click(object sender, EventArgs e)
         {
+
             //用了布局，不好直接添加button
             double select_wave = (double)dataGridView2.Rows[dataGridView2.SelectedCells[0].RowIndex].Cells[1].Value;//记录下所选择的波长
-                                                                                                                    //添加元素
-            spec_data.elements[spec_data.element_cnt].sequece_index = spec_data.element_cnt;
-            spec_data.elements[spec_data.element_cnt].element = select_element_now;
-            spec_data.elements[spec_data.element_cnt].label = select_element_now;
-            spec_data.elements[spec_data.element_cnt].select_wave = select_wave;
-            spec_data.elements[spec_data.element_cnt].seek_peak_range = 0.5; //设置默认寻峰范围
-            spec_data.elements[spec_data.element_cnt].interval_start = select_wave-0.05; //设置默认积分区间，程序中在分析窗体点读取，将根据实际峰,寻峰范围重新设置
-            spec_data.elements[spec_data.element_cnt].interval_end = select_wave + 0.05;
-            spec_data.elements[spec_data.element_cnt].peak_wave = select_wave;
-            spec_data.element_cnt++;
 
-            //重绘已选元素表
-            datagrid_control.draw_datagrid_select_element(dataGridView1, spec_data.elements, spec_data.element_cnt);
+            bool ifExistElem = false;
+            for (int i=0;i<spec_data.element_cnt;i++)
+            {
+                if (select_wave== spec_data.elements[i].select_wave)
+                {
+                    ifExistElem = true;
+                }
+            }
+
+            if (!ifExistElem)
+            {
+                //添加元素
+                spec_data.elements[spec_data.element_cnt].sequece_index = spec_data.element_cnt;
+                spec_data.elements[spec_data.element_cnt].element = select_element_now;
+                spec_data.elements[spec_data.element_cnt].label = select_element_now;
+                spec_data.elements[spec_data.element_cnt].select_wave = select_wave;
+                spec_data.elements[spec_data.element_cnt].seek_peak_range = 0.5; //设置默认寻峰范围
+                spec_data.elements[spec_data.element_cnt].interval_start = select_wave - 0.05; //设置默认积分区间，程序中在分析窗体点读取，将根据实际峰,寻峰范围重新设置
+                spec_data.elements[spec_data.element_cnt].interval_end = select_wave + 0.05;
+                spec_data.elements[spec_data.element_cnt].peak_wave = select_wave;
+                spec_data.element_cnt++;
+
+                //重绘已选元素表
+                datagrid_control.draw_datagrid_select_element(dataGridView1, spec_data.elements, spec_data.element_cnt);
+            }
+            else
+            {
+                MessageBox.Show("该元素已存在");
+            }
+
+
+
+            
         }
 
         private void toolStripButton6_Click(object sender, EventArgs e)
