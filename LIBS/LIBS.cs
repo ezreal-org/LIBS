@@ -616,6 +616,7 @@ namespace LIBS
             //重绘已选元素表
             datagrid_control.draw_datagrid_select_element(dataGridView1, spec_data.elements, spec_data.element_cnt);
         }
+
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
             //MessageBox.Show(x_min_timer + "   " + x_max_timer + "   " + y_min_timer + "   " + y_max_timer);
@@ -1225,6 +1226,21 @@ namespace LIBS
 
         }
 
+        private void panel3_XY_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel_XY_MouseLeave(object sender, EventArgs e)
+        {
+            toolTip_1.Hide(this.panel_XY);
+        }
+
+        private void panel3_XY_MouseLeave(object sender, EventArgs e)
+        {
+            toolTip_3.Hide(this.panel3_XY);
+        }
+
         private float locX_3 = 0, LocY_3 = 0;//消除tooltip闪烁问题，如果鼠标位置与当前locX，LocY位置相同则不刷新
         private void panel3_XY_MouseMove(object sender, MouseEventArgs e)
         {
@@ -1308,12 +1324,12 @@ namespace LIBS
                     List<double> x_temp = new List<double>();
                     List<double> y_temp = new List<double>();
 
-                    for (int i = 0; i < x.Length; i++)
+                    for (int i = 0; i < x_init.Length; i++)
                     {
-                        if (x[i] >= x_ChangeBegin_3 && x[i] <= x_ChangeEnd_3)
+                        if (x_init[i] >= x_ChangeBegin_3 && x_init[i] <= x_ChangeEnd_3)
                         {
-                            x_temp.Add(x[i]);
-                            y_temp.Add(y[i]);
+                            x_temp.Add(x_init[i]);
+                            y_temp.Add(y_init[i]);
                         }
                     }
                     x_tabpage3_array = x_temp.ToArray();
