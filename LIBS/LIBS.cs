@@ -644,7 +644,8 @@ namespace LIBS
 
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show(x_min_timer + "   " + x_max_timer + "   " + y_min_timer + "   " + y_max_timer);
+            float a = -13.5f;
+            MessageBox.Show((a-a%10+10)+"");
         }
 
         //保存不同标样的浓度数据
@@ -876,6 +877,7 @@ namespace LIBS
                         g_bitmap_1.DrawLine(new Pen(Color.White, 1), locNowP1_1, locNowP2_1);
                         gg_1.DrawImage(myBitmap_1, 0, 0);
                         // 重绘图像补全空白处
+                        //clearPaint_1();
                         drawLine_Group_1(x, y);
 
                     }
@@ -912,6 +914,33 @@ namespace LIBS
                 float x_real = -1, y_real = -1;//当前鼠标的实验数据
                 x_real = pixToData_1_timer(x_pix, y_pix).X;
                 y_real = pixToData_1_timer(x_pix, y_pix).Y;
+                float x_real_show = x_real;
+                float y_real_show = y_real;
+
+                for (int i = 0; i < x.Length - 2; i++)
+                {
+                    if (x_real < x[i])
+                    {
+                        x_real_show = (float)x_init[i];
+                        y_real_show = (float)y_init[i];
+                        break;
+                    }
+                    else if (x_real > x[x.Length - 1])
+                    {
+                        x_real_show = (float)x[x.Length - 1];
+                        y_real_show = (float)y[x.Length - 1];
+                        break;
+                    }
+                    else
+                    {
+                        if ((x_real >= x[i]) && (x_real <= x[i + 1]))
+                        {
+                            x_real_show = (float)x[i];
+                            y_real_show = (float)y[i];
+                            break;
+                        }
+                    }
+                }
 
                 if ((x_real < x_min_timer) || (x_real > x_max_timer) || (y_real < y_min_timer) || (y_real > y_max_timer))
                 {
@@ -922,7 +951,7 @@ namespace LIBS
                 {
                     if ((e.X != locX) || (e.Y != LocY))//防止显示闪烁
                     {
-                        toolTip_1.Show(x_real + " , " + y_real + "", this.panel_XY, new Point(e.X + 5, e.Y - 28));
+                        toolTip_1.Show(x_real_show + " , " + y_real_show + "", this.panel_XY, new Point(e.X + 5, e.Y - 28));
                         locX = e.X;
                         LocY = e.Y;
                     }
@@ -934,7 +963,8 @@ namespace LIBS
                         g_bitmap_1.DrawLine(new Pen(Color.White, 1), locNowP1_1, locNowP2_1);
                         gg_1.DrawImage(myBitmap_1, 0, 0);
                         // 重绘图像补全空白处
-                        drawLine_Group_1(x, y);
+                        //drawLine_Group_1(x, y);
+                        drawLine_group_timer_1(x, y, x_min_timer, x_max_timer);
 
                     }
                     PointF p1 = new PointF(e.X, 0);
@@ -1053,7 +1083,7 @@ namespace LIBS
         {
             //动态添加一个定时器
             this.timer1.Enabled = true;//可以使用
-            this.timer1.Interval = 900;//定时时间为700毫秒
+            this.timer1.Interval = 1500;//定时时间为1500毫秒
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
 
             this.timer1.Start();//启动定时器
@@ -1076,12 +1106,14 @@ namespace LIBS
                 }
 
             }
+
             x_init = spec_data.read_wave_all;
             y_init = spec_data.read_spec_all_now;
             x = x_init;
             y = y_init;
 
-            drawLine_group_timer_1(x, y, x_min_timer, x_max_timer, y_min_timer, y_max_timer);
+            drawLine_group_timer_1(x, y, x_min_timer, x_max_timer);
+            
 
         }
 
@@ -1106,6 +1138,7 @@ namespace LIBS
         {
             this.timer1.Stop();
             ifStartTimer = false;
+            clearPaint_1();
         }
 
         //dataGridView4:单击cell响应事件
@@ -1301,6 +1334,11 @@ namespace LIBS
         }
 
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void panel_XY_Paint(object sender, PaintEventArgs e)
         {
 
         }
@@ -1739,17 +1777,17 @@ namespace LIBS
 
 
         //timer线程画坐标图
-        void drawLine_group_timer_1(double[] x,double[] y,double x_min,double x_max,double y_min,double y_max)
+        void drawLine_group_timer_1(double[] xx,double[] yy,double x_min,double x_max)
         {
             List<double> x_temp = new List<double>();
             List<double> y_temp = new List<double>();
 
-            for (int i = 0; i < x.Length; i++)
+            for (int i = 0; i < xx.Length; i++)
             {
-                if (x[i] >= x_min && x[i] <= x_max)
+                if (xx[i] >= x_min && xx[i] <= x_max)
                 {
-                    x_temp.Add(x[i]);
-                    y_temp.Add(y[i]);
+                    x_temp.Add(xx[i]);
+                    y_temp.Add(yy[i]);
                 }
             }
             x = x_temp.ToArray();
@@ -1789,10 +1827,16 @@ namespace LIBS
                 }
             }
 
+            //当前坐标轴x和y的取值范围
             x_min_1 = x_min;
             x_max_1 = x_max;
-            y_min_1 = y_min;
-            y_max_1 = y_max;
+            y_min_1 = y_l - y_l%10 - 10;//a-a%10-10
+            y_max_1 = y_h - y_h % 10 + 10;//a-a%10+10
+
+            x_min_timer = x_min_1;
+            x_max_timer = x_max_1;
+            y_min_timer = y_min_1;
+            y_max_timer = y_max_1;
 
             //根据x,y轴取值范围画坐标轴与刻度
             drawXY_1();
