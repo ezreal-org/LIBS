@@ -803,8 +803,8 @@ namespace LIBS
             {
                 x_ChangeBegin_1 = pixToData_1(e.X, e.Y).X;
                 y_ChangeBegin_1 = pixToData_1(e.X, e.Y).Y;
-                x_min_timer = x_ChangeBegin_1;
-                y_min_timer = y_ChangeBegin_1;
+                //x_min_timer = x_ChangeBegin_1;
+                //y_min_timer = y_ChangeBegin_1;
                 //按下鼠标画矩形逻辑
                 recStart_1.X = e.X;
                 recStart_1.Y = e.Y;
@@ -997,8 +997,8 @@ namespace LIBS
                 //获取终止点参数用于从新画图
                 x_ChangeEnd_1 = pixToData_1(e.X, e.Y).X;
                 y_ChangeEnd_1 = pixToData_1(e.X, e.Y).Y;
-                x_max_timer = x_ChangeEnd_1;
-                y_max_timer = y_ChangeEnd_1;
+                //x_max_timer = x_ChangeEnd_1;
+                //y_max_timer = y_ChangeEnd_1;
                 //MessageBox.Show(x_ChangeBegin_1 + "  " + y_ChangeBegin_1 + ";    " + x_ChangeEnd_1 + "   " + y_ChangeEnd_1);
 
                 //防止单击时重绘
@@ -1115,6 +1115,7 @@ namespace LIBS
             drawLine_group_timer_1(x, y, x_min_timer, x_max_timer);
             
 
+
         }
 
         //保存文件点击响应事件
@@ -1138,7 +1139,7 @@ namespace LIBS
         {
             this.timer1.Stop();
             ifStartTimer = false;
-            clearPaint_1();
+            //clearPaint_1();
         }
 
         //dataGridView4:单击cell响应事件
@@ -1606,27 +1607,31 @@ namespace LIBS
                     }
                 }
 
+                //确定x,y轴取值范围  (规则)
+                x_min_1 = (int)(x_l);
+                x_max_1 = (int)(x_h) + 1;
+                y_min_1 = y_l - y_l % 10 - 10;//a-a%10-10
+                y_max_1 = y_h - y_h % 10 + 10;//a-a%10+10
+
+                //确定x,y轴取值范围  (规则)
+                //if (y_l >= 0)
+                //    {
+                //        x_min_1 = (int)(x_l );
+                //        x_max_1 = (int)(x_h) + 1;
+                //        y_min_1 = (int)(y_l - y_l % 10);
+                //        y_max_1 = (int)(y_h) + 1;
+                //    }
+                //    else
+                //    {
+                //        x_min_1 = (int)(x_l );
+                //        x_max_1 = (int)(x_h) + 1;
+                //        //y_min_1 = (int)(y_l - y_l % 10);
+                //        y_max_1 = (int)(y_h) + 1;
+
+                //        y_min_1 = (int)(-((-y_l) - (-y_l) % 10 + 10));
+
+                //    }
                 
-                    //确定x,y轴取值范围  (规则)
-                    if (y_l >= 0)
-                    {
-                        x_min_1 = (int)(x_l );
-                        x_max_1 = (int)(x_h) + 1;
-                        y_min_1 = (int)(y_l - y_l % 10);
-                        y_max_1 = (int)(y_h) + 1;
-                    }
-                    else
-                    {
-                        x_min_1 = (int)(x_l );
-                        x_max_1 = (int)(x_h) + 1;
-                        //y_min_1 = (int)(y_l - y_l % 10);
-                        y_max_1 = (int)(y_h) + 1;
-
-                        y_min_1 = (int)(-((-y_l) - (-y_l) % 10 + 10));
-
-                    }
-                
-
                 x_min_timer = x_min_1;
                 x_max_timer = x_max_1;
                 y_min_timer = y_min_1;
@@ -1774,6 +1779,7 @@ namespace LIBS
             g_bitmap_3.Clear(Color.White);
             gg_3.DrawImage(myBitmap_3, 0, 0);
         }
+
 
 
         //timer线程画坐标图
