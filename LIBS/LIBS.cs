@@ -539,7 +539,7 @@ namespace LIBS
 
                     DataRow dr4 = dt4.NewRow();
 
-                    dr4[0] = spec_data.elements[k].sequece_index+1;
+                    dr4[0] = spec_data.elements[k].sequece_index;
                     dr4[1] = spec_data.elements[k].element;
                     dr4[2] = spec_data.elements[k].select_wave;
                     double[] realSpecWave = findWaveSpec_Range(spec_data.elements[k].select_wave, spec_data.elements[k].seek_peak_range);
@@ -615,11 +615,10 @@ namespace LIBS
                     ifExistElem = true;
                 }
             }
-
             if (!ifExistElem)
             {
                 //添加元素
-                spec_data.elements[spec_data.element_cnt].sequece_index = spec_data.element_cnt;
+                //spec_data.elements[spec_data.element_cnt].sequece_index = spec_data.element_cnt;
                 spec_data.elements[spec_data.element_cnt].element = select_element_now;
                 spec_data.elements[spec_data.element_cnt].label = select_element_now;
                 spec_data.elements[spec_data.element_cnt].select_wave = select_wave;
@@ -629,6 +628,12 @@ namespace LIBS
                 spec_data.elements[spec_data.element_cnt].peak_wave = select_wave;
                 spec_data.element_cnt++;
 
+
+                for (int i=0;i<spec_data.element_cnt;i++)
+                {
+                    spec_data.elements[i].sequece_index = i+1;
+                }
+
                 //重绘已选元素表
                 datagrid_control.draw_datagrid_select_element(dataGridView1, spec_data.elements, spec_data.element_cnt);
             }
@@ -636,16 +641,11 @@ namespace LIBS
             {
                 MessageBox.Show("该元素已存在");
             }
-
-
-
-            
         }
 
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
-            float a = -13.5f;
-            MessageBox.Show((a-a%10+10)+"");
+            MessageBox.Show(spec_data.elements.Length+"  "+spec_data.element_cnt);
         }
 
         //保存不同标样的浓度数据
@@ -1334,12 +1334,67 @@ namespace LIBS
             toolTip_3.Hide(this.panel3_XY);
         }
 
-        private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        
+
+        private void panel_XY_Paint(object sender, PaintEventArgs e)
         {
 
         }
 
-        private void panel_XY_Paint(object sender, PaintEventArgs e)
+
+        //把s2的值赋值给s1
+        void elemsTrans(select_element s1,select_element s2)
+        {
+            s1.label = s2.label;
+            s1.peak_wave = s2.peak_wave;
+            s1.seek_peak_range = s2.seek_peak_range;
+            s1.select_wave = s2.select_wave;
+            s1.sequece_index = s2.sequece_index;
+            s1.interval_end = s2.interval_end;
+            s1.interval_start = s2.interval_start;
+            s1.element = s2.element;
+        }
+
+        DialogResult dr;
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //double se= (double)dataGridView1.Rows[e.RowIndex].Cells[1].Value;//记录下所选择的波长
+            int index_hang = e.RowIndex;
+            int index_lie = e.ColumnIndex;
+            if ((index_hang>-1)&&(index_lie>-1))
+            {
+
+                dr= MessageBox.Show("是否删除双击行的数据？", "删除确认", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (dr == DialogResult.OK)
+                {
+                    for (int i = index_hang; i < spec_data.element_cnt - 1; i++)
+                    {
+                        elemsTrans(spec_data.elements[i], spec_data.elements[i + 1]);
+                        //spec_data.elements[i]= spec_data.elements[i + 1];指针问题，血的教训！！！
+                    }
+                    spec_data.element_cnt--;
+                    spec_data.elements[spec_data.element_cnt].select_wave = 0;
+
+                    for (int i = 0; i < spec_data.element_cnt; i++)
+                    {
+                        spec_data.elements[i].sequece_index = i + 1;
+                    }
+
+                    datagrid_control.draw_datagrid_select_element(dataGridView1, spec_data.elements, spec_data.element_cnt);
+                }
+                else{}
+
+
+
+                
+
+
+
+            }//end:if ((index_hang>-1)&&(index_lie>-1))
+
+        }
+
+        private void dataGridView4_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
