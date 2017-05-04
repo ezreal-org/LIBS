@@ -496,7 +496,7 @@ namespace LIBS
                 else
                     equation_chart.add_point_now(chart2, this_read_concentration_average, this_read_strenth_average, Color.Green, MarkerStyle.Triangle);
                 datagrid_control.draw_datagrid_snapshot(dgv_thisshot, this_read_integration_concentrations, this_read_integration_strenths);
-                summary_info.draw_summary_info(l_info, this_read_concentration_average, this_read_strenth_average);
+                summary_info.draw_summary_info(l_info, this_read_concentration_average, this_read_strenth_average,this_read_integration_strenths,this_read_integration_concentrations);
             }
         }
 
@@ -645,7 +645,10 @@ namespace LIBS
 
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(spec_data.elements.Length+"  "+spec_data.element_cnt);
+            //double[] dd = { 1,2,3};
+            //double a=data_util.calc_SD(dd);
+            //double b=data_util.calc_BSD(dd);
+            //MessageBox.Show(a+"   "+b);
         }
 
         //保存不同标样的浓度数据
@@ -1531,7 +1534,7 @@ namespace LIBS
         //画tabpage1上的坐标点
         void drawDot_1(PointF p)
         {
-            g_bitmap_1.FillEllipse(Brushes.Red, p.X, p.Y, 2.5f, 2.5f);
+            g_bitmap_1.FillEllipse(Brushes.Green, p.X, p.Y, 1.5f, 1.5f);
             gg_1.DrawImage(myBitmap_1, 0, 0);
         }
 

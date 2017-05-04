@@ -319,7 +319,11 @@ namespace LIBS
                 else
                     equation_chart.add_point_now(chart2, this_read_concentration_average, this_read_strenth_average, Color.Green, MarkerStyle.Triangle);
                 datagrid_control.draw_datagrid_snapshot(dataGridView9, this_read_integration_concentrations, this_read_integration_strenths);
-                summary_info.draw_summary_info(label_info, this_read_concentration_average, this_read_strenth_average);
+
+                //------------------------------------------------
+                double fancha = 0, biaozhuncha = 0;
+                
+                summary_info.draw_summary_info(label_info, this_read_concentration_average, this_read_strenth_average,this_read_integration_strenths,this_read_integration_concentrations);
             }
         }
 

@@ -8,13 +8,14 @@ namespace LIBS.ui_control
 {
     class summary_info
     {
-        public static void draw_summary_info(Label label_info, double average_concentration, double average_strenth)
+        //@haze:添加两个参数：强度数组和浓度数组用于计算方差和标准差
+        public static void draw_summary_info(Label label_info, double average_concentration, double average_strenth,double[] array_qiandu,double[] array_londu)
         {
             label_info.Text = "" + "        " + "浓度" + "        " + "强度" + "\r\n";
             label_info.Text = label_info.Text + "平均值：" + Math.Round(average_concentration, 3) + "       " + Math.Round(average_strenth, 3) + "\r\n";
-            //label_info.Text = label_info.Text + "SD:" + "\t" + Math.Round(sampleSD[es, ew, 0], 3) + "\t" + Math.Round(sampleSD[es, ew, 1], 3) + "\r\n";
-            //label_info.Text = label_info.Text + "RSD(%):" + "\t" + Math.Round(sampleRSD[es, ew, 0], 3) + "\t" + Math.Round(sampleRSD[es, ew, 1], 3) + "\r\n";
-            //label_info.Text = label_info.Text + "背景:" + "\t" + "N/A" + "\t" + Math.Round(standardSpeArray[0, 1, ew], 3);
+            //@haze:添加方差和标准差的显示
+            label_info.Text = label_info.Text + "标准差: " + "\t" + Math.Round(data_util.calc_SD(array_londu), 3) + "       " + Math.Round(data_util.calc_SD(array_qiandu), 3) + "\r\n";
+            label_info.Text = label_info.Text + " 方差:  " + "\t" + Math.Round(data_util.calc_BSD(array_londu), 3) + "       " + Math.Round(data_util.calc_BSD(array_qiandu), 3) + "\r\n";
         }
     }
 }

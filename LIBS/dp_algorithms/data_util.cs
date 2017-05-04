@@ -127,6 +127,44 @@ namespace LIBS
             return peak_index;
         }
 
+        //计算标准差
+        public static double calc_SD(double[] data)
+        {
+            double re = 0;
+            double sum = 0;
+            double avg = 0;
+            for (int i=0;i<data.Length;i++)
+            {
+                sum += data[i];
+            }
+            avg = sum / data.Length;
+            for (int i=0;i<data.Length;i++)
+            {
+                re += (data[i] - avg) * (data[i] - avg);
+            }
+            re = re / data.Length;
+            re = Math.Sqrt(re);
+            return re;
+        }
+
+        //计算方差
+        public static double calc_BSD(double[] data)
+        {
+            double re = 0;
+            double sum = 0;
+            double avg = 0;
+            for (int i = 0; i < data.Length; i++)
+            {
+                sum += data[i];
+            }
+            avg = sum / data.Length;
+            for (int i = 0; i < data.Length; i++)
+            {
+                re += (data[i] - avg) * (data[i] - avg);
+            }
+            re = re / data.Length;
+            return re;
+        }
 
     }
 }

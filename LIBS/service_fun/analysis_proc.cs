@@ -91,7 +91,7 @@ namespace LIBS.service_fun
             else
                 equation_chart.add_point_now(chart2, this_read_concentration_average, this_read_strenth_average, Color.Green, MarkerStyle.Triangle);
             datagrid_control.draw_datagrid_snapshot(dataGridView9, this_read_integration_concentrations, this_read_integration_strenths);
-            summary_info.draw_summary_info(label_info, this_read_concentration_average, this_read_strenth_average);
+            summary_info.draw_summary_info(label_info, this_read_concentration_average, this_read_strenth_average,this_read_integration_strenths,this_read_integration_concentrations);
         }
 
         public static void read_spec_click(NumericUpDown textbox_average_times, spec_wrapper wrapper, DataGridView dgv, int row_index, spec_metadata spec_obj)
