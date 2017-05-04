@@ -741,12 +741,12 @@ namespace LIBS
             }
             int average_times = int.Parse(textBox8.Text);
             wrapper.set_times_for_average(average_times);
-            int intergration_time1 = int.Parse(textBox1.Text);
-            int intergration_time2 = int.Parse(textBox2.Text);
-            int intergration_time3 = int.Parse(textBox3.Text);
-            int intergration_time4 = int.Parse(textBox4.Text);
-            int intergration_time5 = int.Parse(textBox5.Text);
-            int intergration_time6 = int.Parse(textBox6.Text);
+            int intergration_time1 = int.Parse(textBox1.Text)*1000;
+            int intergration_time2 = int.Parse(textBox2.Text)*1000;
+            int intergration_time3 = int.Parse(textBox3.Text)*1000;
+            int intergration_time4 = int.Parse(textBox4.Text)*1000;
+            int intergration_time5 = int.Parse(textBox5.Text)*1000;
+            int intergration_time6 = int.Parse(textBox6.Text)*1000;
             wrapper.set_intergration_time(0, intergration_time1);
             wrapper.set_intergration_time(1, intergration_time2);
             wrapper.set_intergration_time(2, intergration_time3);
@@ -1383,12 +1383,6 @@ namespace LIBS
                     datagrid_control.draw_datagrid_select_element(dataGridView1, spec_data.elements, spec_data.element_cnt);
                 }
                 else{}
-
-
-
-                
-
-
 
             }//end:if ((index_hang>-1)&&(index_lie>-1))
 
