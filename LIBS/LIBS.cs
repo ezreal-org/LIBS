@@ -34,7 +34,6 @@ namespace LIBS
         static double x_min_1, x_max_1, y_min_1, y_max_1;//tabpage1的坐标图像的x,y取值范围
         static double x_min_3, x_max_3, y_min_3, y_max_3;//tabpage3的坐标图像的x,y取值范围
         static double x_min_3_init, x_max_3_init;
-        int x_count_1 = 10, y_count_1 = 10;
         bool ifExistPlot_1 = false;//判断tabpage1的坐标图像是否已经绘制
 
         Bitmap myBitmap_1;
@@ -332,7 +331,7 @@ namespace LIBS
             }
             catch (Exception e1)
             {
-                //MessageBox.Show("积分区间选择异常");
+                MessageBox.Show("积分区间选择异常"+e1);
                 return;
             }
             //调整积分区间需要知道是在操作哪一个元素
@@ -404,7 +403,7 @@ namespace LIBS
             }
             catch (Exception e1)
             {
-                // MessageBox.Show("选择积分区间异常");
+                 MessageBox.Show("选择积分区间异常"+e1);
                 return;
             }
             for (int i = 0; i < 1000; i++)
@@ -727,6 +726,10 @@ namespace LIBS
             if (!wrapper.connect())
             {
                 MessageBox.Show("设备连接失败");
+            }else if (wrapper.connect())
+            {
+                label6.Text = "设备连接情况：连接成功";
+                label6.BackColor = Color.Lime;
             }
             spec_data.read_wave_all = wrapper.get_wave_all();
         }
@@ -797,6 +800,8 @@ namespace LIBS
         private void button4_Click(object sender, EventArgs e)
         {
             wrapper.disconnect();
+            label6.Text = "设备连接情况：未连接";
+            label6.BackColor = Color.Gray;
         }
 
         //------------------------------------------------------------------------------
@@ -1397,6 +1402,12 @@ namespace LIBS
         }
 
         private float locX_3 = 0, LocY_3 = 0;//消除tooltip闪烁问题，如果鼠标位置与当前locX，LocY位置相同则不刷新
+
+        private void dgv_thisshot_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
         private void panel3_XY_MouseMove(object sender, MouseEventArgs e)
         {
             if (ifExistPlot_3)

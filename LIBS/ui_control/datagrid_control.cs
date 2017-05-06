@@ -370,7 +370,6 @@ namespace LIBS.ui_control
                 dtData.Columns.Add(elements[i].element + "(" + elements[i].select_wave.ToString() + ")");
             }
             //设置行
-            int t = 0;
             DataRow drData;
             string concentration_unit = "ppm"; //这个可以放在标样对不同元素的浓度单位中
             drData = dtData.NewRow();

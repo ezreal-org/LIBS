@@ -157,7 +157,7 @@ namespace LIBS
             }
             catch (Exception e1)
             {
-                //MessageBox.Show("积分区间选择异常");
+                MessageBox.Show("积分区间选择异常"+e1);
                 return;
             }
             //调整积分区间需要知道是在操作哪一个元素
@@ -229,7 +229,7 @@ namespace LIBS
             }
             catch (Exception e1)
             {
-               // MessageBox.Show("选择积分区间异常");
+               MessageBox.Show("选择积分区间异常:"+e1);
                 return;
             }
             for (int i = 0; i < 1000; i++)
@@ -319,10 +319,6 @@ namespace LIBS
                 else
                     equation_chart.add_point_now(chart2, this_read_concentration_average, this_read_strenth_average, Color.Green, MarkerStyle.Triangle);
                 datagrid_control.draw_datagrid_snapshot(dataGridView9, this_read_integration_concentrations, this_read_integration_strenths);
-
-                //------------------------------------------------
-                double fancha = 0, biaozhuncha = 0;
-                
                 summary_info.draw_summary_info(label_info, this_read_concentration_average, this_read_strenth_average,this_read_integration_strenths,this_read_integration_concentrations);
             }
         }

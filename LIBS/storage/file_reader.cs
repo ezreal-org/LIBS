@@ -26,7 +26,7 @@ namespace LIBS.storage
             }
             catch (Exception e)
             {
-                MessageBox.Show("文件读取异常");
+                MessageBox.Show("文件读取异常:"+e);
             }
 
             return filedata;
