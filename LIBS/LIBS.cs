@@ -734,6 +734,8 @@ namespace LIBS
             spec_data.read_wave_all = wrapper.get_wave_all();
         }
 
+        int device_update_time = 0;
+
         //设置按钮点击响应事件
         private void button2_Click(object sender, EventArgs e)
         {
@@ -759,6 +761,8 @@ namespace LIBS
             wrapper.set_intergration_time(3, intergration_time4);
             wrapper.set_intergration_time(4, intergration_time5);
             wrapper.set_intergration_time(5, intergration_time6);
+
+            device_update_time = (intergration_time1+ intergration_time2+ intergration_time3+ intergration_time4+ intergration_time5+ intergration_time6) / 1000;
         }
 
         //读取按钮点击响应事件
@@ -822,6 +826,7 @@ namespace LIBS
             }
         }
 
+        float x_now_show = -1;//优化垂直轴重绘减少闪烁
         private float locX = 0, LocY = 0;//消除tooltip闪烁问题，如果鼠标位置与当前locX，LocY位置相同则不刷新
         private void panel_XY_MouseMove(object sender, MouseEventArgs e)
         {
@@ -836,10 +841,10 @@ namespace LIBS
 
                 for (int i=0;i<x.Length-2;i++)
                 {
-                    if (x_real<x[i])
+                    if (x_real<x[0])
                     {
-                        x_real_show = (float)x_init[i];
-                        y_real_show = (float)y_init[i];
+                        x_real_show = (float)x[i];
+                        y_real_show = (float)y[i];
                         break;
                     }
                     else if (x_real>x[x.Length-1])
@@ -872,14 +877,14 @@ namespace LIBS
                     if ((e.X != locX) || (e.Y != LocY))//防止显示闪烁
                     {
                         toolTip_1.Show(x_real_show + " , " + y_real_show + "", this.panel_XY, new Point(e.X + 5, e.Y - 28));
-                        drawDot_1(convert_1(x_real_show, y_real_show));
+                        //drawDot_1(convert_1(x_real_show, y_real_show));
 
                         locX = e.X;
                         LocY = e.Y;
                     }
 
                     // 鼠标点显示垂直轴
-                    if (locNowBoolean_1)
+                    if (locNowBoolean_1 && (x_now_show!=x_real_show))
                     {
                         //如果locNowBoolean为真，说明已经画过垂直线，则需要先擦除之前的垂直线
                         g_bitmap_1.DrawLine(new Pen(Color.White, 1), locNowP1_1, locNowP2_1);
@@ -889,10 +894,14 @@ namespace LIBS
                         drawLine_Group_1(x, y);
 
                     }
-                    PointF p1 = new PointF(e.X, 0);
-                    PointF p2 = new PointF(e.X, (float)(panel_XY.Height - move));
+                    //PointF p1 = new PointF(e.X, 0);
+                    //PointF p2 = new PointF(e.X, (float)(panel_XY.Height - move));
+
+                    PointF p1 = new PointF(convert_1(x_real_show,10f).X, 0);
+                    PointF p2 = new PointF(convert_1(x_real_show, 10f).X, (float)(panel_XY.Height - move));
                     Pen mPen = new Pen(Color.Blue, 1);
                     g_bitmap_1.DrawLine(mPen, p1, p2);
+                    x_now_show = x_real_show;
                     gg_1.DrawImage(myBitmap_1, 0, 0);
                     locNow_1.X = e.X;
                     locNow_1.Y = e.Y;
@@ -1091,7 +1100,15 @@ namespace LIBS
         {
             //动态添加一个定时器
             this.timer1.Enabled = true;//可以使用
-            this.timer1.Interval = 1500;//定时时间为1500毫秒
+            if (device_update_time<1500)
+            {
+                this.timer1.Interval = 1500;//定时时间为1500毫秒
+            }
+            else
+            {
+                this.timer1.Interval = device_update_time;
+            }
+            
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
 
             this.timer1.Start();//启动定时器
@@ -1121,8 +1138,6 @@ namespace LIBS
             y = y_init;
 
             drawLine_group_timer_1(x, y, x_min_timer, x_max_timer);
-            
-
 
         }
 
@@ -1222,15 +1237,15 @@ namespace LIBS
 
             for (int i = 0; i <= count; i++)
             {
-                PointF py1 = new PointF((float)(LenX * i / count + move), (float)(this.panel_XY.Height - move - 4));
+                PointF py1 = new PointF((float)(LenX * i / count + move), (float)(this.panel_XY.Height - move + 5));
                 PointF py2 = new PointF((float)(LenX * i / count + move), (float)(this.panel_XY.Height - move));
                 double va = Math.Round((maxX - minX) * i / count + minX, 3); //刻度值取3位小数
                 string sy = va.ToString();
                 g_bitmap_1.DrawLine(new Pen(Brushes.Black, 2), py1, py2);
-                g_bitmap_1.DrawString(sy, new Font("宋体", 8f), Brushes.Black, new PointF((float)(LenX * i / count + move), (float)(this.panel_XY.Height - move / 1.1f)));
+                g_bitmap_1.DrawString(sy, new Font("宋体", 8f), Brushes.Black, new PointF((float)(LenX * i / count + move-7), (float)(this.panel_XY.Height - move / 1.1f)));
             }
             Pen pen = new Pen(Color.Black, 1);
-            g_bitmap_1.DrawString("X轴", new Font("宋体 ", 8f), Brushes.Black, new PointF((float)(this.panel_XY.Width - move / 1.5f), (float)(this.panel_XY.Height - move / 1.5f)));
+            g_bitmap_1.DrawString("波长", new Font("宋体 ", 9f), Brushes.Red, new PointF((float)(this.panel_XY.Width/2), (float)(this.panel_XY.Height - move / 1.5f+8)));
             gg_1.DrawImage(myBitmap_1, 0, 0);
         }
 
@@ -1240,15 +1255,15 @@ namespace LIBS
 
             for (int i = 0; i <= count; i++)
             {
-                PointF py1 = new PointF((float)(LenX * i / count + move), (float)(this.panel3_XY.Height - move - 4));
+                PointF py1 = new PointF((float)(LenX * i / count + move), (float)(this.panel3_XY.Height - move +5));
                 PointF py2 = new PointF((float)(LenX * i / count + move), (float)(this.panel3_XY.Height - move));
                 double va = Math.Round((maxX - minX) * i / count + minX, 3); //刻度值取3位小数
                 string sy = va.ToString();
                 g_bitmap_3.DrawLine(new Pen(Brushes.Black, 2), py1, py2);
-                g_bitmap_3.DrawString(sy, new Font("宋体", 8f), Brushes.Black, new PointF((float)(LenX * i / count + move), (float)(this.panel3_XY.Height - move / 1.1f)));
+                g_bitmap_3.DrawString(sy, new Font("宋体", 8f), Brushes.Black, new PointF((float)(LenX * i / count + move-7), (float)(this.panel3_XY.Height - move / 1.1f)));
             }
             Pen pen = new Pen(Color.Black, 1);
-            g_bitmap_3.DrawString("X轴", new Font("宋体 ", 8f), Brushes.Black, new PointF((float)(this.panel3_XY.Width - move / 1.5f), (float)(this.panel3_XY.Height - move / 1.5f)));
+            g_bitmap_3.DrawString("波长", new Font("宋体 ", 8f), Brushes.Red, new PointF((float)(this.panel3_XY.Width/2), (float)(this.panel3_XY.Height - move / 1.5f+8)));
             gg_3.DrawImage(myBitmap_3, 0, 0);
         }
 
@@ -1261,17 +1276,17 @@ namespace LIBS
             for (int i = 0; i <= count; i++)
             {
                 PointF px1 = new PointF((float)move, (float)(LenY * i / count + move));
-                PointF px2 = new PointF((float)(move + 4), (float)(LenY * i / count + move));
+                PointF px2 = new PointF((float)(move - 4), (float)(LenY * i / count + move));
                 double va = Math.Round(maxY - (maxY - minY) * i / count, 3); //刻度值取四位小数
                 string sx = va.ToString();
                 g_bitmap_1.DrawLine(new Pen(Brushes.Black, 2), px1, px2);
                 StringFormat drawFormat = new StringFormat();
                 drawFormat.Alignment = StringAlignment.Far;
                 drawFormat.LineAlignment = StringAlignment.Center;
-                g_bitmap_1.DrawString(sx, new Font("宋体", 8f), Brushes.Black, new PointF((float)(move / 1.2f), (float)(LenY * i / count + move * 1.1f)), drawFormat);
+                g_bitmap_1.DrawString(sx, new Font("宋体", 8f), Brushes.Black, new PointF((float)(move / 1.2f), (float)(LenY * i / count + move * 1.1f-3)), drawFormat);
             }
             Pen pen = new Pen(Color.Black, 1);
-            g_bitmap_1.DrawString("Y轴", new Font("宋体 ", 8f), Brushes.Black, new PointF((float)(move / 3), (float)(move / 2f)));
+            g_bitmap_1.DrawString("光强", new Font("宋体 ", 9f), Brushes.Red, new PointF((float)(move / 3), (float)(move / 2f-5)));
             gg_1.DrawImage(myBitmap_1, 0, 0);
         }
 
@@ -1292,7 +1307,7 @@ namespace LIBS
                 g_bitmap_3.DrawString(sx, new Font("宋体", 8f), Brushes.Black, new PointF((float)(move / 1.2f), (float)(LenY * i / count + move * 1.1f)), drawFormat);
             }
             Pen pen = new Pen(Color.Black, 1);
-            g_bitmap_3.DrawString("Y轴", new Font("宋体 ", 8f), Brushes.Black, new PointF((float)(move / 3), (float)(move / 2f)));
+            g_bitmap_3.DrawString("光强", new Font("宋体 ", 8f), Brushes.Black, new PointF((float)(move / 3), (float)(move / 2f)));
             gg_3.DrawImage(myBitmap_3, 0, 0);
         }
 
@@ -1408,6 +1423,7 @@ namespace LIBS
 
         }
 
+        float x_now_show_3= -1;
         private void panel3_XY_MouseMove(object sender, MouseEventArgs e)
         {
             if (ifExistPlot_3)
@@ -1459,7 +1475,7 @@ namespace LIBS
                     }
 
                     // 鼠标点显示垂直轴
-                    if (locNowBoolean_3)
+                    if (locNowBoolean_3 && (x_now_show_3 != x_real_3_show))
                     {
                         //如果locNowBoolean为真，说明已经画过垂直线，则需要先擦除之前的垂直线
                         g_bitmap_3.DrawLine(new Pen(Color.White, 1), locNowP1_3, locNowP2_3);
@@ -1468,11 +1484,12 @@ namespace LIBS
                         drawLine_Group_3(x_tabpage3_array, y_tabpage3_array);
                     }
 
-                    PointF p1 = new PointF(e.X, 0);
-                    PointF p2 = new PointF(e.X, (float)(panel3_XY.Height - move));
+                    PointF p1 = new PointF(convert_3(x_real_3_show,10f).X, 0);
+                    PointF p2 = new PointF(convert_3(x_real_3_show, 10f).X, (float)(panel3_XY.Height - move));
                     Pen mPen = new Pen(Color.Blue, 1);
                     g_bitmap_3.DrawLine(mPen, p1, p2);
                     gg_3.DrawImage(myBitmap_3, 0, 0);
+                    x_now_show_3 = x_real_3_show;
                     locNow_3.X = e.X;
                     locNow_3.Y = e.Y;
                     locNowP1_3 = p1;
@@ -1715,14 +1732,14 @@ namespace LIBS
                 else
                 {
                     //先把图画在内存中的bitmap再画在插件上
-                    Pen myPen = new Pen(Color.Green, 1);
+                    Pen myPen = new Pen(Color.Green, 1f);
                     for (int i = 0; i < n - 1; i++)
                     {
                         //drawLine_twoPoint(convert(pGroup[i].X, pGroup[i].Y), convert(pGroup[i + 1].X, pGroup[i + 1].Y));
                         PointF p1 = convert_1(pGroup[i].X, pGroup[i].Y);
                         PointF p2 = convert_1(pGroup[i + 1].X, pGroup[i + 1].Y);
-                        g_bitmap_1.FillEllipse(Brushes.Green, p1.X, p1.Y, 2f, 2f);
-                        g_bitmap_1.FillEllipse(Brushes.Green, p2.X, p2.Y, 2f, 2f);
+                        g_bitmap_1.FillEllipse(Brushes.Green, p1.X, p1.Y, 1f, 1f);
+                        g_bitmap_1.FillEllipse(Brushes.Green, p2.X, p2.Y, 1f, 1f);
                         g_bitmap_1.DrawLine(myPen, p1, p2);
 
                     }
@@ -1817,13 +1834,11 @@ namespace LIBS
                         //drawLine_twoPoint(convert(pGroup[i].X, pGroup[i].Y), convert(pGroup[i + 1].X, pGroup[i + 1].Y));
                         PointF p1 = convert_3(pGroup[i].X, pGroup[i].Y);
                         PointF p2 = convert_3(pGroup[i + 1].X, pGroup[i + 1].Y);
-                        g_bitmap_3.FillEllipse(Brushes.Green, p1.X, p1.Y, 2f, 2f);
-                        g_bitmap_3.FillEllipse(Brushes.Green, p2.X, p2.Y, 2f, 2f);
+                        g_bitmap_3.FillEllipse(Brushes.Green, p1.X, p1.Y, 1f, 1f);
+                        g_bitmap_3.FillEllipse(Brushes.Green, p2.X, p2.Y, 1f, 1f);
                         g_bitmap_3.DrawLine(myPen, p1, p2);
-
                     }
                     gg_3.DrawImage(myBitmap_3, 0, 0);
-
                 }
             }
 
