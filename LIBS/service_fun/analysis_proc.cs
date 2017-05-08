@@ -193,7 +193,7 @@ namespace LIBS.service_fun
             concentration = new double[standard_cnt]; //浓度
             for (int j = 0; j < standard_cnt; j++)
             {
-                concentration[j] = standards[j].standard_ppm[element.sequece_index];
+                concentration[j] = standards[j].standard_ppm[element.sequece_index-1];
             }
             LinearFit.LfReValue equation = LinearFit.linearFitFunc(concentration, standards_integration_average_strenth, standard_cnt);
 
