@@ -37,6 +37,8 @@ namespace LIBS.ui_control
                 dt8.Columns.Add(elements[i].element + "(" + elements[i].select_wave + ")", typeof(string));
             }
 
+
+
             //行1 标准样本的数据显示
             for (int i = 0; i < standard_cnt; i++)
             {
@@ -53,7 +55,7 @@ namespace LIBS.ui_control
                 }
                 for (int j = 0; j < element_cnt; j++)
                 {
-                    dr8[j + 3] = Math.Round(standard_val[i, j], 1);
+                    dr8[j + 3] = Math.Round(standard_val[i, j], 7);
 
                 }
                 dt8.Rows.Add(dr8);
@@ -234,8 +236,8 @@ namespace LIBS.ui_control
             {
                 DataRow dr9 = dt9.NewRow();
                 dr9[0] = (i + 1).ToString();
-                dr9[1] = Math.Round(concentration[i], 3);
-                dr9[2] = Math.Round(strenth[i], 3);
+                dr9[1] = Math.Round(concentration[i], 7);
+                dr9[2] = Math.Round(strenth[i], 7);
                 dt9.Rows.Add(dr9);
             }
             dgv.DataSource = dt9;

@@ -14,7 +14,7 @@ namespace LIBS.device_driver
         public int cnt_of_devices;
         public int []map_index_waverange2device; //逻辑设备索引到实际设备索引的映射
         public int build_num; //记录第几次读取
-        public bool is_test_model; //是否是测试模式
+        public static  bool is_test_model; //是否是测试模式
         private double[] wave_all;
         private double[,] wave_array;
         private int[] channel_pixels;

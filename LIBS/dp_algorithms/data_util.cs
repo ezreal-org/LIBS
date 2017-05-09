@@ -148,7 +148,7 @@ namespace LIBS
         }
 
         //计算方差
-        public static double calc_BSD(double[] data)
+        public static double calc_RSD(double[] data)
         {
             double re = 0;
             double sum = 0;
@@ -163,6 +163,8 @@ namespace LIBS
                 re += (data[i] - avg) * (data[i] - avg);
             }
             re = re / data.Length;
+            re = Math.Sqrt(re);
+            re = re / avg * 100;
             return re;
         }
 

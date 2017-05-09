@@ -29,8 +29,10 @@ namespace LIBS.storage
         public int standard_index; // 0号位置留给空白标样
         public string standard_label;
         public double[] standard_ppm;
+       // public int[] standard_danwei;//
         public int average_times;
         public bool is_readed;
+
     }
     //样本序列
     [Serializable]

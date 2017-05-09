@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -103,6 +104,14 @@ namespace LIBS
             spec_data.standards = new standard[20];
             spec_data.elements = new select_element[20];
             spec_data.env_spec = new double[10418];
+
+
+
+            if (File.Exists(@"config.txt"))
+            {
+                //设置默认设备参数
+                auto_set_configure(@"config.txt");
+            }
 
             for (int i = 0; i < 20; i++)
             {
@@ -644,10 +653,7 @@ namespace LIBS
 
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
-            //double[] dd = { 1,2,3};
-            //double a=data_util.calc_SD(dd);
-            //double b=data_util.calc_BSD(dd);
-            //MessageBox.Show(a+"   "+b);
+            
         }
 
         //保存不同标样的浓度数据
@@ -739,6 +745,8 @@ namespace LIBS
         //设置按钮点击响应事件
         private void button2_Click(object sender, EventArgs e)
         {
+            write_configure(@"config.txt");
+            
             if (checkBox1.Checked)
             {
                 wrapper.set_correct_for_electrical_dart(1);
@@ -1178,6 +1186,19 @@ namespace LIBS
         //dataGridView4:双击cell响应事件
         private void dataGridView4_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            //调取新数据
+            spec_data.read_spec_all_now = wrapper.get_spec_all();
+            // @增加扣除本底
+            if (radioButton_subbase.Checked)
+            {
+                for (int i = 0; i < spec_data.read_spec_all_now.Length; i++)
+                {
+                    spec_data.read_spec_all_now[i] -= spec_data.env_spec[i];
+                }
+
+            }
+            x_init = spec_data.read_wave_all;
+            y_init = spec_data.read_spec_all_now;
             if (e.RowIndex!=-1)
             {
                 //MessageBox.Show(e.RowIndex + "  " + e.ColumnIndex);
@@ -1424,6 +1445,12 @@ namespace LIBS
         }
 
         float x_now_show_3= -1;
+
+        private void textBox1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
         private void panel3_XY_MouseMove(object sender, MouseEventArgs e)
         {
             if (ifExistPlot_3)
@@ -1553,6 +1580,24 @@ namespace LIBS
                 }
 
 
+            }
+        }
+
+        private void panel5_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        //测试功能复选框响应事件
+        private void checkBox91_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox91.CheckState==CheckState.Checked)
+            {
+                spec_wrapper.is_test_model = true;
+            }
+            else if(checkBox91.CheckState == CheckState.Unchecked)
+            {
+                spec_wrapper.is_test_model = false;
             }
         }
 
@@ -2003,6 +2048,91 @@ namespace LIBS
                 }
             }
             return t;
+        }
+
+
+        void auto_set_configure(string path)
+        {
+            int[] i_array = read_configure(path);
+            textBox1.Text = i_array[0]+"";
+            textBox2.Text = i_array[1] + "";
+            textBox3.Text = i_array[2] + "";
+            textBox4.Text = i_array[3] + "";
+            textBox5.Text = i_array[4] + "";
+            textBox6.Text = i_array[5] + "";
+            textBox8.Text = i_array[6] + "";
+            if (i_array[7]==0)
+            {
+                checkBox1.CheckState = CheckState.Unchecked;
+            }
+            else
+            {
+                checkBox1.CheckState = CheckState.Checked;
+            }
+
+        }
+
+        public static int[] read_configure(string path)
+        {
+            int[] configure_data = new int[10];
+            int index = 0;
+            string rd;
+            try
+            {
+                StreamReader SReader0 = new StreamReader(path, Encoding.Default);
+                while ((rd = SReader0.ReadLine()) != null)
+                {
+                    configure_data[index] = Convert.ToInt16(rd);
+                    index++;
+                }
+                SReader0.Close();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("文件读取异常:" + e);
+            }
+
+            return configure_data;
+        }
+
+
+        public void write_configure(string path)
+        {
+            FileStream fs = new FileStream(path, FileMode.Create);
+            StreamWriter sw = new StreamWriter(fs);
+            int checkbok_andianliu = -1;
+            if (checkBox1.CheckState == CheckState.Checked)
+            {
+                checkbok_andianliu = 1;
+            }
+            else
+            {
+                checkbok_andianliu = 0;
+            }
+            try {
+
+                //开始写入
+                sw.WriteLine(textBox1.Text);
+                sw.WriteLine(textBox2.Text);
+                sw.WriteLine(textBox3.Text);
+                sw.WriteLine(textBox4.Text);
+                sw.WriteLine(textBox5.Text);
+                sw.WriteLine(textBox6.Text);
+                sw.WriteLine(textBox8.Text);
+                sw.WriteLine(checkbok_andianliu+"");
+
+                //清空缓冲区
+                sw.Flush();
+                //关闭流
+                sw.Close();
+                fs.Close();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("配置文件写入失败："+e);
+            }
+            
+        
         }
 
     }//(end) public partial class LIBS : Form
