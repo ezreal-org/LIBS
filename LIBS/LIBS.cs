@@ -1601,6 +1601,112 @@ namespace LIBS
             }
         }
 
+
+        private float locX_show_wave = 0, LocY_show_wave = 0;//消除tooltip闪烁问题，如果鼠标位置与当前locX，LocY位置相同则不刷新
+        ToolTip toolTip_14 = new ToolTip();
+        private void label14_MouseMove(object sender, MouseEventArgs e)
+        {
+            if ((e.X != locX_show_wave) || (e.Y != LocY_show_wave))//防止显示闪烁
+            {
+                toolTip_14.Show("A -- B ", this.label14, new Point(e.X + 20, e.Y));
+                locX_show_wave = e.X;
+                LocY_show_wave = e.Y;
+            }
+                
+        }
+
+        private void label14_MouseLeave(object sender, EventArgs e)
+        {
+            toolTip_14.Hide(this.label14);
+        }
+
+        ToolTip toolTip_15 = new ToolTip();
+        private void label15_MouseMove(object sender, MouseEventArgs e)
+        {
+
+            if ((e.X != locX_show_wave) || (e.Y != LocY_show_wave))//防止显示闪烁
+            {
+                toolTip_15.Show("A -- B ", this.label15, new Point(e.X + 20, e.Y));
+                locX_show_wave = e.X;
+                LocY_show_wave = e.Y;
+            }
+
+            
+        }
+
+        private void label15_MouseLeave(object sender, EventArgs e)
+        {
+            toolTip_15.Hide(this.label15);
+        }
+
+        ToolTip toolTip_16 = new ToolTip();
+        private void label16_MouseMove(object sender, MouseEventArgs e)
+        {
+            
+            if ((e.X != locX_show_wave) || (e.Y != LocY_show_wave))//防止显示闪烁
+            {
+                toolTip_16.Show("A -- B ", this.label16, new Point(e.X + 20, e.Y));
+                locX_show_wave = e.X;
+                LocY_show_wave = e.Y;
+            }
+        }
+
+        private void label16_MouseLeave(object sender, EventArgs e)
+        {
+            toolTip_16.Hide(this.label16);
+        }
+
+        ToolTip toolTip_17 = new ToolTip();
+        private void label17_MouseMove(object sender, MouseEventArgs e)
+        {
+            
+            if ((e.X != locX_show_wave) || (e.Y != LocY_show_wave))//防止显示闪烁
+            {
+                toolTip_17.Show("A -- B ", this.label17, new Point(e.X + 20, e.Y));
+                locX_show_wave = e.X;
+                LocY_show_wave = e.Y;
+            }
+        }
+
+        private void label17_MouseLeave(object sender, EventArgs e)
+        {
+            toolTip_17.Hide(this.label17);
+        }
+
+        ToolTip toolTip_18 = new ToolTip();
+        private void label18_MouseMove(object sender, MouseEventArgs e)
+        {
+           
+            if ((e.X != locX_show_wave) || (e.Y != LocY_show_wave))//防止显示闪烁
+            {
+                toolTip_18.Show("A -- B ", this.label18, new Point(e.X + 20, e.Y));
+                locX_show_wave = e.X;
+                LocY_show_wave = e.Y;
+            }
+        }
+
+        private void label18_MouseLeave(object sender, EventArgs e)
+        {
+            toolTip_18.Hide(this.label18);
+        }
+
+        ToolTip toolTip_19 = new ToolTip();
+        private void label19_MouseMove(object sender, MouseEventArgs e)
+        {
+            
+            if ((e.X != locX_show_wave) || (e.Y != LocY_show_wave))//防止显示闪烁
+            {
+                toolTip_19.Show("A -- B ", this.label19, new Point(e.X + 20, e.Y));
+                locX_show_wave = e.X;
+                LocY_show_wave = e.Y;
+            }
+        }
+
+        private void label19_MouseLeave(object sender, EventArgs e)
+        {
+            toolTip_19.Hide(this.label19);
+        }
+
         //===================================================================================================
 
 
