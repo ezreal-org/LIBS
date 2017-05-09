@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace LIBS.device_driver
@@ -12,14 +13,17 @@ namespace LIBS.device_driver
     {
         private static OmniDriver.CCoWrapper wrapper;
         public int cnt_of_devices;
-        public int []map_index_waverange2device; //逻辑设备索引到实际设备索引的映射
+        public int[] map_index_waverange2device; //逻辑设备索引到实际设备索引的映射
         public int build_num; //记录第几次读取
-        public static  bool is_test_model; //是否是测试模式
+        public bool is_test_model; //是否是测试模式
         private double[] wave_all;
         private double[,] wave_array;
-        private int[] channel_pixels;
-        
-        
+        private static double[,] spec_array; //每个通道的强度计数，在线程函数里进行读取设置
+        private static int[] channel_pixels;
+        private static Thread[] read_threads; //每个通道分配一个read_spec的线程
+
+
+
         public spec_wrapper()
         {
             cnt_of_devices = 0;
@@ -34,13 +38,18 @@ namespace LIBS.device_driver
             if (is_test_model)
             {
                 cnt_of_devices = 6;
+                spec_array = new double[6, 2068];
                 init_wave_all(); //连接时初始化波长，并初始化索引映射的map
                 return true;
             }
             cnt_of_devices = wrapper.openAllSpectrometers();
             if (cnt_of_devices > 0)
             {
+                //分配光强数组空间
+                spec_array = new double[cnt_of_devices, 2068];
                 init_wave_all(); //连接时初始化波长
+                //定义读取线程数组
+                read_threads = new Thread[cnt_of_devices];
                 return true;
             }
             else return false;
@@ -79,11 +88,11 @@ namespace LIBS.device_driver
         //设置/获取平均次数
         public void set_times_for_average(int times)
         {
-            for(int i=0; i < cnt_of_devices; i++)
+            for (int i = 0; i < cnt_of_devices; i++)
             {
                 wrapper.setScansToAverage(i, times);
             }
-           
+
         }
         public int get_times_for_average()
         {
@@ -94,7 +103,7 @@ namespace LIBS.device_driver
         //暗电流矫正
         public void set_correct_for_electrical_dart(int flag)
         {
-            for(int i = 0; i < cnt_of_devices; i++)
+            for (int i = 0; i < cnt_of_devices; i++)
             {
                 wrapper.setCorrectForElectricalDark(i, flag);
             }
@@ -126,14 +135,15 @@ namespace LIBS.device_driver
                 {
                     StreamReader SReader = new StreamReader("TestData\\readAllWave.txt", Encoding.Default);
                     int k = 0;//
-                    string rd="";
+                    string rd = "";
                     while ((rd = SReader.ReadLine()) != null)
                     {
                         wave_all[k] = Convert.ToDouble(rd);
                         k++;
                     }
                     SReader.Close();
-                }catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     MessageBox.Show("读取测试波长失败" + e.Message.ToString());
                 }
@@ -149,12 +159,12 @@ namespace LIBS.device_driver
                 channel_pixels[i] = wave_temp.Length;
                 for (int j = 0; j < wave_temp.Length; j++) //以后这里会根据响应的强度对重叠区域进行取舍
                 {
-                    wave_array[i,j] = wave_temp[j];
+                    wave_array[i, j] = wave_temp[j];
                 }
 
             }
             //根据实际响应排序
-            for(int i = 0; i < cnt_of_devices; i++)
+            for (int i = 0; i < cnt_of_devices; i++)
             {
                 if (wave_array[i, 0] > 185 && wave_array[i, 0] < 186)
                 {
@@ -164,13 +174,13 @@ namespace LIBS.device_driver
                     {
                         wave_all[j] = wave_array[i, (121 + j)];
                     }
-                }               
+                }
                 else if (wave_array[i, 0] > 228 && wave_array[i, 0] < 238)
                 {
                     map_index_waverange2device[1] = i;
                     for (int j = 0; j < (channel_pixels[i] - 168); j++)
                     {
-                        wave_all[1533+j] = wave_array[i, (167 + j)];
+                        wave_all[1533 + j] = wave_array[i, (167 + j)];
                     }
                 }
                 else if (wave_array[i, 0] > 320 && wave_array[i, 0] < 321)
@@ -178,7 +188,7 @@ namespace LIBS.device_driver
                     map_index_waverange2device[2] = i;
                     for (int j = 0; j < (channel_pixels[i] - 87); j++)
                     {
-                        wave_all[3253+j] = wave_array[i, (86 + j)];
+                        wave_all[3253 + j] = wave_array[i, (86 + j)];
                     }
                 }
                 else if (wave_array[i, 0] > 398 && wave_array[i, 0] < 399)
@@ -188,7 +198,7 @@ namespace LIBS.device_driver
                     {
                         for (int j = 0; j < (channel_pixels[i] - 100); j++)
                         {
-                            wave_all[5002+j] = wave_array[i, (99 + j)];
+                            wave_all[5002 + j] = wave_array[i, (99 + j)];
                         }
                     }
                     catch (Exception ex) { MessageBox.Show("第四通道发生错误： " + ex.Message.ToString()); };
@@ -198,7 +208,7 @@ namespace LIBS.device_driver
                     map_index_waverange2device[4] = i;
                     for (int j = 0; j < (channel_pixels[i] - 181); j++)
                     {
-                        wave_all[6814+j] = wave_array[i, (180 + j)];
+                        wave_all[6814 + j] = wave_array[i, (180 + j)];
                     }
                 }
                 else if (wave_array[i, 0] > 607 && wave_array[i, 0] < 608)
@@ -206,15 +216,27 @@ namespace LIBS.device_driver
                     map_index_waverange2device[5] = i;
                     for (int j = 0; j < 1918; j++)
                     {
-                        wave_all[8500+j] = wave_array[i, (72 + j)];
+                        wave_all[8500 + j] = wave_array[i, (72 + j)];
                     }
                 }
             }
         }
+
+        //读取线程的函数
+        public static void thread_read(object device_index)
+        {
+            int index = int.Parse(device_index.ToString());
+            double[] spec_temp = wrapper.getSpectrum(index);
+            for (int j = 0; j < spec_temp.Length; j++)
+            {
+                spec_array[index, j] = spec_temp[j];
+            }
+        }
+
         //一次获取所有通道数据
         public double[] get_spec_all()
         {
-            double []spec_all = new double[10418];
+            double[] spec_all = new double[10418];
             if (is_test_model)
             {
                 Random random = new Random();
@@ -273,16 +295,17 @@ namespace LIBS.device_driver
                 }
                 return spec_all;
             }
-            double[,] spec_array = new double[cnt_of_devices, 2068];
+            //多线程读取
             for (int i = 0; i < cnt_of_devices; i++)
             {
-                double[] spec_temp = wrapper.getSpectrum(i);
-                channel_pixels[i] = spec_temp.Length;
-                for (int j = 0; j < spec_temp.Length; j++) //以后这里会根据响应的强度对重叠区域进行取舍
-                {
-                    spec_array[i, j] = spec_temp[j];
-                }
-
+                //采用多线程读取
+                read_threads[i] = new Thread(new ParameterizedThreadStart(thread_read));
+                read_threads[i].Start(i);
+            }
+            //等待所以线程读完所以通道数据
+            for (int i = 0; i < cnt_of_devices; i++)
+            {
+                read_threads[i].Join();
             }
             //根据实际响应排序
             for (int i = 0; i < cnt_of_devices; i++)
