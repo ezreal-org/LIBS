@@ -662,7 +662,7 @@ namespace LIBS
 
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(spec_wrapper.is_test_model+"");
+            MessageBox.Show(wrapper.is_test_model+"");
         }
 
         //保存不同标样的浓度数据
@@ -1623,11 +1623,11 @@ namespace LIBS
         {
             if (checkBox91.CheckState==CheckState.Checked)
             {
-                spec_wrapper.is_test_model = true;
+                wrapper.is_test_model = true;
             }
             else if(checkBox91.CheckState == CheckState.Unchecked)
             {
-                spec_wrapper.is_test_model = false;
+                wrapper.is_test_model = false;
             }
         }
 
