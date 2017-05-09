@@ -172,6 +172,15 @@ namespace LIBS
 
 
                     //MessageBox.Show(spec_data.element_cnt+"");
+
+                    clearPaint_1();
+                    drawLine_Group_1(x_init, y_init);
+                    ifExistPlot_1 = true;
+
+                    //绘制已选元素表格   
+                    datagrid_control.draw_datagrid_select_element(dataGridView1, spec_data.elements, spec_data.element_cnt);
+
+
                 }
                 catch (Exception ex)
                 {
@@ -653,7 +662,7 @@ namespace LIBS
 
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
-            
+            MessageBox.Show(spec_wrapper.is_test_model+"");
         }
 
         //保存不同标样的浓度数据
@@ -722,7 +731,28 @@ namespace LIBS
         //添加样本
         private void button7_Click(object sender, EventArgs e)
         {
+            if (textBox16.Text != null && textBox16.Text != "")
+            {
+                int sc = int.Parse(textBox16.Text);
+                if (sc >= 0 && sc <= 20)
+                {
+                    if (sc > spec_data.sample_cnt)
+                    {
+                        for (int k = spec_data.sample_cnt; k < sc; k++)
+                        {
+                            spec_data.samples[k].sample_index = k;
+                            spec_data.samples[k].sample_label = "样本" + (k + 1).ToString();
+                            spec_data.samples[k].average_times = 1;
+                            spec_data.samples[k].is_read = false;
+                        }
 
+                    }
+                    spec_data.sample_cnt = sc;
+
+                }
+                datagrid_control.draw_datagrid_sample_setting(dataGridView7, spec_data.samples, spec_data.sample_cnt);
+
+            }
         }
 
 
@@ -1700,6 +1730,11 @@ namespace LIBS
                 locX_show_wave = e.X;
                 LocY_show_wave = e.Y;
             }
+        }
+
+        private void textBox16_ValueChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void label19_MouseLeave(object sender, EventArgs e)
