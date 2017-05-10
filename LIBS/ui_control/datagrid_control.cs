@@ -55,8 +55,18 @@ namespace LIBS.ui_control
                 }
                 for (int j = 0; j < element_cnt; j++)
                 {
-                    dr8[j + 3] = Math.Round(standard_val[i, j], 7);
-
+                    if (elements[j].danwei==1)
+                    {
+                        dr8[j + 3] = Math.Round(standard_val[i, j], 7);
+                    }
+                    else if (elements[j].danwei == 2)
+                    {
+                        dr8[j + 3] = Math.Round(standard_val[i, j], 5);
+                    }
+                    else if (elements[j].danwei == 3)
+                    {
+                        dr8[j + 3] = Math.Round(standard_val[i, j], 2);
+                    }
                 }
                 dt8.Rows.Add(dr8);
 
@@ -78,11 +88,23 @@ namespace LIBS.ui_control
                 }
                 for (int j = 0; j < element_cnt; j++)
                 {
-                    dr8[j + 3] = Math.Round(sample_val[i, j], 1);
+                    if (elements[j].danwei == 1)
+                    {
+                        dr8[j + 3] = Math.Round(standard_val[i, j], 7);
+                    }
+                    else if (elements[j].danwei == 2)
+                    {
+                        dr8[j + 3] = Math.Round(standard_val[i, j], 5);
+                    }
+                    else if (elements[j].danwei == 3)
+                    {
+                        dr8[j + 3] = Math.Round(standard_val[i, j], 2);
+                    }
 
                 }
                 dt8.Rows.Add(dr8);
             }
+
             dgv.DataSource = dt8;
             for (int i = 0; i < standard_cnt; i++)
             {
@@ -360,7 +382,7 @@ namespace LIBS.ui_control
             dgv.DataSource = dt1;
         }
 
-        public static void draw_datagrid_standard_setting(DataGridView dgv, select_element[] elements,standard[] standards, int element_cnt, int standard_cnt)
+        public static void draw_datagrid_standard_setting(DataGridView dgv, select_element[] elements,standard[] standards, int element_cnt, int standard_cnt,spec_metadata spec_data)
         {
             //设置列
             DataTable dtData = new DataTable();
@@ -379,7 +401,19 @@ namespace LIBS.ui_control
             drData[1] = "";
             for (int i = 0; i < element_cnt; i++)
             {
-                drData[2 + i] = concentration_unit;
+                if (spec_data.elements[i].danwei == 1)
+                {
+                    drData[2 + i] = "ppm";
+                }
+                else if (spec_data.elements[i].danwei == 2)
+                {
+                    drData[2 + i] = "ppb";
+                }
+                else if (spec_data.elements[i].danwei == 3)
+                {
+                    drData[2 + i] = "%";
+                }
+
             }
             dtData.Rows.Add(drData);
             for (int l = 0; l < standard_cnt; l++)
@@ -389,7 +423,21 @@ namespace LIBS.ui_control
                 drData[1] = standards[l].standard_label;
                 for (int i = 0; i < element_cnt; i++)
                 {
-                        drData[2 + i] = standards[l].standard_ppm[i];
+                    if (spec_data.elements[i].danwei == 1)
+                    {
+                        drData[2 + i] = Math.Round(standards[l].standard_ppm[i],7);
+                    }
+                    else if (spec_data.elements[i].danwei == 2)
+                    {
+                        drData[2 + i] = Math.Round(standards[l].standard_ppm[i], 5);
+                    }
+                    else if (spec_data.elements[i].danwei == 3)
+                    {
+                        drData[2 + i] = Math.Round(standards[l].standard_ppm[i], 2);
+                    }
+
+
+                    
                 }
                 dtData.Rows.Add(drData);
             }

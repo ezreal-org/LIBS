@@ -83,6 +83,12 @@
     <Compile Include="ui_control\datagrid_control.cs" />
     <Compile Include="ui_control\equation_chart.cs" />
     <Compile Include="ui_control\summary_info.cs" />
+    <Compile Include="ui_control\UserControl1.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ui_control\UserControl1.Designer.cs">
+      <DependentUpon>UserControl1.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

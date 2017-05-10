@@ -30,17 +30,17 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LIBS));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea47 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea48 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle46 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea45 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend31 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series31 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle47 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle48 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea49 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend32 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series32 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea14 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea15 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea16 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend10 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
@@ -70,7 +70,6 @@
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton10 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton13 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton12 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton11 = new System.Windows.Forms.ToolStripButton();
@@ -216,6 +215,7 @@
             this.btn_saveas_base = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.checkBox91 = new System.Windows.Forms.CheckBox();
             this.textBox8 = new System.Windows.Forms.NumericUpDown();
             this.textBox6 = new System.Windows.Forms.NumericUpDown();
             this.textBox7 = new System.Windows.Forms.NumericUpDown();
@@ -242,7 +242,7 @@
             this.panel_XY = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.checkBox91 = new System.Windows.Forms.CheckBox();
+            this.toolStripComboBox2 = new System.Windows.Forms.ToolStripComboBox();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.tabPage6.SuspendLayout();
@@ -406,19 +406,19 @@
             this.放大ToolStripMenuItem,
             this.缩小ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(115, 56);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(109, 52);
             // 
             // 放大ToolStripMenuItem
             // 
             this.放大ToolStripMenuItem.Name = "放大ToolStripMenuItem";
-            this.放大ToolStripMenuItem.Size = new System.Drawing.Size(114, 26);
+            this.放大ToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
             this.放大ToolStripMenuItem.Text = "放大";
             this.放大ToolStripMenuItem.Click += new System.EventHandler(this.放大ToolStripMenuItem_Click);
             // 
             // 缩小ToolStripMenuItem
             // 
             this.缩小ToolStripMenuItem.Name = "缩小ToolStripMenuItem";
-            this.缩小ToolStripMenuItem.Size = new System.Drawing.Size(114, 26);
+            this.缩小ToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
             this.缩小ToolStripMenuItem.Text = "缩小";
             this.缩小ToolStripMenuItem.Click += new System.EventHandler(this.缩小ToolStripMenuItem_Click);
             // 
@@ -493,25 +493,25 @@
             // 
             // chart2
             // 
-            chartArea47.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea47.AxisX.MinorTickMark.Enabled = true;
-            chartArea47.AxisX.MinorTickMark.LineColor = System.Drawing.Color.Gray;
-            chartArea47.AxisX.MinorTickMark.Size = 0.5F;
-            chartArea47.AxisX2.MajorGrid.Enabled = false;
-            chartArea47.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea47.AxisY.MinorTickMark.Enabled = true;
-            chartArea47.AxisY.MinorTickMark.LineColor = System.Drawing.Color.Gray;
-            chartArea47.AxisY.MinorTickMark.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea47.AxisY.MinorTickMark.Size = 0.5F;
-            chartArea47.AxisY.MinorTickMark.TickMarkStyle = System.Windows.Forms.DataVisualization.Charting.TickMarkStyle.AcrossAxis;
-            chartArea47.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea47.Name = "ChartArea1";
-            chartArea47.Position.Auto = false;
-            chartArea47.Position.Height = 94F;
-            chartArea47.Position.Width = 94F;
-            chartArea47.Position.X = 3F;
-            chartArea47.Position.Y = 3F;
-            this.chart2.ChartAreas.Add(chartArea47);
+            chartArea14.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea14.AxisX.MinorTickMark.Enabled = true;
+            chartArea14.AxisX.MinorTickMark.LineColor = System.Drawing.Color.Gray;
+            chartArea14.AxisX.MinorTickMark.Size = 0.5F;
+            chartArea14.AxisX2.MajorGrid.Enabled = false;
+            chartArea14.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea14.AxisY.MinorTickMark.Enabled = true;
+            chartArea14.AxisY.MinorTickMark.LineColor = System.Drawing.Color.Gray;
+            chartArea14.AxisY.MinorTickMark.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea14.AxisY.MinorTickMark.Size = 0.5F;
+            chartArea14.AxisY.MinorTickMark.TickMarkStyle = System.Windows.Forms.DataVisualization.Charting.TickMarkStyle.AcrossAxis;
+            chartArea14.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+            chartArea14.Name = "ChartArea1";
+            chartArea14.Position.Auto = false;
+            chartArea14.Position.Height = 94F;
+            chartArea14.Position.Width = 94F;
+            chartArea14.Position.X = 3F;
+            chartArea14.Position.Y = 3F;
+            this.chart2.ChartAreas.Add(chartArea14);
             this.chart2.Location = new System.Drawing.Point(789, 391);
             this.chart2.Margin = new System.Windows.Forms.Padding(2);
             this.chart2.Name = "chart2";
@@ -534,25 +534,25 @@
             // 
             // chart1
             // 
-            chartArea48.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea48.AxisX.MinorTickMark.Enabled = true;
-            chartArea48.AxisX.MinorTickMark.LineColor = System.Drawing.Color.Gray;
-            chartArea48.AxisX.MinorTickMark.Size = 0.5F;
-            chartArea48.AxisX2.MajorGrid.Enabled = false;
-            chartArea48.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea48.AxisY.MinorTickMark.Enabled = true;
-            chartArea48.AxisY.MinorTickMark.LineColor = System.Drawing.Color.Gray;
-            chartArea48.AxisY.MinorTickMark.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-            chartArea48.AxisY.MinorTickMark.Size = 0.5F;
-            chartArea48.AxisY.MinorTickMark.TickMarkStyle = System.Windows.Forms.DataVisualization.Charting.TickMarkStyle.AcrossAxis;
-            chartArea48.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea48.Name = "ChartArea1";
-            chartArea48.Position.Auto = false;
-            chartArea48.Position.Height = 94F;
-            chartArea48.Position.Width = 94F;
-            chartArea48.Position.X = 3F;
-            chartArea48.Position.Y = 3F;
-            this.chart1.ChartAreas.Add(chartArea48);
+            chartArea15.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea15.AxisX.MinorTickMark.Enabled = true;
+            chartArea15.AxisX.MinorTickMark.LineColor = System.Drawing.Color.Gray;
+            chartArea15.AxisX.MinorTickMark.Size = 0.5F;
+            chartArea15.AxisX2.MajorGrid.Enabled = false;
+            chartArea15.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea15.AxisY.MinorTickMark.Enabled = true;
+            chartArea15.AxisY.MinorTickMark.LineColor = System.Drawing.Color.Gray;
+            chartArea15.AxisY.MinorTickMark.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea15.AxisY.MinorTickMark.Size = 0.5F;
+            chartArea15.AxisY.MinorTickMark.TickMarkStyle = System.Windows.Forms.DataVisualization.Charting.TickMarkStyle.AcrossAxis;
+            chartArea15.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+            chartArea15.Name = "ChartArea1";
+            chartArea15.Position.Auto = false;
+            chartArea15.Position.Height = 94F;
+            chartArea15.Position.Width = 94F;
+            chartArea15.Position.X = 3F;
+            chartArea15.Position.Y = 3F;
+            this.chart1.ChartAreas.Add(chartArea15);
             this.chart1.ContextMenuStrip = this.contextMenuStrip1;
             this.chart1.Location = new System.Drawing.Point(754, 41);
             this.chart1.Margin = new System.Windows.Forms.Padding(2);
@@ -575,18 +575,19 @@
             this.dgv_analysis.Size = new System.Drawing.Size(739, 319);
             this.dgv_analysis.TabIndex = 12;
             this.dgv_analysis.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_analysis_CellClick);
+            this.dgv_analysis.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_analysis_CellDoubleClick);
             // 
             // toolStrip2
             // 
             this.toolStrip2.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripComboBox1,
-            this.toolStripButton9,
-            this.toolStripButton10,
             this.toolStripButton13,
             this.toolStripButton12,
             this.toolStripButton11,
-            this.toolStripLabel1});
+            this.toolStripLabel1,
+            this.toolStripComboBox2,
+            this.toolStripButton9});
             this.toolStrip2.Location = new System.Drawing.Point(4, 4);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Size = new System.Drawing.Size(1452, 39);
@@ -601,6 +602,7 @@
             this.toolStripComboBox1.Name = "toolStripComboBox1";
             this.toolStripComboBox1.Size = new System.Drawing.Size(99, 39);
             this.toolStripComboBox1.Text = "浓度";
+            this.toolStripComboBox1.Click += new System.EventHandler(this.toolStripComboBox1_Click);
             this.toolStripComboBox1.TextChanged += new System.EventHandler(this.toolStripComboBox1_TextChanged);
             // 
             // toolStripButton9
@@ -611,15 +613,8 @@
             this.toolStripButton9.Name = "toolStripButton9";
             this.toolStripButton9.Size = new System.Drawing.Size(58, 36);
             this.toolStripButton9.Text = "列属性";
-            // 
-            // toolStripButton10
-            // 
-            this.toolStripButton10.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton10.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton10.Image")));
-            this.toolStripButton10.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton10.Name = "toolStripButton10";
-            this.toolStripButton10.Size = new System.Drawing.Size(73, 36);
-            this.toolStripButton10.Text = "删除结果";
+            this.toolStripButton9.Visible = false;
+            this.toolStripButton9.Click += new System.EventHandler(this.toolStripButton9_Click);
             // 
             // toolStripButton13
             // 
@@ -696,8 +691,8 @@
             this.dataGridView7.Location = new System.Drawing.Point(257, 4);
             this.dataGridView7.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView7.Name = "dataGridView7";
-            dataGridViewCellStyle46.ForeColor = System.Drawing.Color.Black;
-            this.dataGridView7.RowsDefaultCellStyle = dataGridViewCellStyle46;
+            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black;
+            this.dataGridView7.RowsDefaultCellStyle = dataGridViewCellStyle13;
             this.dataGridView7.RowTemplate.Height = 23;
             this.dataGridView7.Size = new System.Drawing.Size(863, 659);
             this.dataGridView7.TabIndex = 3;
@@ -773,6 +768,7 @@
             this.dataGridView5.RowTemplate.Height = 23;
             this.dataGridView5.Size = new System.Drawing.Size(1327, 332);
             this.dataGridView5.TabIndex = 3;
+            this.dataGridView5.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView5_CellClick);
             // 
             // button6
             // 
@@ -834,26 +830,26 @@
             // 
             this.chart4.BorderlineColor = System.Drawing.Color.DimGray;
             this.chart4.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea45.AxisX.Interval = 5D;
-            chartArea45.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver;
-            chartArea45.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.DashDotDot;
-            chartArea45.AxisX.Title = "波长";
-            chartArea45.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver;
-            chartArea45.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.DashDotDot;
-            chartArea45.AxisY.Title = "强度";
-            chartArea45.Name = "ChartArea1";
-            this.chart4.ChartAreas.Add(chartArea45);
-            legend31.Name = "Legend1";
-            this.chart4.Legends.Add(legend31);
+            chartArea12.AxisX.Interval = 5D;
+            chartArea12.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea12.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.DashDotDot;
+            chartArea12.AxisX.Title = "波长";
+            chartArea12.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea12.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.DashDotDot;
+            chartArea12.AxisY.Title = "强度";
+            chartArea12.Name = "ChartArea1";
+            this.chart4.ChartAreas.Add(chartArea12);
+            legend9.Name = "Legend1";
+            this.chart4.Legends.Add(legend9);
             this.chart4.Location = new System.Drawing.Point(12, 306);
             this.chart4.Margin = new System.Windows.Forms.Padding(4);
             this.chart4.Name = "chart4";
-            series31.ChartArea = "ChartArea1";
-            series31.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series31.IsVisibleInLegend = false;
-            series31.Legend = "Legend1";
-            series31.Name = "Series1";
-            this.chart4.Series.Add(series31);
+            series9.ChartArea = "ChartArea1";
+            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series9.IsVisibleInLegend = false;
+            series9.Legend = "Legend1";
+            series9.Name = "Series1";
+            this.chart4.Series.Add(series9);
             this.chart4.Size = new System.Drawing.Size(0, 0);
             this.chart4.TabIndex = 32;
             this.chart4.Text = "chart4";
@@ -948,19 +944,19 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView4.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle47.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle47.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle47.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle47.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle47.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle47.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle47.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView4.DefaultCellStyle = dataGridViewCellStyle47;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView4.DefaultCellStyle = dataGridViewCellStyle14;
             this.dataGridView4.Location = new System.Drawing.Point(172, 9);
             this.dataGridView4.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView4.Name = "dataGridView4";
-            dataGridViewCellStyle48.ForeColor = System.Drawing.Color.Black;
-            this.dataGridView4.RowsDefaultCellStyle = dataGridViewCellStyle48;
+            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.Black;
+            this.dataGridView4.RowsDefaultCellStyle = dataGridViewCellStyle15;
             this.dataGridView4.RowTemplate.Height = 23;
             this.dataGridView4.Size = new System.Drawing.Size(860, 248);
             this.dataGridView4.TabIndex = 0;
@@ -2719,6 +2715,21 @@
             this.panel5.TabIndex = 30;
             this.panel5.Paint += new System.Windows.Forms.PaintEventHandler(this.panel5_Paint);
             // 
+            // checkBox91
+            // 
+            this.checkBox91.AutoSize = true;
+            this.checkBox91.BackColor = System.Drawing.SystemColors.Control;
+            this.checkBox91.Checked = true;
+            this.checkBox91.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox91.Location = new System.Drawing.Point(1361, 21);
+            this.checkBox91.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBox91.Name = "checkBox91";
+            this.checkBox91.Size = new System.Drawing.Size(86, 19);
+            this.checkBox91.TabIndex = 37;
+            this.checkBox91.Text = "测试模式";
+            this.checkBox91.UseVisualStyleBackColor = false;
+            this.checkBox91.CheckedChanged += new System.EventHandler(this.checkBox91_CheckedChanged);
+            // 
             // textBox8
             // 
             this.textBox8.Location = new System.Drawing.Point(1170, 19);
@@ -2967,26 +2978,26 @@
             // 
             this.chart3.BorderlineColor = System.Drawing.Color.DimGray;
             this.chart3.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea49.AxisX.Interval = 50D;
-            chartArea49.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver;
-            chartArea49.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.DashDotDot;
-            chartArea49.AxisX.Title = "波长";
-            chartArea49.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver;
-            chartArea49.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.DashDotDot;
-            chartArea49.AxisY.Title = "强度";
-            chartArea49.Name = "ChartArea1";
-            this.chart3.ChartAreas.Add(chartArea49);
-            legend32.Name = "Legend1";
-            this.chart3.Legends.Add(legend32);
+            chartArea16.AxisX.Interval = 50D;
+            chartArea16.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea16.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.DashDotDot;
+            chartArea16.AxisX.Title = "波长";
+            chartArea16.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver;
+            chartArea16.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.DashDotDot;
+            chartArea16.AxisY.Title = "强度";
+            chartArea16.Name = "ChartArea1";
+            this.chart3.ChartAreas.Add(chartArea16);
+            legend10.Name = "Legend1";
+            this.chart3.Legends.Add(legend10);
             this.chart3.Location = new System.Drawing.Point(8, 92);
             this.chart3.Margin = new System.Windows.Forms.Padding(4);
             this.chart3.Name = "chart3";
-            series32.ChartArea = "ChartArea1";
-            series32.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series32.IsVisibleInLegend = false;
-            series32.Legend = "Legend1";
-            series32.Name = "Series1";
-            this.chart3.Series.Add(series32);
+            series10.ChartArea = "ChartArea1";
+            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series10.IsVisibleInLegend = false;
+            series10.Legend = "Legend1";
+            series10.Name = "Series1";
+            this.chart3.Series.Add(series10);
             this.chart3.Size = new System.Drawing.Size(0, 0);
             this.chart3.TabIndex = 31;
             this.chart3.Text = "chart3";
@@ -3070,20 +3081,16 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // checkBox91
+            // toolStripComboBox2
             // 
-            this.checkBox91.AutoSize = true;
-            this.checkBox91.BackColor = System.Drawing.SystemColors.Control;
-            this.checkBox91.Checked = true;
-            this.checkBox91.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox91.Location = new System.Drawing.Point(1361, 21);
-            this.checkBox91.Margin = new System.Windows.Forms.Padding(4);
-            this.checkBox91.Name = "checkBox91";
-            this.checkBox91.Size = new System.Drawing.Size(86, 19);
-            this.checkBox91.TabIndex = 37;
-            this.checkBox91.Text = "测试模式";
-            this.checkBox91.UseVisualStyleBackColor = false;
-            this.checkBox91.CheckedChanged += new System.EventHandler(this.checkBox91_CheckedChanged);
+            this.toolStripComboBox2.Items.AddRange(new object[] {
+            "ppm",
+            "ppb",
+            "%"});
+            this.toolStripComboBox2.Name = "toolStripComboBox2";
+            this.toolStripComboBox2.Size = new System.Drawing.Size(121, 39);
+            this.toolStripComboBox2.Text = "列属性";
+            this.toolStripComboBox2.TextChanged += new System.EventHandler(this.toolStripComboBox2_TextChanged);
             // 
             // LIBS
             // 
@@ -3182,7 +3189,6 @@
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
         private System.Windows.Forms.ToolStripButton toolStripButton9;
-        private System.Windows.Forms.ToolStripButton toolStripButton10;
         private System.Windows.Forms.ToolStripButton toolStripButton13;
         private System.Windows.Forms.ToolStripButton toolStripButton12;
         private System.Windows.Forms.ToolStripButton toolStripButton11;
@@ -3357,5 +3363,6 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.CheckBox checkBox91;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBox2;
     }
 }

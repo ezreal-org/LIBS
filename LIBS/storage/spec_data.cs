@@ -20,7 +20,8 @@ namespace LIBS.storage
         public double peak_wave;       //实际读取波长
         public double seek_peak_range; //硬件设备确定的情况下,某个波长的偏移也确定，寻峰和找积分区间可以和波长绑定
         public double interval_start;  //积分区间开始和结束
-        public double interval_end;   
+        public double interval_end;
+        public int danwei;//1-ppm,2-ppb,3-%
     }
     //标样序列
     [Serializable]
@@ -29,11 +30,11 @@ namespace LIBS.storage
         public int standard_index; // 0号位置留给空白标样
         public string standard_label;
         public double[] standard_ppm;
-       // public int[] standard_danwei;//
+        
         public int average_times;
         public bool is_readed;
-
     }
+
     //样本序列
     [Serializable]
     public class sample

@@ -17,6 +17,9 @@ namespace LIBS
 {
     public partial class LIBS : Form
     {
+        int weishu_ppm = 7;
+        int weishu_ppb = 4;
+        int weishu_baifenhao = 2;
         spec_metadata spec_data; //程序内流动改对象
         int interval_change_status; // 0-没有改变, 1-改变左区间, 2-改变右区间
         spec_wrapper wrapper;
@@ -285,6 +288,7 @@ namespace LIBS
 
         private void dgv_analysis_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            select_col = e.ColumnIndex;
             //switch case
             //读取数据
             if (e.ColumnIndex == 2 && e.RowIndex >= 0)
@@ -294,8 +298,22 @@ namespace LIBS
             }
             else if (e.ColumnIndex > 2 && e.RowIndex >= 0)
             {
+                if (spec_data.elements[e.ColumnIndex-3].danwei==1)
+                {
+                    toolStripComboBox2.Text = "ppm";
+                }
+                else if (spec_data.elements[e.ColumnIndex - 3].danwei == 2)
+                {
+                    toolStripComboBox2.Text = "ppb";
+
+                }
+                else if (spec_data.elements[e.ColumnIndex - 3].danwei == 3)
+                {
+                    toolStripComboBox2.Text = "%";
+                }
                 analysis_proc.process_cell_click(chart1, chart2, label_equation, l_info, dgv_thisshot, e.RowIndex, e.ColumnIndex, spec_data);
             }
+            
 
         }
 
@@ -527,7 +545,7 @@ namespace LIBS
             if (e.TabPageIndex == 3)
             {
                 textBox15.Text = spec_data.standard_cnt.ToString();
-                datagrid_control.draw_datagrid_standard_setting(dataGridView5, spec_data.elements, spec_data.standards, spec_data.element_cnt, spec_data.standard_cnt);
+                datagrid_control.draw_datagrid_standard_setting(dataGridView5, spec_data.elements, spec_data.standards, spec_data.element_cnt, spec_data.standard_cnt,spec_data);
             }
             if (e.TabPageIndex == 4)
             {
@@ -643,7 +661,9 @@ namespace LIBS
                 spec_data.elements[spec_data.element_cnt].interval_start = select_wave - 0.05; //设置默认积分区间，程序中在分析窗体点读取，将根据实际峰,寻峰范围重新设置
                 spec_data.elements[spec_data.element_cnt].interval_end = select_wave + 0.05;
                 spec_data.elements[spec_data.element_cnt].peak_wave = select_wave;
+                spec_data.elements[spec_data.element_cnt].danwei = 1;
                 spec_data.element_cnt++;
+                
 
 
                 for (int i=0;i<spec_data.element_cnt;i++)
@@ -699,7 +719,7 @@ namespace LIBS
 
                 }
             }
-            datagrid_control.draw_datagrid_standard_setting(dataGridView5, spec_data.elements, spec_data.standards, spec_data.element_cnt, spec_data.standard_cnt);
+            datagrid_control.draw_datagrid_standard_setting(dataGridView5, spec_data.elements, spec_data.standards, spec_data.element_cnt, spec_data.standard_cnt,spec_data);
         }
 
         private void textBox16_Click(object sender, EventArgs e)
@@ -1735,6 +1755,93 @@ namespace LIBS
         private void textBox16_ValueChanged(object sender, EventArgs e)
         {
 
+        }
+
+        UserControl1 mycontrol = new UserControl1();//自定义空间类
+        int lie_ttt = -1;
+        private void dataGridView5_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == 0 && e.ColumnIndex >= 2)
+            {
+                lie_ttt = e.ColumnIndex;
+                //MessageBox.Show(lie_ttt+"");
+                //返回单元格显示区域的矩形
+                Rectangle rect = dataGridView5.GetCellDisplayRectangle(dataGridView5.CurrentCell.ColumnIndex, dataGridView5.CurrentCell.RowIndex, false);
+                this.Controls.Add(mycontrol.cbx);
+
+                mycontrol.cbx.Size = rect.Size;
+                mycontrol.cbx.Location = new Point(rect.X + 33, rect.Y + 131);
+                mycontrol.cbx.SelectedIndexChanged += new System.EventHandler(cbx_SelectedIndexChanged);
+                mycontrol.cbx.BringToFront();
+                mycontrol.cbx.Visible = true;
+
+            }
+        }
+
+        public void cbx_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            string choose_danwei = mycontrol.cbx.Text;
+            int danwei_index = -1;
+            if (choose_danwei=="ppm")
+            {
+                danwei_index = 1;
+            }else if (choose_danwei == "ppb")
+            {
+                danwei_index = 2;
+            }
+            else if(choose_danwei == "%")
+            {
+                danwei_index = 3;
+            }
+            spec_data.elements[lie_ttt - 2].danwei = danwei_index;
+
+            mycontrol.cbx.Visible = false;
+
+            datagrid_control.draw_datagrid_standard_setting(dataGridView5, spec_data.elements, spec_data.standards, spec_data.element_cnt, spec_data.standard_cnt, spec_data);
+
+        }
+
+        int select_col = -1;
+        private void toolStripButton9_Click(object sender, EventArgs e)
+        {
+            if (select_col>2)
+            {
+                MessageBox.Show(select_col+"");
+            }
+        }
+
+        
+
+        private void dgv_analysis_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
+        }
+
+        private void toolStripComboBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripComboBox2_TextChanged(object sender, EventArgs e)
+        {
+            if (select_col>2)
+            {
+                if (toolStripComboBox2.Text == "ppm")
+                {
+                    spec_data.elements[select_col - 3].danwei = 1;
+                }
+                else if (toolStripComboBox2.Text == "ppb")
+                {
+                    spec_data.elements[select_col - 3].danwei = 2;
+                }
+                else if (toolStripComboBox2.Text == "%")
+                {
+                    spec_data.elements[select_col - 3].danwei = 3;
+                }
+                datagrid_control.draw_datagrid_analysis(dgv_analysis, spec_data);
+
+            }
         }
 
         private void label19_MouseLeave(object sender, EventArgs e)
