@@ -90,15 +90,15 @@ namespace LIBS.ui_control
                 {
                     if (elements[j].danwei == 1)
                     {
-                        dr8[j + 3] = Math.Round(standard_val[i, j], 7);
+                        dr8[j + 3] = Math.Round(sample_val[i, j], 7);
                     }
                     else if (elements[j].danwei == 2)
                     {
-                        dr8[j + 3] = Math.Round(standard_val[i, j], 5);
+                        dr8[j + 3] = Math.Round(sample_val[i, j], 5);
                     }
                     else if (elements[j].danwei == 3)
                     {
-                        dr8[j + 3] = Math.Round(standard_val[i, j], 2);
+                        dr8[j + 3] = Math.Round(sample_val[i, j], 2);
                     }
 
                 }

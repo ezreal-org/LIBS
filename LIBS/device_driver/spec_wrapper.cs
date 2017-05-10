@@ -170,25 +170,25 @@ namespace LIBS.device_driver
                 {
                     //System.Console.WriteLine("找到第一通道：i={0}", i.ToString());
                     map_index_waverange2device[0] = i; // @jayce i号硬件设备索引，对应逻辑用户看到的0号索引
-                    for (int j = 0; j < (channel_pixels[i] - 122); j++)
+                    for (int j = 121; j <= 1653; j++)
                     {
-                        wave_all[j] = wave_array[i, (121 + j)];
+                        wave_all[j-121] = wave_array[i, j];
                     }
                 }
                 else if (wave_array[i, 0] > 228 && wave_array[i, 0] < 238)
                 {
                     map_index_waverange2device[1] = i;
-                    for (int j = 0; j < (channel_pixels[i] - 168); j++)
+                    for (int j = 167; j <= 1886; j++)
                     {
-                        wave_all[1533 + j] = wave_array[i, (167 + j)];
+                        wave_all[1533 + j - 167] = wave_array[i, j];
                     }
                 }
                 else if (wave_array[i, 0] > 320 && wave_array[i, 0] < 321)
                 {
                     map_index_waverange2device[2] = i;
-                    for (int j = 0; j < (channel_pixels[i] - 87); j++)
+                    for (int j = 86; j <= 1834; j++)
                     {
-                        wave_all[3253 + j] = wave_array[i, (86 + j)];
+                        wave_all[3252 + j - 86] = wave_array[i, j];
                     }
                 }
                 else if (wave_array[i, 0] > 398 && wave_array[i, 0] < 399)
@@ -196,9 +196,9 @@ namespace LIBS.device_driver
                     map_index_waverange2device[3] = i;
                     try
                     {
-                        for (int j = 0; j < (channel_pixels[i] - 100); j++)
+                        for (int j = 99; j <= 1736; j++)
                         {
-                            wave_all[5002 + j] = wave_array[i, (99 + j)];
+                            wave_all[5001 + j-99] = wave_array[i, j];
                         }
                     }
                     catch (Exception ex) { MessageBox.Show("第四通道发生错误： " + ex.Message.ToString()); };
@@ -206,17 +206,17 @@ namespace LIBS.device_driver
                 else if (wave_array[i, 0] > 508 && wave_array[i, 0] < 509)
                 {
                     map_index_waverange2device[4] = i;
-                    for (int j = 0; j < (channel_pixels[i] - 181); j++)
+                    for (int j = 23; j <= 1784; j++)
                     {
-                        wave_all[6814 + j] = wave_array[i, (180 + j)];
+                        wave_all[6639 + j - 23] = wave_array[i, j];
                     }
                 }
                 else if (wave_array[i, 0] > 607 && wave_array[i, 0] < 608)
                 {
                     map_index_waverange2device[5] = i;
-                    for (int j = 0; j < 1918; j++)
+                    for (int j = 24; j < 2041; j++)
                     {
-                        wave_all[8500 + j] = wave_array[i, (72 + j)];
+                        wave_all[8401 + j - 24] = wave_array[i, j];
                     }
                 }
             }
@@ -307,56 +307,63 @@ namespace LIBS.device_driver
             {
                 read_threads[i].Join();
             }
-            //根据实际响应排序
+
             for (int i = 0; i < cnt_of_devices; i++)
             {
                 if (wave_array[i, 0] > 185 && wave_array[i, 0] < 186)
                 {
                     //System.Console.WriteLine("找到第一通道：i={0}", i.ToString());
-                    for (int j = 0; j < (channel_pixels[i] - 122); j++)
+                    map_index_waverange2device[0] = i; // @jayce i号硬件设备索引，对应逻辑用户看到的0号索引
+                    for (int j = 121; j <= 1653; j++)
                     {
-                        spec_all[j] = spec_array[i, (121 + j)];
+                        spec_all[j - 121] = spec_array[i, j];
                     }
                 }
                 else if (wave_array[i, 0] > 228 && wave_array[i, 0] < 238)
                 {
-                    for (int j = 0; j < (channel_pixels[i] - 168); j++)
+                    map_index_waverange2device[1] = i;
+                    for (int j = 167; j <= 1886; j++)
                     {
-                        spec_all[1533 + j] = spec_array[i, (167 + j)];
+                        spec_all[1533 + j - 167] = spec_array[i, j];
                     }
                 }
                 else if (wave_array[i, 0] > 320 && wave_array[i, 0] < 321)
                 {
-                    for (int j = 0; j < (channel_pixels[i] - 87); j++)
+                    map_index_waverange2device[2] = i;
+                    for (int j = 86; j <= 1834; j++)
                     {
-                        spec_all[3253 + j] = spec_array[i, (86 + j)];
+                        spec_all[3252 + j - 86] = spec_array[i, j];
                     }
                 }
                 else if (wave_array[i, 0] > 398 && wave_array[i, 0] < 399)
                 {
+                    map_index_waverange2device[3] = i;
                     try
                     {
-                        for (int j = 0; j < (channel_pixels[i] - 100); j++)
+                        for (int j = 99; j <= 1736; j++)
                         {
-                            spec_all[5002 + j] = spec_array[i, (99 + j)];
+                            spec_all[5001 + j - 99] = spec_array[i, j];
                         }
                     }
                     catch (Exception ex) { MessageBox.Show("第四通道发生错误： " + ex.Message.ToString()); };
                 }
                 else if (wave_array[i, 0] > 508 && wave_array[i, 0] < 509)
                 {
-                    for (int j = 0; j < (channel_pixels[i] - 181); j++)
+                    map_index_waverange2device[4] = i;
+                    for (int j = 23; j <= 1784; j++)
                     {
-                        spec_all[6814 + j] = spec_array[i, (180 + j)];
+                        spec_all[6639 + j - 23] = spec_array[i, j];
                     }
                 }
                 else if (wave_array[i, 0] > 607 && wave_array[i, 0] < 608)
                 {
-                    for (int j = 0; j < 1918; j++)
+                    map_index_waverange2device[5] = i;
+                    for (int j = 24; j < 2041; j++)
                     {
-                        spec_all[8500 + j] = spec_array[i, (72 + j)];
+                        spec_all[8401 + j - 24] = spec_array[i, j];
                     }
                 }
+
             }
             return spec_all;
         }
