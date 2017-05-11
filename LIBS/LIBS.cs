@@ -1658,7 +1658,7 @@ namespace LIBS
         {
             if ((e.X != locX_show_wave) || (e.Y != LocY_show_wave))//防止显示闪烁
             {
-                toolTip_14.Show("A -- B ", this.label14, new Point(e.X + 20, e.Y));
+                toolTip_14.Show("波长范围：190 -- 250 ", this.label14, new Point(e.X + 20, e.Y));
                 locX_show_wave = e.X;
                 LocY_show_wave = e.Y;
             }
@@ -1676,7 +1676,7 @@ namespace LIBS
 
             if ((e.X != locX_show_wave) || (e.Y != LocY_show_wave))//防止显示闪烁
             {
-                toolTip_15.Show("A -- B ", this.label15, new Point(e.X + 20, e.Y));
+                toolTip_15.Show("波长范围：230 -- 330 ", this.label15, new Point(e.X + 20, e.Y));
                 locX_show_wave = e.X;
                 LocY_show_wave = e.Y;
             }
@@ -1695,7 +1695,7 @@ namespace LIBS
             
             if ((e.X != locX_show_wave) || (e.Y != LocY_show_wave))//防止显示闪烁
             {
-                toolTip_16.Show("A -- B ", this.label16, new Point(e.X + 20, e.Y));
+                toolTip_16.Show("波长范围：320 -- 410 ", this.label16, new Point(e.X + 20, e.Y));
                 locX_show_wave = e.X;
                 LocY_show_wave = e.Y;
             }
@@ -1712,7 +1712,7 @@ namespace LIBS
             
             if ((e.X != locX_show_wave) || (e.Y != LocY_show_wave))//防止显示闪烁
             {
-                toolTip_17.Show("A -- B ", this.label17, new Point(e.X + 20, e.Y));
+                toolTip_17.Show("波长范围：398 -- 527 ", this.label17, new Point(e.X + 20, e.Y));
                 locX_show_wave = e.X;
                 LocY_show_wave = e.Y;
             }
@@ -1729,7 +1729,7 @@ namespace LIBS
            
             if ((e.X != locX_show_wave) || (e.Y != LocY_show_wave))//防止显示闪烁
             {
-                toolTip_18.Show("A -- B ", this.label18, new Point(e.X + 20, e.Y));
+                toolTip_18.Show("波长范围：508 -- 623 ", this.label18, new Point(e.X + 20, e.Y));
                 locX_show_wave = e.X;
                 LocY_show_wave = e.Y;
             }
@@ -1746,7 +1746,7 @@ namespace LIBS
             
             if ((e.X != locX_show_wave) || (e.Y != LocY_show_wave))//防止显示闪烁
             {
-                toolTip_19.Show("A -- B ", this.label19, new Point(e.X + 20, e.Y));
+                toolTip_19.Show("波长范围：607 -- 799 ", this.label19, new Point(e.X + 20, e.Y));
                 locX_show_wave = e.X;
                 LocY_show_wave = e.Y;
             }

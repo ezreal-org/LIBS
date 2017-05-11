@@ -61,11 +61,11 @@ namespace LIBS.ui_control
                     }
                     else if (elements[j].danwei == 2)
                     {
-                        dr8[j + 3] = Math.Round(standard_val[i, j], 5);
+                        dr8[j + 3] = Math.Round(standard_val[i, j]*1000, 7);
                     }
                     else if (elements[j].danwei == 3)
                     {
-                        dr8[j + 3] = Math.Round(standard_val[i, j], 2);
+                        dr8[j + 3] = (decimal)Math.Round(standard_val[i, j]/10000, 7);
                     }
                 }
                 dt8.Rows.Add(dr8);
@@ -395,7 +395,7 @@ namespace LIBS.ui_control
             }
             //设置行
             DataRow drData;
-            string concentration_unit = "ppm"; //这个可以放在标样对不同元素的浓度单位中
+            //string concentration_unit = "ppm"; //这个可以放在标样对不同元素的浓度单位中
             drData = dtData.NewRow();
             drData[0] = "";
             drData[1] = "";
@@ -423,21 +423,23 @@ namespace LIBS.ui_control
                 drData[1] = standards[l].standard_label;
                 for (int i = 0; i < element_cnt; i++)
                 {
+                    /*
+                     * 1 ppm = 1000 ppb
+                     * 10000 ppm = 1 %
+                    */
                     if (spec_data.elements[i].danwei == 1)
                     {
                         drData[2 + i] = Math.Round(standards[l].standard_ppm[i],7);
                     }
                     else if (spec_data.elements[i].danwei == 2)
                     {
-                        drData[2 + i] = Math.Round(standards[l].standard_ppm[i], 5);
+                        //drData[2 + i] = Math.Round(standards[l].standard_ppm[i], 5);
+                        drData[2 + i] = Math.Round(standards[l].standard_ppm[i]*1000, 7);
                     }
                     else if (spec_data.elements[i].danwei == 3)
                     {
-                        drData[2 + i] = Math.Round(standards[l].standard_ppm[i], 2);
+                        drData[2 + i] = (decimal)Math.Round(standards[l].standard_ppm[i]/10000, 7);
                     }
-
-
-                    
                 }
                 dtData.Rows.Add(drData);
             }
