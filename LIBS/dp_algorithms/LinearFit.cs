@@ -40,23 +40,15 @@ namespace LIBS
 
         }
 
-        /// <summary>
-        /// 拟合计算原理：http://i.imgur.com/Qhrmfwt.png
-        /// 相关系数r计算原理：http://i.imgur.com/xsODpm3.png
-        /// </summary>
-        /// <param name="a">数组x地址</param>
-        /// <param name="b">数组y地址</param>
-        /// <param name="n">数组个数</param>
-        /// <returns>返回值为LfReValue自定义结构，主要包含参数a,b和r</returns>
-        /// 注意：因为在静态main函数中测试调用，所以定义为了static，实际项目中static可以去除
+        //线性拟合（不一定过原点）
+        //公式：http://i1.piimg.com/588926/c241d90e3eb2cfdb.png
         public static LfReValue linearFitFunc(double[] a, double[] b, int n)
         {
             LfReValue temp = new LfReValue();
             double a_sum = 0, b_sum = 0;
             double a_avg, b_avg;
             double p1 = 0, p2 = 0, p3 = 0, p4 = 0;
-            double a_temp, b_temp, r_temp = 0;
-
+            double a_temp, b_temp,r_temp;
 
             for (int i = 0; i < n; i++)
             {
@@ -88,7 +80,6 @@ namespace LIBS
                 r_value1 += (a[i] - a_avg) * (b[i] - b_avg);
                 r_value2 += (a[i] - a_avg) * (a[i] - a_avg);
                 r_value3 += (b[i] - b_avg) * (b[i] - b_avg);
-
             }
 
             r_temp = r_value1 / (Math.Sqrt(r_value2) * Math.Sqrt(r_value3));
@@ -100,44 +91,58 @@ namespace LIBS
             return temp;
         }
 
-        /// <summary>
-        /// 计算某数组的方差
-        /// 公式：http://i.imgur.com/LGzicJe.png
-        /// </summary>
-        /// <param name="x">double数组名</param>
-        /// <param name="n">数组元素个数</param>
-        /// <returns></returns>
-        public static double cal_variance(double[] x, int n)
+
+
+        //线性拟合：过原点情况
+        //公式：http://i4.buimg.com/588926/822a2c20ebbe24a6.png
+        public static LfReValue linearFitFunc_zero(double[] x, double[] y, int n)
         {
-            double x_sum = 0, x_avg, temp1 = 0;
+            LfReValue temp = new LfReValue();
+            
+            double shan = 0, xia = 0;
 
-            for (int i = 0; i < n; i++)
+            for (int i=0;i<x.Length;i++)
             {
-                x_sum += x[i];
+                shan += x[i] * y[i];
+                xia += x[i] * x[i];
+
             }
 
-            x_avg = x_sum / n;
-
-            for (int i = 0; i < n; i++)
-            {
-                temp1 += (x[i] - x_avg) * (x[i] - x_avg);
-            }
-
-            return temp1 / n;
+            temp.setA(0);
+            temp.setB(shan/xia);
+            temp.setR(calc_r_xgxs(x,y));
+            return temp;
         }
 
-        //double[] a = {35.3,29.7,30.8,58.8,61.4,71.3,74.4,76.6,70.7,57.5,46.4,28.9,
-        //        28.1,39.1,46.8,48.5,59.3,70.0,70.0,74.5,72.1,58.1,44.6,33.4,28.6 };
-        //double[] b = { 10.98,11.13,12.51,8.40,9.27,8.73,6.36,8.50,7.82,9.14,8.24,
-        //        12.19,11.88,9.57,10.94,9.58,10.09,8.11,6.83,8.88,7.68,8.47,8.86,10.38,11.08};
-        //double[] c = { 10.0, 11.0, 12.0 };
 
-        ////线性拟合调用示例
-        //LfReValue itemp = linearFitFunc(a, b, a.Length);
-        //Console.WriteLine(itemp.getA());
-        //    Console.WriteLine(itemp.getB());
-        //    Console.WriteLine(itemp.getR());
-        //    //计算方差调用示例
-        //    Console.WriteLine(cal_variance(c, c.Length));
+        //计算"相关系数r"
+        //公式：http://i1.piimg.com/1949/15d68cb1fc522dff.png
+        public static double calc_r_xgxs(double[] a, double[] b)
+        {
+            double temp = 0 ;
+            double a_avg = 0, b_avg = 0;
+            int n = a.Length;
+            for (int i=0;i<a.Length;i++)
+            {
+                a_avg += a[i];
+                b_avg += b[i];
+            }
+            a_avg = a_avg / a.Length;
+            b_avg = b_avg / a.Length;
+
+            double r_value1 = 0, r_value2 = 0, r_value3 = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                r_value1 += (a[i] - a_avg) * (b[i] - b_avg);
+                r_value2 += (a[i] - a_avg) * (a[i] - a_avg);
+                r_value3 += (b[i] - b_avg) * (b[i] - b_avg);
+            }
+
+            temp = r_value1 / (Math.Sqrt(r_value2) * Math.Sqrt(r_value3));
+
+            return temp;
+        }
+
     }
 }

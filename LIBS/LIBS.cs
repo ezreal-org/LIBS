@@ -1357,7 +1357,7 @@ namespace LIBS
                 g_bitmap_1.DrawString(sx, new Font("宋体", 8f), Brushes.Black, new PointF((float)(move / 1.2f), (float)(LenY * i / count + move * 1.1f-3)), drawFormat);
             }
             Pen pen = new Pen(Color.Black, 1);
-            g_bitmap_1.DrawString("光强", new Font("宋体 ", 9f), Brushes.Red, new PointF((float)(move / 3), (float)(move / 2f-5)));
+            g_bitmap_1.DrawString("计数", new Font("宋体 ", 9f), Brushes.Red, new PointF((float)(move / 3), (float)(move / 2f-5)));
             gg_1.DrawImage(myBitmap_1, 0, 0);
         }
 
@@ -1378,7 +1378,7 @@ namespace LIBS
                 g_bitmap_3.DrawString(sx, new Font("宋体", 8f), Brushes.Black, new PointF((float)(move / 1.2f), (float)(LenY * i / count + move * 1.1f)), drawFormat);
             }
             Pen pen = new Pen(Color.Black, 1);
-            g_bitmap_3.DrawString("光强", new Font("宋体 ", 8f), Brushes.Black, new PointF((float)(move / 3), (float)(move / 2f)));
+            g_bitmap_3.DrawString("计数", new Font("宋体 ", 8f), Brushes.Black, new PointF((float)(move / 3), (float)(move / 2f)));
             gg_3.DrawImage(myBitmap_3, 0, 0);
         }
 
