@@ -13,7 +13,7 @@ namespace LIBS.service_fun
 {
     class analysis_proc
     {
-        public static void process_cell_click(Chart chart1,Chart chart2,Label label2,Label label_info, DataGridView dataGridView9, int click_row, int click_column, spec_metadata spec_obj)
+        public static void process_cell_click(Chart chart1,Chart chart2,Label label2,Label label_info, DataGridView dataGridView9, int click_row, int click_column, spec_metadata spec_obj, int bs)
         {
             select_element[] elements = spec_obj.elements;
             standard[] standards = spec_obj.standards;
@@ -68,7 +68,8 @@ namespace LIBS.service_fun
             //用于计算方程的浓度和强度
             double []element_concentrations = null;
             double []element_average_strenths = null;
-            LinearFit.LfReValue equation = get_equation(spec_obj, click_column-3, ref element_concentrations, ref element_average_strenths);
+            //bs为
+            LinearFit.LfReValue equation = get_equation(spec_obj, click_column-3, ref element_concentrations, ref element_average_strenths,bs);
 
             this_read_integration_strenths = get_oneshot_all_strength(spec_obj, click_row, click_column - 3);
             this_read_average_times = this_read_integration_strenths.Length;
@@ -167,7 +168,7 @@ namespace LIBS.service_fun
 
         //获取某元素波长的方程，前置约束为调用者已经完成所有所有标样的读取
         //函数返回方程的同时，将返回方程进行计算时用到的标样点
-        public static LinearFit.LfReValue get_equation(spec_metadata spec_obj, int element_index, ref double[] concentration, ref double[] standards_integration_average_strenth)
+        public static LinearFit.LfReValue get_equation(spec_metadata spec_obj, int element_index, ref double[] concentration, ref double[] standards_integration_average_strenth, int bs)
         {
             double[] wave_all = spec_obj.read_wave_all;
             double[] env = spec_obj.env_spec;
@@ -195,7 +196,12 @@ namespace LIBS.service_fun
             {
                 concentration[j] = standards[j].standard_ppm[element.sequece_index-1];
             }
-            LinearFit.LfReValue equation = LinearFit.linearFitFunc(concentration, standards_integration_average_strenth, standard_cnt);
+            LinearFit.LfReValue equation;
+            //过空白或不过空白读取
+            if (bs == 0)
+                equation = LinearFit.linearFitFunc(concentration, standards_integration_average_strenth, standard_cnt);
+            else
+                equation = LinearFit.linearFitFunc_blank(concentration, standards_integration_average_strenth, standard_cnt);
 
             return equation;
         }

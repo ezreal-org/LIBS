@@ -19,6 +19,7 @@ namespace LIBS
     {
         spec_metadata spec_data; //程序内流动改对象
         int interval_change_status; // 0-没有改变, 1-改变左区间, 2-改变右区间
+        int blank_status=0;//是否过空白拟合，0代表不过
         spec_wrapper wrapper;
         NIST nist;
         string select_element_now; //当前正在选择的元素
@@ -87,6 +88,8 @@ namespace LIBS
             InitializeComponent();
             init_application();
         }
+
+    
 
         private void init_application()
         {
@@ -305,7 +308,7 @@ namespace LIBS
                 {
                     toolStripComboBox2.Text = "%";
                 }
-                analysis_proc.process_cell_click(chart1, chart2, label_equation, l_info, dgv_thisshot, e.RowIndex, e.ColumnIndex, spec_data);
+                analysis_proc.process_cell_click(chart1, chart2, label_equation, l_info, dgv_thisshot, e.RowIndex, e.ColumnIndex, spec_data, blank_status);
             }
             
 
@@ -449,6 +452,7 @@ namespace LIBS
             label_mouse.Location = p_lable;
             label_mouse.Show();
         }
+
         private void chart1_MouseDown(object sender, MouseEventArgs e)
         {
             if (chart1.Series.Count < 4) return;
@@ -502,7 +506,7 @@ namespace LIBS
                 double[] element_average_strenths = null;
                 int click_column = dgv_analysis.SelectedCells[0].ColumnIndex;
                 int click_row = dgv_analysis.SelectedCells[0].RowIndex;
-                LinearFit.LfReValue equation = analysis_proc.get_equation(spec_data, click_column - 3, ref element_concentrations, ref element_average_strenths);
+                LinearFit.LfReValue equation = analysis_proc.get_equation(spec_data, click_column - 3, ref element_concentrations, ref element_average_strenths,blank_status);
 
                 double[] this_read_integration_strenths = analysis_proc.get_oneshot_all_strength(spec_data, click_row, click_column - 3);
                 int this_read_average_times = this_read_integration_strenths.Length;
@@ -1880,6 +1884,78 @@ namespace LIBS
         {
             g_bitmap_1.FillEllipse(Brushes.Green, p.X, p.Y, 1.5f, 1.5f);
             gg_1.DrawImage(myBitmap_1, 0, 0);
+        }
+
+       
+
+        private void label_equation_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox106_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox106.CheckState == CheckState.Checked)
+            {
+               blank_status = 1;
+            }
+            else if (checkBox106.CheckState == CheckState.Unchecked)
+            {
+               blank_status = 0;
+            }
+
+            double[,] standard_val = new double[spec_data.standard_cnt, spec_data.element_cnt];
+            double[,] sample_val = new double[spec_data.sample_cnt, spec_data.element_cnt];
+            //draw_datagrid_analysis函数内会准备好用于表格显示的数据，并绘制表格
+            int origin_select_row = dgv_analysis.SelectedCells[0].RowIndex;
+            int origin_select_column = dgv_analysis.SelectedCells[0].ColumnIndex;
+            datagrid_control.draw_datagrid_analysis(dgv_analysis, spec_data);
+            dgv_analysis.ClearSelection();
+            dgv_analysis.Rows[origin_select_row].Cells[origin_select_column].Selected = true;
+
+            //重新根据积分区间计算
+            //只负责更新积分区间，调用datagrid_control重新fill表格数据
+            // 计算该点的(wave,积分平均强度)
+            // 重新计算方程 更新视图
+            // 重新绘制方程图
+            double[] element_concentrations = null;
+            double[] element_average_strenths = null;
+            int click_column = dgv_analysis.SelectedCells[0].ColumnIndex;
+            int click_row = dgv_analysis.SelectedCells[0].RowIndex;
+            LinearFit.LfReValue equation = analysis_proc.get_equation(spec_data, click_column - 3, ref element_concentrations, ref element_average_strenths, blank_status);
+
+            double[] this_read_integration_strenths = analysis_proc.get_oneshot_all_strength(spec_data, click_row, click_column - 3);
+            int this_read_average_times = this_read_integration_strenths.Length;
+            double[] this_read_integration_concentrations = new double[this_read_average_times];
+            double this_read_strenth_average = 0, this_read_concentration_average = 0;
+            for (int i = 0; i < this_read_average_times; i++)
+            {
+                this_read_integration_concentrations[i] = (this_read_integration_strenths[i] - equation.getA()) / equation.getB();
+            }
+            for (int i = 0; i < this_read_average_times; i++)
+            {
+                this_read_strenth_average += this_read_integration_strenths[i];
+            }
+            this_read_strenth_average /= this_read_average_times;
+            this_read_concentration_average = (this_read_strenth_average - equation.getA()) / equation.getB();
+
+            equation_chart.draw_equation(chart2, label_equation, element_concentrations, element_average_strenths, equation.getA(), equation.getB(), equation.getR());
+            if (click_row < spec_data.standard_cnt)
+                equation_chart.add_point_now(chart2, element_concentrations[click_row], element_average_strenths[click_row], Color.Red, MarkerStyle.Circle);
+            else
+                equation_chart.add_point_now(chart2, this_read_concentration_average, this_read_strenth_average, Color.Green, MarkerStyle.Triangle);
+            datagrid_control.draw_datagrid_snapshot(dgv_thisshot, this_read_integration_concentrations, this_read_integration_strenths);
+            summary_info.draw_summary_info(l_info, this_read_concentration_average, this_read_strenth_average, this_read_integration_strenths, this_read_integration_concentrations);
+        }
+
+        private void checkBox1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void radioButton_subbase_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
 
         void drawDot_3(PointF p)

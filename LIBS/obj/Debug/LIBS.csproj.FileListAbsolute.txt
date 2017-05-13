@@ -18,3 +18,13 @@ H:\bs\LIBS\LIBS\obj\Debug\LIBS.csproj.GenerateResource.Cache
 H:\bs\LIBS\LIBS\obj\Debug\LIBS.exe
 H:\bs\LIBS\LIBS\obj\Debug\LIBS.pdb
 H:\bs\LIBS\LIBS\obj\Debug\LIBS.csprojResolveAssemblyReference.cache
+D:\Users\aaron-thinkpad\Source\Repos\NewRepo\LIBS\bin\Debug\LIBS.exe.config
+D:\Users\aaron-thinkpad\Source\Repos\NewRepo\LIBS\bin\Debug\LIBS.exe
+D:\Users\aaron-thinkpad\Source\Repos\NewRepo\LIBS\bin\Debug\LIBS.pdb
+D:\Users\aaron-thinkpad\Source\Repos\NewRepo\LIBS\bin\Debug\NETOmniDriver-NET40.dll
+D:\Users\aaron-thinkpad\Source\Repos\NewRepo\LIBS\obj\Debug\LIBS.csprojResolveAssemblyReference.cache
+D:\Users\aaron-thinkpad\Source\Repos\NewRepo\LIBS\obj\Debug\LIBS.LIBS.resources
+D:\Users\aaron-thinkpad\Source\Repos\NewRepo\LIBS\obj\Debug\LIBS.Properties.Resources.resources
+D:\Users\aaron-thinkpad\Source\Repos\NewRepo\LIBS\obj\Debug\LIBS.csproj.GenerateResource.Cache
+D:\Users\aaron-thinkpad\Source\Repos\NewRepo\LIBS\obj\Debug\LIBS.exe
+D:\Users\aaron-thinkpad\Source\Repos\NewRepo\LIBS\obj\Debug\LIBS.pdb

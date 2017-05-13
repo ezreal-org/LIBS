@@ -114,6 +114,46 @@ namespace LIBS
             return temp;
         }
 
+        //线性拟合过空白 
+        //公式：http://chuantu.biz/t5/85/1494685716x2890171456.gif
+        public static LfReValue linearFitFunc_blank(double[] a, double[] b, int n)
+        {
+            LfReValue temp = new LfReValue();
+            double a_sum = 0, b_sum = 0;
+            double a_avg, b_avg;
+            double p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 0, p6 = 0, p7 = 0;
+            double a_temp, b_temp, r_temp;
+            //空白坐标
+            double x0 = a[0];
+            double y0 = b[0];
+            for (int i = 1; i < n; i++)
+            {
+                a_sum += a[i];
+                b_sum += b[i];
+                p1 += a[i] * b[i];
+                p5 += a[i] * a[i];
+            }
+
+            a_avg = a_sum / (n - 1);
+            b_avg = b_sum / (n - 1);
+
+            p2 = (n - 1) * x0 * y0;
+            p3 = (n - 1) * y0 * a_avg;
+            p4 = (n - 1) * x0 * b_avg;
+            p6 = 2 * (n - 1) * x0 * a_avg;
+            p7 = (n - 1) * x0 * x0;
+
+            b_temp = (p1 + p2 - p3 - p4) / (p5 - p6 + p7);
+            a_temp = y0 - b_temp * x0;
+
+            r_temp = calc_r_xgxs(a, b);
+            temp.setA(a_temp);
+            temp.setB(b_temp);
+            temp.setR(r_temp);
+
+            return temp;
+
+        }
 
         //计算"相关系数r"
         //公式：http://i1.piimg.com/1949/15d68cb1fc522dff.png
