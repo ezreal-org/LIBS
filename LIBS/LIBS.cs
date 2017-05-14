@@ -655,7 +655,53 @@ namespace LIBS
 
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
-            
+            save_to_report();
+        }
+
+        void save_to_report()
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "TXT文件 (*.txt)|*.txt";
+            saveFileDialog1.RestoreDirectory = true;
+            saveFileDialog1.FileName = "实验报告";
+            string time= DateTime.Now.ToString();
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                
+                FileStream fs = new FileStream(saveFileDialog1.FileName, FileMode.Create);
+                StreamWriter sw = new StreamWriter(fs);
+                string blank = "         ";
+                //MessageBox.Show(System.IO.Path.GetFileName(saveFileDialog1.FileName));
+                try
+                {
+                    sw.WriteLine("Name= " + System.IO.Path.GetFileName(saveFileDialog1.FileName));
+                    sw.WriteLine("SpectrometerName=组合光谱仪");
+                    sw.WriteLine(time);
+                    sw.WriteLine();
+                    sw.WriteLine();
+                    sw.WriteLine("波长" + "                   " + "本底" + "                   " + "计数");
+
+                    for (int i = 0; i < spec_data.read_wave_all.Length; i++)
+                    {
+                        sw.WriteLine(Math.Round(spec_data.read_wave_all[i],9) + blank + Math.Round(spec_data.env_spec[i], 9) + blank + Math.Round(spec_data.read_spec_all_now[i],9));
+                    }
+
+
+                    //清空缓冲区
+                    sw.Flush();
+                    //关闭流
+                    sw.Close();
+                    fs.Close();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("生成报告写入失败：" + e);
+                    sw.Close();
+                    fs.Close();
+                }
+
+            }
         }
 
         //保存不同标样的浓度数据
@@ -1141,7 +1187,7 @@ namespace LIBS
             {
                 this.timer1.Interval = device_update_time;
             }
-            //this.timer1.Interval = 1500;
+
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
 
             this.timer1.Start();//启动定时器
@@ -2331,6 +2377,7 @@ namespace LIBS
             {
                 //清除原先y轴刻度
                 clearYLineValue_1((float)y_min_1, (float)y_max_1, 10);
+                clearYLineValue_1((float)y_min_1, (float)y_max_1, 10);
 
                 y_min_1 = y_l - y_l % 10 - 50;//a-a%10-20
 
@@ -2536,14 +2583,14 @@ namespace LIBS
                     sw.WriteLine(spec_obj.sample_cnt);
 
 
-                    sw.WriteLine("double[] read_wave_all:");
+                    sw.WriteLine("波长（double[] read_wave_all）:");
                     sw.WriteLine(spec_obj.read_wave_all.Length);
                     for (int i = 0; i < spec_obj.read_wave_all.Length; i++)
                     {
                         sw.WriteLine(spec_obj.read_wave_all[i]);
                     }
 
-                    sw.WriteLine("double[] read_spec_all_now:");
+                    sw.WriteLine("计数（double[] read_spec_all_now:）");
                     sw.WriteLine(spec_obj.read_spec_all_now.Length);
                     for (int i = 0; i < spec_obj.read_spec_all_now.Length; i++)
                     {
@@ -2551,7 +2598,7 @@ namespace LIBS
                     }
 
 
-                    sw.WriteLine("double[] env_spec:");
+                    sw.WriteLine("本底（double[] env_spec:）");
                     sw.WriteLine(spec_obj.env_spec.Length);
                     for (int i = 0; i < spec_obj.env_spec.Length; i++)
                     {
