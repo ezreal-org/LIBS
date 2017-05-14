@@ -658,6 +658,10 @@ namespace LIBS
             save_to_report();
         }
 
+
+        //跟大家讨论确定导出数据使用上面模板
+        //波长精确到小数点后3位，本底、计数精确到小数点后2位
+        //每列测试数据显示几次测试的平均值
         void save_to_report()
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
@@ -671,20 +675,57 @@ namespace LIBS
                 
                 FileStream fs = new FileStream(saveFileDialog1.FileName, FileMode.Create);
                 StreamWriter sw = new StreamWriter(fs);
-                string blank = "         ";
-                //MessageBox.Show(System.IO.Path.GetFileName(saveFileDialog1.FileName));
+                string blank = "        ";
                 try
                 {
-                    sw.WriteLine("Name= " + System.IO.Path.GetFileName(saveFileDialog1.FileName));
                     sw.WriteLine("SpectrometerName=组合光谱仪");
-                    sw.WriteLine(time);
-                    sw.WriteLine();
-                    sw.WriteLine();
-                    sw.WriteLine("波长" + "                   " + "本底" + "                   " + "计数");
-
-                    for (int i = 0; i < spec_data.read_wave_all.Length; i++)
+                    string line2="测试元素：";
+                    for (int i=0;i<spec_data.element_cnt;i++)
                     {
-                        sw.WriteLine(Math.Round(spec_data.read_wave_all[i],9) + blank + Math.Round(spec_data.env_spec[i], 9) + blank + Math.Round(spec_data.read_spec_all_now[i],9));
+                        line2 += spec_data.elements[i].label + "(" + spec_data.elements[i].select_wave + ")" + "  ";
+                    }
+                    sw.WriteLine(line2);
+                    sw.WriteLine("通道范围: 通道一:190-250  通道二：230-330 通道三：320-410 通道四：398-527 通道五：508-623 通道六：607-799");
+                    string line4 = "积分时间(ms)：通道一："+textBox1.Text+"  通道二："+textBox2.Text+ "  通道三：" + textBox3.Text+ "  通道四：" + textBox4.Text+ "  通道五：" + textBox5.Text+ "  通道六：" + textBox6.Text;
+                    sw.WriteLine(line4);
+                    string line5 = "重复读取次数：" + textBox8.Text;
+                    sw.WriteLine(line5);
+                    string line6 = "保存时间:" + time;
+                    sw.WriteLine(line6);
+                    sw.WriteLine();
+                    sw.WriteLine();
+
+                    int standard_count = spec_data.standard_cnt;
+                    int sample_count = spec_data.sample_cnt;
+
+                    string line9 = " 波长           本底          ";
+                    for (int i=0;i<standard_count;i++)
+                    {
+                        line9 += "计数(" + spec_data.standards[i].standard_label + ")    ";
+                    }
+                    for (int i=0;i<sample_count;i++)
+                    {
+                        line9+= "计数(" + spec_data.samples[i].sample_label + ")    ";
+                    }
+                    sw.WriteLine(line9);
+
+                    for (int i=0;i<spec_data.read_wave_all.Length;i++)
+                    {
+                        string str = "";
+                        str += spec_data.read_wave_all[i].ToString("0.000")+blank;
+                        str += spec_data.env_spec[i].ToString("0.00") + blank;
+                        for (int j=0;j<standard_count;j++)
+                        {
+                            double avg_spec1 = (spec_data.read_standard_spec[j, 0, i] + spec_data.read_standard_spec[j, 1, i] + spec_data.read_standard_spec[j, 2, i] + spec_data.read_standard_spec[j, 3, i] + spec_data.read_standard_spec[j, 4, i]) / 5;
+                            str += avg_spec1.ToString("0.00") + blank;
+                        }
+                        for (int j=0;j<sample_count;j++)
+                        {
+                            double avg_spec2 = (spec_data.read_sample_spec[j, 0, i] + spec_data.read_sample_spec[j, 1, i] + spec_data.read_sample_spec[j, 2, i] + spec_data.read_sample_spec[j, 3, i] + spec_data.read_sample_spec[j, 4, i]) / 5;
+                            str += avg_spec2.ToString("0.00") + blank;
+                        }
+                        sw.WriteLine(str);
+
                     }
 
 
