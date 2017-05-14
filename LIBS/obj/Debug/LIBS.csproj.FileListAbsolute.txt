@@ -28,3 +28,12 @@ D:\Users\aaron-thinkpad\Source\Repos\NewRepo\LIBS\obj\Debug\LIBS.Properties.Reso
 D:\Users\aaron-thinkpad\Source\Repos\NewRepo\LIBS\obj\Debug\LIBS.csproj.GenerateResource.Cache
 D:\Users\aaron-thinkpad\Source\Repos\NewRepo\LIBS\obj\Debug\LIBS.exe
 D:\Users\aaron-thinkpad\Source\Repos\NewRepo\LIBS\obj\Debug\LIBS.pdb
+H:\bs_new\LIBS\LIBS\bin\Debug\LIBS.exe.config
+H:\bs_new\LIBS\LIBS\bin\Debug\LIBS.exe
+H:\bs_new\LIBS\LIBS\bin\Debug\LIBS.pdb
+H:\bs_new\LIBS\LIBS\obj\Debug\LIBS.csprojResolveAssemblyReference.cache
+H:\bs_new\LIBS\LIBS\obj\Debug\LIBS.LIBS.resources
+H:\bs_new\LIBS\LIBS\obj\Debug\LIBS.Properties.Resources.resources
+H:\bs_new\LIBS\LIBS\obj\Debug\LIBS.csproj.GenerateResource.Cache
+H:\bs_new\LIBS\LIBS\obj\Debug\LIBS.exe
+H:\bs_new\LIBS\LIBS\obj\Debug\LIBS.pdb

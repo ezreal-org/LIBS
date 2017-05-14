@@ -80,7 +80,23 @@ namespace LIBS.ui_control
             chart2.Series.Add(ser2);
             chart2.Series.Add(ser);
             chart2.ChartAreas[0].RecalculateAxesScale();
-            label2.Text = "回归方程" + "\r" + "强度 = " + Math.Round(b, 3) + " * 浓度 + " + Math.Round(a, 3) + "\t" + "    相关系数(r): " + Math.Round(r, 4);
+            //label2.Text = "回归方程" + "\r" + "强度 = " + Math.Round(b, 3) + " * 浓度 + " + Math.Round(a, 3) + "\t" + "    相关系数(r): " + Math.Round(r, 4);
+            String text1 = "回归方程" + "\r" + "强度 = " + Math.Round(b, 3) + " * 浓度";
+            String text2;
+            if (Math.Round(a, 3) > 0)
+            {
+                text2 = " + " + Math.Round(a, 3);
+            }
+            else if (Math.Round(a, 3) < 0)
+            {
+                text2 = " - " + (-Math.Round(a, 3));
+            }
+            else
+            {
+                text2 = "";
+            }
+            String text3 = "\t" + "    相关系数(r): " + Math.Round(r, 4);
+            label2.Text = text1 + text2 + text3;
         }
 
         public static void add_point_now(Chart chart2, double x, double y, Color cc, MarkerStyle ms)

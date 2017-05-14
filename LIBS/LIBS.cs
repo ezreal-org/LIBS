@@ -159,35 +159,7 @@ namespace LIBS
         //打开文件点击响应事件
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.Filter = "LIBS配置文件|*.libs";
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    spec_metadata vv_spec_metadata = file_operator.read_spec_metadata(openFileDialog1.FileName);
-                    spec_data = vv_spec_metadata;
-                    x_init = spec_data.read_wave_all;
-                    y_init = spec_data.read_spec_all_now;
-                    x = x_init;
-                    y = y_init;
 
-
-                    clearPaint_1();
-                    drawLine_Group_1(x, y);
-                    ifExistPlot_1 = true;
-
-                    //绘制已选元素表格   
-                    datagrid_control.draw_datagrid_select_element(dataGridView1, spec_data.elements, spec_data.element_cnt);
-
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("读取文件出错，请检查！" + "\n" + ex);
-                }
-
-            }
         }
 
         //private void read_testdata()
@@ -1209,14 +1181,6 @@ namespace LIBS
         //保存文件点击响应事件
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Filter = "LIBS文件 (*.libs)|*.libs";
-            saveFileDialog1.RestoreDirectory = true;
-            saveFileDialog1.FileName = "spec_metadat";
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                file_operator.save_spec_metadat(saveFileDialog1.FileName,spec_data);
-            }
 
         }
 
@@ -1970,6 +1934,66 @@ namespace LIBS
             gg_1.DrawImage(myBitmap_1, 0, 0);
         }
 
+        private void toolStripButton8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void 打开txt文件ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            txt_data_to_program();
+        }
+
+        private void 打开libs文件ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "LIBS配置文件|*.libs";
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    spec_metadata vv_spec_metadata = file_operator.read_spec_metadata(openFileDialog1.FileName);
+                    spec_data = vv_spec_metadata;
+                    x_init = spec_data.read_wave_all;
+                    y_init = spec_data.read_spec_all_now;
+                    x = x_init;
+                    y = y_init;
+
+
+                    clearPaint_1();
+                    drawLine_Group_1(x, y);
+                    ifExistPlot_1 = true;
+
+                    //绘制已选元素表格   
+                    datagrid_control.draw_datagrid_select_element(dataGridView1, spec_data.elements, spec_data.element_cnt);
+
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("读取文件出错，请检查！" + "\n" + ex);
+                }
+
+            }
+        }
+
+        private void 保存为txt文件ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            save_data_to_txt(spec_data);
+        }
+
+        private void 保存为libs文件ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "LIBS文件 (*.libs)|*.libs";
+            saveFileDialog1.RestoreDirectory = true;
+            saveFileDialog1.FileName = "spec_metadat";
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                file_operator.save_spec_metadat(saveFileDialog1.FileName, spec_data);
+            }
+        }
+
         //把 实际参数 转换成 坐标系中点的参数
         PointF convert_1(float x, float y)
         {
@@ -2320,12 +2344,12 @@ namespace LIBS
                 }
                 drawYLineValue_1((float)y_min_1, (float)y_max_1, 10);
             }
-
+            drawXY_1();
 
             //根据x,y轴取值范围画坐标轴与刻度
             //drawXY_1();
             //drawXLineValue_1(x_min_1, x_max_1, 10);
-            
+
 
             //画图
             if (n<=0)
@@ -2484,9 +2508,324 @@ namespace LIBS
             {
                 MessageBox.Show("配置文件写入失败："+e);
             }
-            
-        
-        }
+        }//end:public void write_configure(string path)
+
+
+        //把数据保存为txt格式文件
+        void save_data_to_txt(spec_metadata spec_obj)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "TXT文件 (*.txt)|*.txt";
+            saveFileDialog1.RestoreDirectory = true;
+            saveFileDialog1.FileName = "spec_metadat";
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+
+                FileStream fs = new FileStream(saveFileDialog1.FileName, FileMode.Create);
+                StreamWriter sw = new StreamWriter(fs);
+                try
+                {
+                    //开始写入
+                    sw.WriteLine("int element_cnt:");
+                    sw.WriteLine(spec_obj.element_cnt);
+
+                    sw.WriteLine("int standard_cnt:");
+                    sw.WriteLine(spec_obj.standard_cnt);
+
+                    sw.WriteLine("int sample_cnt:");
+                    sw.WriteLine(spec_obj.sample_cnt);
+
+
+                    sw.WriteLine("double[] read_wave_all:");
+                    sw.WriteLine(spec_obj.read_wave_all.Length);
+                    for (int i = 0; i < spec_obj.read_wave_all.Length; i++)
+                    {
+                        sw.WriteLine(spec_obj.read_wave_all[i]);
+                    }
+
+                    sw.WriteLine("double[] read_spec_all_now:");
+                    sw.WriteLine(spec_obj.read_spec_all_now.Length);
+                    for (int i = 0; i < spec_obj.read_spec_all_now.Length; i++)
+                    {
+                        sw.WriteLine(spec_obj.read_spec_all_now[i]);
+                    }
+
+
+                    sw.WriteLine("double[] env_spec:");
+                    sw.WriteLine(spec_obj.env_spec.Length);
+                    for (int i = 0; i < spec_obj.env_spec.Length; i++)
+                    {
+                        sw.WriteLine(spec_obj.env_spec[i]);
+                    }
+
+                    sw.WriteLine("select_element[] elements:");
+                    for (int i = 0; i < spec_obj.element_cnt; i++)
+                    {
+                        sw.WriteLine(spec_obj.elements[i].sequece_index);
+                        sw.WriteLine(spec_obj.elements[i].element);
+                        sw.WriteLine(spec_obj.elements[i].label);
+                        sw.WriteLine(spec_obj.elements[i].select_wave);
+                        sw.WriteLine(spec_obj.elements[i].peak_wave);
+                        sw.WriteLine(spec_obj.elements[i].seek_peak_range);
+                        sw.WriteLine(spec_obj.elements[i].interval_start);
+                        sw.WriteLine(spec_obj.elements[i].interval_end);
+                        sw.WriteLine(spec_obj.elements[i].danwei);
+                    }
+
+                    sw.WriteLine("standard[] standards:");
+                    for (int i = 0; i < spec_obj.standard_cnt; i++)
+                    {
+                        sw.WriteLine(spec_obj.standards[i].standard_index);
+                        sw.WriteLine(spec_obj.standards[i].standard_label);
+
+                        sw.WriteLine("spec_obj.standards[i].standard_ppm.Length:");
+                        sw.WriteLine(spec_obj.standards[i].standard_ppm.Length);
+                        for (int j = 0; j < spec_obj.standards[i].standard_ppm.Length; j++)
+                        {
+                            sw.WriteLine(spec_obj.standards[i].standard_ppm[j]);
+                        }
+
+                        sw.WriteLine(spec_obj.standards[i].average_times);
+                        sw.WriteLine(spec_obj.standards[i].is_readed);
+                    }
+
+                    sw.WriteLine("sample[] samples:");
+                    for (int i = 0; i < spec_obj.sample_cnt; i++)
+                    {
+                        sw.WriteLine(spec_obj.samples[i].sample_index);
+                        sw.WriteLine(spec_obj.samples[i].sample_label);
+                        sw.WriteLine(spec_obj.samples[i].average_times);
+                        sw.WriteLine(spec_obj.samples[i].is_read);
+                        sw.WriteLine(spec_obj.samples[i].weight);
+                        sw.WriteLine(spec_obj.samples[i].volume);
+                        sw.WriteLine(spec_obj.samples[i].coefficient);
+                    }
+
+                    sw.WriteLine("double[,,] read_standard_spec:");
+                    int ar1 = spec_obj.standard_cnt;
+                    int ar3 = spec_obj.read_standard_spec.GetLength(2);
+                    sw.WriteLine(ar1);
+                    sw.WriteLine(ar3);
+                    for (int i = 0; i < ar1; i++)
+                    {
+                        int ar2 = spec_obj.standards[i].average_times;
+                        sw.WriteLine(ar2);
+                        for (int j = 0; j < ar2; j++)
+                        {
+                            for (int k = 0; k < ar3; k++)
+                            {
+                                sw.WriteLine(spec_obj.read_standard_spec[i, j, k]);
+                            }
+                        }
+                    }
+
+                    sw.WriteLine("double[,,] read_sample_spec:");
+                    int as1 = spec_obj.sample_cnt;
+                    int as3 = spec_obj.read_sample_spec.GetLength(2);
+                    sw.WriteLine(as1);
+                    sw.WriteLine(as3);
+                    for (int i = 0; i < as1; i++)
+                    {
+                        int as2 = spec_obj.samples[i].average_times;
+                        sw.WriteLine(as2);
+                        for (int j = 0; j < as2; j++)
+                        {
+                            for (int k = 0; k < as3; k++)
+                            {
+                                sw.WriteLine(spec_obj.read_sample_spec[i, j, k]);
+                            }
+                        }
+                    }
+
+                    //清空缓冲区
+                    sw.Flush();
+                    //关闭流
+                    sw.Close();
+                    fs.Close();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("txt文件写入失败：" + e);
+                    sw.Close();
+                    fs.Close();
+                }
+
+
+            }//end:if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+        }//end:void save_data_to_txt(spec_metadata spec_obj)
+
+
+        //读取txt数据文件到程序中
+        void txt_data_to_program()
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "TXT配置文件|*.txt";
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    //MessageBox.Show(openFileDialog1.FileName);
+                    string rd;
+                    try
+                    {
+                        //StreamReader sreader = new StreamReader(openFileDialog1.FileName, Encoding.Default);
+                        StreamReader sreader = new StreamReader(openFileDialog1.FileName, Encoding.UTF8);
+
+                        sreader.ReadLine();//读取提示信息
+                        int elem_count, standard_count, sample_count;
+                        elem_count = int.Parse(sreader.ReadLine());
+                        sreader.ReadLine();//读取提示信息
+                        standard_count = int.Parse(sreader.ReadLine());
+                        sreader.ReadLine();//读取提示信息
+                        sample_count = int.Parse(sreader.ReadLine());
+                        //设置element_cnt，standard_cnt，sample_cnt三个参数
+                        spec_data.element_cnt = elem_count;
+                        spec_data.standard_cnt = standard_count;
+                        spec_data.sample_cnt = sample_count;
+
+                        //MessageBox.Show(elem_count+"\n"+standard_count+"\n"+sample_count);
+
+                        sreader.ReadLine();
+                        int i_read_wave_all = int.Parse(sreader.ReadLine());
+                        for (int i = 0; i < i_read_wave_all; i++)
+                        {
+                            spec_data.read_wave_all[i] = double.Parse(sreader.ReadLine());
+                        }
+
+                        //MessageBox.Show(spec_data.read_wave_all[0]+"\n"+ spec_data.read_wave_all[2]);
+
+                        sreader.ReadLine();
+                        int i_read_spec_all_now = int.Parse(sreader.ReadLine());
+                        for (int i = 0; i < i_read_spec_all_now; i++)
+                        {
+                            spec_data.read_spec_all_now[i] = double.Parse(sreader.ReadLine());
+                        }
+
+                        //MessageBox.Show(spec_data.read_spec_all_now[0] + "\n" + spec_data.read_spec_all_now[2]);
+
+                        sreader.ReadLine();
+                        int i_env_spec = int.Parse(sreader.ReadLine());
+                        for (int i = 0; i < i_env_spec; i++)
+                        {
+                            spec_data.env_spec[i] = double.Parse(sreader.ReadLine());
+                        }
+
+                        //MessageBox.Show(spec_data.env_spec[0] + "\n" + spec_data.env_spec[2]);
+
+                        sreader.ReadLine();
+                        for (int i = 0; i < elem_count; i++)
+                        {
+                            spec_data.elements[i].sequece_index = int.Parse(sreader.ReadLine());
+                            spec_data.elements[i].element = sreader.ReadLine();
+                            spec_data.elements[i].label = sreader.ReadLine();
+                            spec_data.elements[i].select_wave = double.Parse(sreader.ReadLine());
+                            spec_data.elements[i].peak_wave = double.Parse(sreader.ReadLine());
+                            spec_data.elements[i].seek_peak_range = double.Parse(sreader.ReadLine());
+                            spec_data.elements[i].interval_start = double.Parse(sreader.ReadLine());
+                            spec_data.elements[i].interval_end = double.Parse(sreader.ReadLine());
+                            spec_data.elements[i].danwei = int.Parse(sreader.ReadLine());
+                        }
+
+                        //MessageBox.Show(spec_data.elements[1].select_wave+"");
+
+                        sreader.ReadLine();
+                        for (int i = 0; i < standard_count; i++)
+                        {
+                            spec_data.standards[i].standard_index = int.Parse(sreader.ReadLine());
+                            spec_data.standards[i].standard_label = sreader.ReadLine();
+                            sreader.ReadLine();
+                            int ii_count = int.Parse(sreader.ReadLine());
+                            for (int j = 0; j < ii_count; j++)
+                            {
+                                spec_data.standards[i].standard_ppm[j] = double.Parse(sreader.ReadLine());
+                            }
+                            spec_data.standards[i].average_times = int.Parse(sreader.ReadLine());
+                            spec_data.standards[i].is_readed = bool.Parse(sreader.ReadLine());
+                        }
+
+                        //MessageBox.Show(spec_data.standards[1].is_readed+"");
+
+                        sreader.ReadLine();
+                        for (int i = 0; i < sample_count; i++)
+                        {
+                            spec_data.samples[i].sample_index = int.Parse(sreader.ReadLine());
+                            spec_data.samples[i].sample_label = sreader.ReadLine();
+                            spec_data.samples[i].average_times = int.Parse(sreader.ReadLine());
+                            spec_data.samples[i].is_read = bool.Parse(sreader.ReadLine());
+                            spec_data.samples[i].weight = int.Parse(sreader.ReadLine());
+                            spec_data.samples[i].volume = int.Parse(sreader.ReadLine());
+                            spec_data.samples[i].coefficient = int.Parse(sreader.ReadLine());
+                        }
+                        //MessageBox.Show(spec_data.samples[0].sample_label);
+
+                        sreader.ReadLine();
+                        int i_ar1 = int.Parse(sreader.ReadLine());
+                        int i_ar3 = int.Parse(sreader.ReadLine());
+                        for (int i = 0; i < i_ar1; i++)
+                        {
+                            int i_ar2 = int.Parse(sreader.ReadLine());
+                            for (int j = 0; j < i_ar2; j++)
+                            {
+                                for (int k = 0; k < i_ar3; k++)
+                                {
+                                    spec_data.read_standard_spec[i, j, k] = double.Parse(sreader.ReadLine());
+                                }
+                            }
+
+                        }
+
+                        //MessageBox.Show(sreader.ReadLine());
+
+                        sreader.ReadLine();
+                        int i_as1 = int.Parse(sreader.ReadLine());
+                        int i_as3 = int.Parse(sreader.ReadLine());
+                        for (int i = 0; i < i_as1; i++)
+                        {
+                            int i_as2 = int.Parse(sreader.ReadLine());
+                            for (int j = 0; j < i_as2; j++)
+                            {
+                                for (int k = 0; k < i_as3; k++)
+                                {
+                                    spec_data.read_sample_spec[i, j, k] = double.Parse(sreader.ReadLine());
+                                }
+                            }
+                        }
+
+                        sreader.Close();
+
+                        //===========================================================
+                        x_init = spec_data.read_wave_all;
+                        y_init = spec_data.read_spec_all_now;
+                        x = x_init;
+                        y = y_init;
+
+
+                        clearPaint_1();
+                        drawLine_Group_1(x, y);
+                        ifExistPlot_1 = true;
+
+                        //绘制已选元素表格   
+                        datagrid_control.draw_datagrid_select_element(dataGridView1, spec_data.elements, spec_data.element_cnt);
+
+
+
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show("文件读取异常:" + e);
+                    }
+
+
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("读取文件出错，请检查！" + "\n" + ex);
+                }
+
+            }//end: if (openFileDialog1.ShowDialog() == DialogResult.OK)
+        }//end:void txt_data_to_program()
+
 
     }//(end) public partial class LIBS : Form
 }//(end)namespace LIBS
