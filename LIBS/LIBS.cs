@@ -716,12 +716,12 @@ namespace LIBS
                         str += spec_data.env_spec[i].ToString("0.00") + blank;
                         for (int j=0;j<standard_count;j++)
                         {
-                            double avg_spec1 = (spec_data.read_standard_spec[j, 0, i] + spec_data.read_standard_spec[j, 1, i] + spec_data.read_standard_spec[j, 2, i] + spec_data.read_standard_spec[j, 3, i] + spec_data.read_standard_spec[j, 4, i]) / 5;
+                            double avg_spec1 = (spec_data.read_standard_spec[j, 0, i] + spec_data.read_standard_spec[j, 1, i] + spec_data.read_standard_spec[j, 2, i] + spec_data.read_standard_spec[j, 3, i] + spec_data.read_standard_spec[j, 4, i]) / spec_data.standards[j].average_times;
                             str += avg_spec1.ToString("0.00") + blank;
                         }
                         for (int j=0;j<sample_count;j++)
                         {
-                            double avg_spec2 = (spec_data.read_sample_spec[j, 0, i] + spec_data.read_sample_spec[j, 1, i] + spec_data.read_sample_spec[j, 2, i] + spec_data.read_sample_spec[j, 3, i] + spec_data.read_sample_spec[j, 4, i]) / 5;
+                            double avg_spec2 = (spec_data.read_sample_spec[j, 0, i] + spec_data.read_sample_spec[j, 1, i] + spec_data.read_sample_spec[j, 2, i] + spec_data.read_sample_spec[j, 3, i] + spec_data.read_sample_spec[j, 4, i]) / spec_data.samples[j].average_times;
                             str += avg_spec2.ToString("0.00") + blank;
                         }
                         sw.WriteLine(str);
