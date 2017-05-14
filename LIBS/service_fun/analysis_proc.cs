@@ -13,7 +13,7 @@ namespace LIBS.service_fun
 {
     class analysis_proc
     {
-        public static void process_cell_click(Chart chart1,Chart chart2,Label label2,Label label_info, DataGridView dataGridView9, int click_row, int click_column, spec_metadata spec_obj, int bs)
+        public static int process_cell_click(Chart chart1,Chart chart2,Label label2,Label label_info, DataGridView dataGridView9, int click_row, int click_column, spec_metadata spec_obj, int bs)
         {
             select_element[] elements = spec_obj.elements;
             standard[] standards = spec_obj.standards;
@@ -51,14 +51,14 @@ namespace LIBS.service_fun
             else
             {
                 MessageBox.Show("需要先完成读取");
-                return;
+                return 0;
             }
             for(int i = 0; i < standard_cnt; i++)
             {
                 if (!standards[i].is_readed)
                 {
                     MessageBox.Show("需要所有标样完成读取才能计算方程");
-                    return;
+                    return 0;
                 }
             }
 
@@ -93,9 +93,10 @@ namespace LIBS.service_fun
                 equation_chart.add_point_now(chart2, this_read_concentration_average, this_read_strenth_average, Color.Green, MarkerStyle.Triangle);
             datagrid_control.draw_datagrid_snapshot(dataGridView9, this_read_integration_concentrations, this_read_integration_strenths);
             summary_info.draw_summary_info(label_info, this_read_concentration_average, this_read_strenth_average,this_read_integration_strenths,this_read_integration_concentrations);
+            return 1;
         }
 
-        public static void read_spec_click(NumericUpDown textbox_average_times, spec_wrapper wrapper, DataGridView dgv, int row_index, spec_metadata spec_obj)
+        public static void read_spec_click(NumericUpDown textbox_average_times, spec_wrapper wrapper, DataGridView dgv, int row_index, spec_metadata spec_obj,int bs)
         {
             select_element[] elements = spec_obj.elements;
             standard[] standards = spec_obj.standards;
@@ -161,7 +162,7 @@ namespace LIBS.service_fun
             double[,] samples_val = new double[sample_cnt, element_cnt];
 
             //预计算表格数据，统一调用datagrid_control来控制绘制，调用直接根据规则预先进行计算
-            datagrid_control.draw_datagrid_analysis(dgv, spec_obj);
+            datagrid_control.draw_datagrid_analysis(dgv, spec_obj,bs);
 
 
         }

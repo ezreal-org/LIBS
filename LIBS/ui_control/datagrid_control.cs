@@ -15,7 +15,7 @@ namespace LIBS.ui_control
         public static bool is_datagrid_analysis_exist = false; //根据这个标识判断是否需要new新表格还是重用旧表格
 
         //这部分只负责根据数据绘图,standard_val/sample_val为强度或者浓度
-        public static void draw_datagrid_analysis(DataGridView dgv, spec_metadata spec_obj)
+        public static void draw_datagrid_analysis(DataGridView dgv, spec_metadata spec_obj, int bs)
         {
             select_element[] elements = spec_obj.elements;
             standard[] standards = spec_obj.standards;
@@ -25,7 +25,7 @@ namespace LIBS.ui_control
             int element_cnt = spec_obj.element_cnt;
             double[,] standard_val = new double[standard_cnt, element_cnt];
             double[,] sample_val = new double[sample_cnt, element_cnt];
-            fill_datagrid_data(spec_obj, ref standard_val, ref sample_val);
+            fill_datagrid_data(spec_obj, ref standard_val, ref sample_val, bs);
 
             //列
             DataTable dt8 = new DataTable();
@@ -134,7 +134,7 @@ namespace LIBS.ui_control
 
         //根据实际测量数据spec_standard和spec_sample，选择的各元素，标样，样本，计算出将要显示的表格数据
         //返回值standard_val和sample_val分别为计算后表格要显示的标样/样本的浓度或强度数据
-        private static void fill_datagrid_data(spec_metadata spec_obj, ref double[,] standard_val, ref double[,] sample_val)
+        private static void fill_datagrid_data(spec_metadata spec_obj, ref double[,] standard_val, ref double[,] sample_val,int bs)
         {
             select_element[] elements = spec_obj.elements;
             standard[] standards = spec_obj.standards;
@@ -225,7 +225,11 @@ namespace LIBS.ui_control
                             concentration[j] = standards[j].standard_ppm[i];
                             strenth[j] = standards_integration_average_strenth[j, i];
                         }
-                        LinearFit.LfReValue equation = LinearFit.linearFitFunc(concentration, strenth, standard_cnt);
+                        LinearFit.LfReValue equation;
+                        if (bs == 0)
+                             equation = LinearFit.linearFitFunc(concentration, strenth, standard_cnt);
+                        else
+                             equation = LinearFit.linearFitFunc_blank(concentration, strenth, standard_cnt);
                         //根据方程进行样本浓度推算
                         for (int j = 0; j < sample_cnt; j++)
                         {

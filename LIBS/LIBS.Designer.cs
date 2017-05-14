@@ -451,6 +451,7 @@
             this.checkBox106.Size = new System.Drawing.Size(88, 22);
             this.checkBox106.TabIndex = 19;
             this.checkBox106.Text = "过空白";
+            this.checkBox106.Enabled = false;
             this.checkBox106.UseVisualStyleBackColor = true;
             this.checkBox106.CheckedChanged += new System.EventHandler(this.checkBox106_CheckedChanged);
             // 

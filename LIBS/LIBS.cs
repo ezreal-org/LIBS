@@ -291,7 +291,7 @@ namespace LIBS
             if (e.ColumnIndex == 2 && e.RowIndex >= 0)
             {
                 //获取平均次数用于下一次读取
-                analysis_proc.read_spec_click(textBox17, wrapper, dgv_analysis, e.RowIndex, spec_data);
+                analysis_proc.read_spec_click(textBox17, wrapper, dgv_analysis, e.RowIndex, spec_data, blank_status);
             }
             else if (e.ColumnIndex > 2 && e.RowIndex >= 0)
             {
@@ -308,7 +308,10 @@ namespace LIBS
                 {
                     toolStripComboBox2.Text = "%";
                 }
-                analysis_proc.process_cell_click(chart1, chart2, label_equation, l_info, dgv_thisshot, e.RowIndex, e.ColumnIndex, spec_data, blank_status);
+                int success_analysis = 0;
+                success_analysis = analysis_proc.process_cell_click(chart1, chart2, label_equation, l_info, dgv_thisshot, e.RowIndex, e.ColumnIndex, spec_data, blank_status);
+                if (success_analysis == 1)
+                checkBox106.Enabled = true;
             }
             
 
@@ -493,7 +496,7 @@ namespace LIBS
                 //draw_datagrid_analysis函数内会准备好用于表格显示的数据，并绘制表格
                 int origin_select_row = dgv_analysis.SelectedCells[0].RowIndex;
                 int origin_select_column = dgv_analysis.SelectedCells[0].ColumnIndex;
-                datagrid_control.draw_datagrid_analysis(dgv_analysis, spec_data);
+                datagrid_control.draw_datagrid_analysis(dgv_analysis, spec_data, blank_status);
                 dgv_analysis.ClearSelection();
                 dgv_analysis.Rows[origin_select_row].Cells[origin_select_column].Selected = true;
 
@@ -553,7 +556,7 @@ namespace LIBS
             }
             if (e.TabPageIndex == 5)
             {
-                datagrid_control.draw_datagrid_analysis(dgv_analysis, spec_data);
+                datagrid_control.draw_datagrid_analysis(dgv_analysis, spec_data, blank_status);
             }
             if (e.TabPageIndex == 2)
             {
@@ -605,7 +608,7 @@ namespace LIBS
             {
                 datagrid_control.show_strenth = true; ;
             }
-            datagrid_control.draw_datagrid_analysis(dgv_analysis, spec_data);
+            datagrid_control.draw_datagrid_analysis(dgv_analysis, spec_data,blank_status);
         }
 
         private void chart1_MouseLeave(object sender, EventArgs e)
@@ -1866,7 +1869,7 @@ namespace LIBS
                 {
                     spec_data.elements[select_col - 3].danwei = 3;
                 }
-                datagrid_control.draw_datagrid_analysis(dgv_analysis, spec_data);
+                datagrid_control.draw_datagrid_analysis(dgv_analysis, spec_data, blank_status);
 
             }
         }
@@ -1906,13 +1909,6 @@ namespace LIBS
 
             double[,] standard_val = new double[spec_data.standard_cnt, spec_data.element_cnt];
             double[,] sample_val = new double[spec_data.sample_cnt, spec_data.element_cnt];
-            //draw_datagrid_analysis函数内会准备好用于表格显示的数据，并绘制表格
-            int origin_select_row = dgv_analysis.SelectedCells[0].RowIndex;
-            int origin_select_column = dgv_analysis.SelectedCells[0].ColumnIndex;
-            datagrid_control.draw_datagrid_analysis(dgv_analysis, spec_data);
-            dgv_analysis.ClearSelection();
-            dgv_analysis.Rows[origin_select_row].Cells[origin_select_column].Selected = true;
-
             //重新根据积分区间计算
             //只负责更新积分区间，调用datagrid_control重新fill表格数据
             // 计算该点的(wave,积分平均强度)
@@ -1922,8 +1918,8 @@ namespace LIBS
             double[] element_average_strenths = null;
             int click_column = dgv_analysis.SelectedCells[0].ColumnIndex;
             int click_row = dgv_analysis.SelectedCells[0].RowIndex;
+            if (click_column < 3) return; 
             LinearFit.LfReValue equation = analysis_proc.get_equation(spec_data, click_column - 3, ref element_concentrations, ref element_average_strenths, blank_status);
-
             double[] this_read_integration_strenths = analysis_proc.get_oneshot_all_strength(spec_data, click_row, click_column - 3);
             int this_read_average_times = this_read_integration_strenths.Length;
             double[] this_read_integration_concentrations = new double[this_read_average_times];
@@ -1946,7 +1942,7 @@ namespace LIBS
                 equation_chart.add_point_now(chart2, this_read_concentration_average, this_read_strenth_average, Color.Green, MarkerStyle.Triangle);
             datagrid_control.draw_datagrid_snapshot(dgv_thisshot, this_read_integration_concentrations, this_read_integration_strenths);
             summary_info.draw_summary_info(l_info, this_read_concentration_average, this_read_strenth_average, this_read_integration_strenths, this_read_integration_concentrations);
-        }
+    }
 
         private void checkBox1_Paint(object sender, PaintEventArgs e)
         {
